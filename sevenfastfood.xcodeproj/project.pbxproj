@@ -7,23 +7,71 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		444E23AE013A562074F6A880 /* Pods_sevenfastfood.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 614A216A7D856A6706AFEC75 /* Pods_sevenfastfood.framework */; };
+		F45BD7F82A83E80C0099E22F /* Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45BD7F72A83E80C0099E22F /* Widgets.swift */; };
+		F45BD7FA2A83EB270099E22F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45BD7F92A83EB270099E22F /* Extensions.swift */; };
+		F46E5C6C2A834B2600889BB0 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C6B2A834B2600889BB0 /* Tokens.swift */; };
+		F46E5C6E2A834EDF00889BB0 /* AuthenNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C6D2A834EDF00889BB0 /* AuthenNavigationController.swift */; };
+		F46E5C742A83537C00889BB0 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C732A83537C00889BB0 /* SignInViewController.swift */; };
+		F46E5C762A83538300889BB0 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C752A83538300889BB0 /* SignInViewModel.swift */; };
+		F46E5C782A83539E00889BB0 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C772A83539E00889BB0 /* SignUpViewController.swift */; };
+		F46E5C7A2A8353A400889BB0 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C792A8353A400889BB0 /* SignUpViewModel.swift */; };
+		F46E5C7C2A8353B100889BB0 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C7B2A8353B100889BB0 /* ForgotPasswordViewController.swift */; };
+		F46E5C7E2A8353B900889BB0 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C7D2A8353B900889BB0 /* ForgotPasswordViewModel.swift */; };
+		F46E5C802A8353C500889BB0 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C7F2A8353C500889BB0 /* ResetPasswordViewController.swift */; };
+		F46E5C822A8353CB00889BB0 /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C812A8353CB00889BB0 /* ResetPasswordViewModel.swift */; };
+		F46E5C852A83543700889BB0 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C842A83543700889BB0 /* OnboardingViewController.swift */; };
+		F46E5C872A83543F00889BB0 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C862A83543F00889BB0 /* OnboardingViewModel.swift */; };
+		F46E5C892A83AB1F00889BB0 /* LocalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C882A83AB1F00889BB0 /* LocalData.swift */; };
 		F48AD0382A83334D00F693F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0372A83334D00F693F7 /* AppDelegate.swift */; };
 		F48AD03A2A83334D00F693F7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0392A83334D00F693F7 /* SceneDelegate.swift */; };
-		F48AD03C2A83334D00F693F7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD03B2A83334D00F693F7 /* ViewController.swift */; };
-		F48AD03F2A83334D00F693F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F48AD03D2A83334D00F693F7 /* Main.storyboard */; };
 		F48AD0412A83334E00F693F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F48AD0402A83334E00F693F7 /* Assets.xcassets */; };
 		F48AD0442A83334E00F693F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F48AD0422A83334E00F693F7 /* LaunchScreen.storyboard */; };
+		F48AD0542A83383400F693F7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0532A83383400F693F7 /* MainTabBarController.swift */; };
+		F48AD0572A83391700F693F7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0562A83391700F693F7 /* HomeViewController.swift */; };
+		F48AD0592A83393800F693F7 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0582A83393800F693F7 /* HomeViewModel.swift */; };
+		F48AD05C2A8339FF00F693F7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD05B2A8339FF00F693F7 /* ProfileViewController.swift */; };
+		F48AD05E2A833A1800F693F7 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD05D2A833A1800F693F7 /* ProfileViewModel.swift */; };
+		F48AD0602A833AC800F693F7 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD05F2A833AC800F693F7 /* NotificationsViewController.swift */; };
+		F48AD0622A833AD000F693F7 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0612A833AD000F693F7 /* NotificationsViewModel.swift */; };
+		F48AD0652A833AFA00F693F7 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0642A833AFA00F693F7 /* CartViewController.swift */; };
+		F48AD0672A833B0300F693F7 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0662A833B0300F693F7 /* CartViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		614A216A7D856A6706AFEC75 /* Pods_sevenfastfood.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sevenfastfood.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAF4121C0DBEE9CB7CB48367 /* Pods-sevenfastfood.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sevenfastfood.release.xcconfig"; path = "Target Support Files/Pods-sevenfastfood/Pods-sevenfastfood.release.xcconfig"; sourceTree = "<group>"; };
+		EB3550663BFFCAFA08C46641 /* Pods-sevenfastfood.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sevenfastfood.debug.xcconfig"; path = "Target Support Files/Pods-sevenfastfood/Pods-sevenfastfood.debug.xcconfig"; sourceTree = "<group>"; };
+		F45BD7F72A83E80C0099E22F /* Widgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widgets.swift; sourceTree = "<group>"; };
+		F45BD7F92A83EB270099E22F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F46E5C6B2A834B2600889BB0 /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
+		F46E5C6D2A834EDF00889BB0 /* AuthenNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenNavigationController.swift; sourceTree = "<group>"; };
+		F46E5C732A83537C00889BB0 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		F46E5C752A83538300889BB0 /* SignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		F46E5C772A83539E00889BB0 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		F46E5C792A8353A400889BB0 /* SignUpViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		F46E5C7B2A8353B100889BB0 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		F46E5C7D2A8353B900889BB0 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
+		F46E5C7F2A8353C500889BB0 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		F46E5C812A8353CB00889BB0 /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
+		F46E5C842A83543700889BB0 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		F46E5C862A83543F00889BB0 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		F46E5C882A83AB1F00889BB0 /* LocalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalData.swift; sourceTree = "<group>"; };
 		F48AD0342A83334D00F693F7 /* sevenfastfood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sevenfastfood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F48AD0372A83334D00F693F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F48AD0392A83334D00F693F7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F48AD03B2A83334D00F693F7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		F48AD03E2A83334D00F693F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F48AD0402A83334E00F693F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F48AD0432A83334E00F693F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F48AD0452A83334E00F693F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F48AD0532A83383400F693F7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		F48AD0562A83391700F693F7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		F48AD0582A83393800F693F7 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		F48AD05B2A8339FF00F693F7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = sevenfastfood/Controllers/ProfileVC/ProfileViewController.swift; sourceTree = SOURCE_ROOT; };
+		F48AD05D2A833A1800F693F7 /* ProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewModel.swift; path = sevenfastfood/Controllers/ProfileVC/ProfileViewModel.swift; sourceTree = SOURCE_ROOT; };
+		F48AD05F2A833AC800F693F7 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		F48AD0612A833AD000F693F7 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
+		F48AD0642A833AFA00F693F7 /* CartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
+		F48AD0662A833B0300F693F7 /* CartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +79,82 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				444E23AE013A562074F6A880 /* Pods_sevenfastfood.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3ABB07A68C3221BE5F73B957 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				614A216A7D856A6706AFEC75 /* Pods_sevenfastfood.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A22320BD2C38FC0A9692DCEC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EB3550663BFFCAFA08C46641 /* Pods-sevenfastfood.debug.xcconfig */,
+				EAF4121C0DBEE9CB7CB48367 /* Pods-sevenfastfood.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		F46E5C6F2A834EFA00889BB0 /* SignInVC */ = {
+			isa = PBXGroup;
+			children = (
+				F46E5C732A83537C00889BB0 /* SignInViewController.swift */,
+				F46E5C752A83538300889BB0 /* SignInViewModel.swift */,
+			);
+			path = SignInVC;
+			sourceTree = "<group>";
+		};
+		F46E5C702A834F0600889BB0 /* SignUpVC */ = {
+			isa = PBXGroup;
+			children = (
+				F46E5C772A83539E00889BB0 /* SignUpViewController.swift */,
+				F46E5C792A8353A400889BB0 /* SignUpViewModel.swift */,
+			);
+			path = SignUpVC;
+			sourceTree = "<group>";
+		};
+		F46E5C712A834F0C00889BB0 /* ForgotPasswordVC */ = {
+			isa = PBXGroup;
+			children = (
+				F46E5C7B2A8353B100889BB0 /* ForgotPasswordViewController.swift */,
+				F46E5C7D2A8353B900889BB0 /* ForgotPasswordViewModel.swift */,
+			);
+			path = ForgotPasswordVC;
+			sourceTree = "<group>";
+		};
+		F46E5C722A834F5100889BB0 /* ResetPasswordVC */ = {
+			isa = PBXGroup;
+			children = (
+				F46E5C7F2A8353C500889BB0 /* ResetPasswordViewController.swift */,
+				F46E5C812A8353CB00889BB0 /* ResetPasswordViewModel.swift */,
+			);
+			path = ResetPasswordVC;
+			sourceTree = "<group>";
+		};
+		F46E5C832A83542500889BB0 /* OnboardingVC */ = {
+			isa = PBXGroup;
+			children = (
+				F46E5C842A83543700889BB0 /* OnboardingViewController.swift */,
+				F46E5C862A83543F00889BB0 /* OnboardingViewModel.swift */,
+			);
+			path = OnboardingVC;
+			sourceTree = "<group>";
+		};
 		F48AD02B2A83334D00F693F7 = {
 			isa = PBXGroup;
 			children = (
 				F48AD0362A83334D00F693F7 /* sevenfastfood */,
 				F48AD0352A83334D00F693F7 /* Products */,
+				A22320BD2C38FC0A9692DCEC /* Pods */,
+				3ABB07A68C3221BE5F73B957 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +169,112 @@
 		F48AD0362A83334D00F693F7 /* sevenfastfood */ = {
 			isa = PBXGroup;
 			children = (
-				F48AD0372A83334D00F693F7 /* AppDelegate.swift */,
-				F48AD0392A83334D00F693F7 /* SceneDelegate.swift */,
-				F48AD03B2A83334D00F693F7 /* ViewController.swift */,
-				F48AD03D2A83334D00F693F7 /* Main.storyboard */,
-				F48AD0402A83334E00F693F7 /* Assets.xcassets */,
-				F48AD0422A83334E00F693F7 /* LaunchScreen.storyboard */,
+				F48AD04F2A8333E400F693F7 /* Views */,
+				F48AD04E2A8333E000F693F7 /* Models */,
+				F48AD04D2A8333D700F693F7 /* Controllers */,
+				F48AD04C2A8333BC00F693F7 /* AppDelegates */,
+				F48AD04B2A8333A900F693F7 /* Resources */,
 				F48AD0452A83334E00F693F7 /* Info.plist */,
 			);
 			path = sevenfastfood;
+			sourceTree = "<group>";
+		};
+		F48AD04B2A8333A900F693F7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F48AD0402A83334E00F693F7 /* Assets.xcassets */,
+				F48AD0422A83334E00F693F7 /* LaunchScreen.storyboard */,
+				F46E5C6B2A834B2600889BB0 /* Tokens.swift */,
+				F45BD7F72A83E80C0099E22F /* Widgets.swift */,
+				F45BD7F92A83EB270099E22F /* Extensions.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F48AD04C2A8333BC00F693F7 /* AppDelegates */ = {
+			isa = PBXGroup;
+			children = (
+				F48AD0372A83334D00F693F7 /* AppDelegate.swift */,
+				F48AD0392A83334D00F693F7 /* SceneDelegate.swift */,
+			);
+			path = AppDelegates;
+			sourceTree = "<group>";
+		};
+		F48AD04D2A8333D700F693F7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F46E5C832A83542500889BB0 /* OnboardingVC */,
+				F46E5C722A834F5100889BB0 /* ResetPasswordVC */,
+				F46E5C712A834F0C00889BB0 /* ForgotPasswordVC */,
+				F46E5C702A834F0600889BB0 /* SignUpVC */,
+				F46E5C6F2A834EFA00889BB0 /* SignInVC */,
+				F48AD0682A833B0800F693F7 /* CartVC */,
+				F48AD0632A833AE300F693F7 /* NotificationsVC */,
+				F48AD05A2A8339D900F693F7 /* ProfileVC */,
+				F48AD0552A83390A00F693F7 /* HomeVC */,
+				F48AD0502A8337EC00F693F7 /* Screens */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		F48AD04E2A8333E000F693F7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F46E5C882A83AB1F00889BB0 /* LocalData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F48AD04F2A8333E400F693F7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F48AD0502A8337EC00F693F7 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				F48AD0532A83383400F693F7 /* MainTabBarController.swift */,
+				F46E5C6D2A834EDF00889BB0 /* AuthenNavigationController.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		F48AD0552A83390A00F693F7 /* HomeVC */ = {
+			isa = PBXGroup;
+			children = (
+				F48AD0562A83391700F693F7 /* HomeViewController.swift */,
+				F48AD0582A83393800F693F7 /* HomeViewModel.swift */,
+			);
+			path = HomeVC;
+			sourceTree = "<group>";
+		};
+		F48AD05A2A8339D900F693F7 /* ProfileVC */ = {
+			isa = PBXGroup;
+			children = (
+				F48AD05B2A8339FF00F693F7 /* ProfileViewController.swift */,
+				F48AD05D2A833A1800F693F7 /* ProfileViewModel.swift */,
+			);
+			path = ProfileVC;
+			sourceTree = "<group>";
+		};
+		F48AD0632A833AE300F693F7 /* NotificationsVC */ = {
+			isa = PBXGroup;
+			children = (
+				F48AD05F2A833AC800F693F7 /* NotificationsViewController.swift */,
+				F48AD0612A833AD000F693F7 /* NotificationsViewModel.swift */,
+			);
+			path = NotificationsVC;
+			sourceTree = "<group>";
+		};
+		F48AD0682A833B0800F693F7 /* CartVC */ = {
+			isa = PBXGroup;
+			children = (
+				F48AD0642A833AFA00F693F7 /* CartViewController.swift */,
+				F48AD0662A833B0300F693F7 /* CartViewModel.swift */,
+			);
+			path = CartVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +284,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F48AD0482A83334E00F693F7 /* Build configuration list for PBXNativeTarget "sevenfastfood" */;
 			buildPhases = (
+				A5D14DAD9116A3603AE1C498 /* [CP] Check Pods Manifest.lock */,
 				F48AD0302A83334D00F693F7 /* Sources */,
 				F48AD0312A83334D00F693F7 /* Frameworks */,
 				F48AD0322A83334D00F693F7 /* Resources */,
+				4EAEA1D15F20F24D3AFA9C14 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -127,34 +339,90 @@
 			files = (
 				F48AD0442A83334E00F693F7 /* LaunchScreen.storyboard in Resources */,
 				F48AD0412A83334E00F693F7 /* Assets.xcassets in Resources */,
-				F48AD03F2A83334D00F693F7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4EAEA1D15F20F24D3AFA9C14 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sevenfastfood/Pods-sevenfastfood-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sevenfastfood/Pods-sevenfastfood-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sevenfastfood/Pods-sevenfastfood-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A5D14DAD9116A3603AE1C498 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-sevenfastfood-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F48AD0302A83334D00F693F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F48AD03C2A83334D00F693F7 /* ViewController.swift in Sources */,
+				F46E5C742A83537C00889BB0 /* SignInViewController.swift in Sources */,
+				F46E5C7A2A8353A400889BB0 /* SignUpViewModel.swift in Sources */,
+				F48AD05C2A8339FF00F693F7 /* ProfileViewController.swift in Sources */,
+				F45BD7F82A83E80C0099E22F /* Widgets.swift in Sources */,
 				F48AD0382A83334D00F693F7 /* AppDelegate.swift in Sources */,
+				F48AD0652A833AFA00F693F7 /* CartViewController.swift in Sources */,
 				F48AD03A2A83334D00F693F7 /* SceneDelegate.swift in Sources */,
+				F46E5C892A83AB1F00889BB0 /* LocalData.swift in Sources */,
+				F48AD0622A833AD000F693F7 /* NotificationsViewModel.swift in Sources */,
+				F46E5C802A8353C500889BB0 /* ResetPasswordViewController.swift in Sources */,
+				F48AD0542A83383400F693F7 /* MainTabBarController.swift in Sources */,
+				F46E5C852A83543700889BB0 /* OnboardingViewController.swift in Sources */,
+				F46E5C762A83538300889BB0 /* SignInViewModel.swift in Sources */,
+				F48AD0592A83393800F693F7 /* HomeViewModel.swift in Sources */,
+				F48AD0572A83391700F693F7 /* HomeViewController.swift in Sources */,
+				F46E5C782A83539E00889BB0 /* SignUpViewController.swift in Sources */,
+				F46E5C872A83543F00889BB0 /* OnboardingViewModel.swift in Sources */,
+				F48AD0672A833B0300F693F7 /* CartViewModel.swift in Sources */,
+				F46E5C6E2A834EDF00889BB0 /* AuthenNavigationController.swift in Sources */,
+				F46E5C7C2A8353B100889BB0 /* ForgotPasswordViewController.swift in Sources */,
+				F48AD05E2A833A1800F693F7 /* ProfileViewModel.swift in Sources */,
+				F45BD7FA2A83EB270099E22F /* Extensions.swift in Sources */,
+				F48AD0602A833AC800F693F7 /* NotificationsViewController.swift in Sources */,
+				F46E5C7E2A8353B900889BB0 /* ForgotPasswordViewModel.swift in Sources */,
+				F46E5C6C2A834B2600889BB0 /* Tokens.swift in Sources */,
+				F46E5C822A8353CB00889BB0 /* ResetPasswordViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		F48AD03D2A83334D00F693F7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F48AD03E2A83334D00F693F7 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F48AD0422A83334E00F693F7 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -282,6 +550,7 @@
 		};
 		F48AD0492A83334E00F693F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB3550663BFFCAFA08C46641 /* Pods-sevenfastfood.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -292,7 +561,6 @@
 				INFOPLIST_FILE = sevenfastfood/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -310,6 +578,7 @@
 		};
 		F48AD04A2A83334E00F693F7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EAF4121C0DBEE9CB7CB48367 /* Pods-sevenfastfood.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -320,7 +589,6 @@
 				INFOPLIST_FILE = sevenfastfood/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
