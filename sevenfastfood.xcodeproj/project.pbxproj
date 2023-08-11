@@ -36,6 +36,7 @@
 		F48AD0622A833AD000F693F7 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0612A833AD000F693F7 /* NotificationsViewModel.swift */; };
 		F48AD0652A833AFA00F693F7 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0642A833AFA00F693F7 /* CartViewController.swift */; };
 		F48AD0672A833B0300F693F7 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0662A833B0300F693F7 /* CartViewModel.swift */; };
+		F494B0B82A868E4C002B8F07 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F494B0B72A868E4C002B8F07 /* SignUpFormView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		F48AD0612A833AD000F693F7 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		F48AD0642A833AFA00F693F7 /* CartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		F48AD0662A833B0300F693F7 /* CartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
+		F494B0B72A868E4C002B8F07 /* SignUpFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +230,7 @@
 		F48AD04F2A8333E400F693F7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F494B0B72A868E4C002B8F07 /* SignUpFormView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				F45BD7FA2A83EB270099E22F /* Extensions.swift in Sources */,
 				F48AD0602A833AC800F693F7 /* NotificationsViewController.swift in Sources */,
 				F46E5C7E2A8353B900889BB0 /* ForgotPasswordViewModel.swift in Sources */,
+				F494B0B82A868E4C002B8F07 /* SignUpFormView.swift in Sources */,
 				F46E5C6C2A834B2600889BB0 /* Tokens.swift in Sources */,
 				F46E5C822A8353CB00889BB0 /* ResetPasswordViewModel.swift in Sources */,
 			);

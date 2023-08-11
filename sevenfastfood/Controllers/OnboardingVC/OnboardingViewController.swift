@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol OnboardingViewControllerDelegate: AnyObject {
+    
+}
+
 final class OnboardingViewController: UIViewController {
     let viewModel = OnboardingViewModel()
+    weak var delegate: OnboardingViewControllerDelegate!
     private let tokens = Tokens.shared
     private let widgets = Widgets.shared
     private let pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -42,7 +47,13 @@ final class OnboardingViewController: UIViewController {
     }
     
     @objc func didTapContinueButton() {
-        print("didTapContinueButton")
+        print("didTabContinueButton")
+    }
+    
+    @objc func didTapStartedButton() {
+        let signUpVC = SignUpViewController()
+        signUpVC.modalPresentationStyle = .automatic
+        navigationController?.present(signUpVC, animated: true)
     }
     
     private func setupPages() {
@@ -54,7 +65,7 @@ final class OnboardingViewController: UIViewController {
             onboardingScreen in
             let vc = UIViewController()
             vc.view.backgroundColor = Tokens.shared.secondaryColor
-            setupOnboardingView(for: vc, title: onboardingScreen.title, description: onboardingScreen.description, displayImage: onboardingScreen.displayImage!)
+            setupOnboardingView(for: vc, title: onboardingScreen.title, description: onboardingScreen.description, displayImage: onboardingScreen.displayImage!, buttonTitle: onboardingScreen.buttonTitle, isFinal: onboardingScreen.isFinal)
             return vc
         } )
         
@@ -65,7 +76,7 @@ final class OnboardingViewController: UIViewController {
         pageVC.didMove(toParent: self)
     }
     
-    private func setupOnboardingView(for vc: UIViewController, title _title: String, description _description: String, displayImage image: UIImage) {
+    private func setupOnboardingView(for vc: UIViewController, title _title: String, description _description: String, displayImage image: UIImage, buttonTitle _buttonTitle: String, isFinal _isFinal: Bool) {
         let topView = {
            let view = UIView()
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -94,6 +105,7 @@ final class OnboardingViewController: UIViewController {
             label.text = _title
             label.textColor = tokens.secondaryColor
             label.font = UIFont.boldSystemFont(ofSize: tokens.titleFontSize)
+            label.textAlignment = .center
             label.translatesAutoresizingMaskIntoConstraints = false
             return label
         }()
@@ -102,12 +114,14 @@ final class OnboardingViewController: UIViewController {
             let label = UILabel()
             label.text = _description
             label.textColor = .gray
+            label.textAlignment = .center
             label.font.withSize(tokens.descriptionFontSize)
             label.translatesAutoresizingMaskIntoConstraints = false
             return label
         }()
         
-        let actionButton = widgets.createSecondaryButton(title: "Continue", target: self, action: #selector(didTapContinueButton))
+        let action: Selector = _isFinal ? #selector(didTapStartedButton) : #selector(didTapContinueButton)
+        let actionButton = widgets.createSecondaryButton(title: _buttonTitle, target: self, action: action)
 
         vc.view.addSubviews(topView, bottomView)
         topView.addSubviews(imageView)

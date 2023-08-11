@@ -9,7 +9,7 @@ import UIKit
 
 final class Tokens {
     public static let shared = Tokens()
-    
+    let textFieldFontSize = CGFloat(14)
     let primaryColor: UIColor = {
         let color = UIColor(red: CGFloat(255.0/255.0), green: CGFloat(190.0/255.0), blue: CGFloat(51.0/255.0), alpha: CGFloat(1.0))
         return color
@@ -21,14 +21,18 @@ final class Tokens {
     }()
     
     let onPrimaryColor: UIColor = {
-        .white
+        .darkText
     }()
 
     let onSecondaryColor: UIColor = {
         .white
     }()
     
-    let buttonCornerRadius = CGFloat(50) // Pill button
+    let systemFontSize = UIFont.systemFontSize
+    
+    let smallSystemFontSize = UIFont.smallSystemFontSize
+    
+    let buttonCornerRadius = CGFloat(8)
     
     let titleFontSize = CGFloat(24)
     

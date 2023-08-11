@@ -12,8 +12,7 @@ final class AuthenNavigationController: UINavigationController {
     private let signInVC = SignInViewController()
     private let signUpVC = SignUpViewController()
     private let forgotPasswordVC = ForgotPasswordViewController()
-
-
+    
     override init(rootViewController: UIViewController = OnboardingViewController()) {
         super.init(rootViewController: rootViewController)
         navigationBar.tintColor = Tokens.shared.primaryColor
