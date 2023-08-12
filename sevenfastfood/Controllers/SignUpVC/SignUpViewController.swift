@@ -22,7 +22,6 @@ final class SignUpViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
         navigationItem.title = "Sign up"
-        
         setupViews()
         setupConstraints()
     }
@@ -63,7 +62,8 @@ final class SignUpViewController: UIViewController {
             return label
         }()
         
-        formView = SignUpFormView()
+        formView = SignUpFormView(textFieldDelegate: self)
+        formView.delegate = self
         
         closeButton = {
             let button = UIButton(type: .close)
@@ -129,6 +129,24 @@ final class SignUpViewController: UIViewController {
     }
     
     @objc func didTapGoogleAuthButton() {
-        
+        print("tapped google Auth")
+    }
+}
+
+
+
+extension SignUpViewController: UITextFieldDelegate, SignUpFormViewDelegate {
+    func didTapCreateAccountButton(form _form: SignUpForm) {
+        print("Create Account \(_form)")
+    }
+    
+    func didTapAlreadyHaveAccountButton() {
+        print("Already have account")
+    }
+    
+    func didValidateFailed(messages _messages: [String]) {
+        if let rootWindow = UIApplication.shared.windows.first {
+            rootWindow.displayToast(with: "\(_messages)")
+        }
     }
 }

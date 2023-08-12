@@ -6,6 +6,7 @@ target 'sevenfastfood' do
   use_frameworks!
   pod 'Alamofire'
   pod 'IQKeyboardManagerSwift'
+  pod 'Validator'
   # Pods for sevenfastfood
 
 end

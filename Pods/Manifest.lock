@@ -1,20 +1,24 @@
 PODS:
   - Alamofire (5.7.1)
   - IQKeyboardManagerSwift (6.5.12)
+  - Validator (3.2.1)
 
 DEPENDENCIES:
   - Alamofire
   - IQKeyboardManagerSwift
+  - Validator
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - IQKeyboardManagerSwift
+    - Validator
 
 SPEC CHECKSUMS:
   Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
   IQKeyboardManagerSwift: 371b08cb39664fb56030f5345c815a4ffc74bbc0
+  Validator: 80a6f567220c962dfd2d9928ae98a8c1d164f6f4
 
-PODFILE CHECKSUM: 8110bf7750024a4d0f0ce0ef8bb0179ba96d4422
+PODFILE CHECKSUM: ed9aa2b53fc4c556761b946e27a04bf76d82be8e
 
 COCOAPODS: 1.12.1

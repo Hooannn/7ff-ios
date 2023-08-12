@@ -80,6 +80,7 @@ final class Widgets {
         textField.placeholder = _placeholder
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = _delegate
+        textField.autocapitalizationType = .none
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: tokens.textFieldFontSize)
         textField.layer.cornerRadius = tokens.buttonCornerRadius

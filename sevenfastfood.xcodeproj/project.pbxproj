@@ -37,6 +37,7 @@
 		F48AD0652A833AFA00F693F7 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0642A833AFA00F693F7 /* CartViewController.swift */; };
 		F48AD0672A833B0300F693F7 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0662A833B0300F693F7 /* CartViewModel.swift */; };
 		F494B0B82A868E4C002B8F07 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F494B0B72A868E4C002B8F07 /* SignUpFormView.swift */; };
+		F4C931132A87BA1300EAC7DF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C931122A87BA1300EAC7DF /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,7 @@
 		F48AD0642A833AFA00F693F7 /* CartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		F48AD0662A833B0300F693F7 /* CartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		F494B0B72A868E4C002B8F07 /* SignUpFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
+		F4C931122A87BA1300EAC7DF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				F46E5C882A83AB1F00889BB0 /* LocalData.swift */,
+				F4C931122A87BA1300EAC7DF /* Utils.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				F46E5C742A83537C00889BB0 /* SignInViewController.swift in Sources */,
 				F46E5C7A2A8353A400889BB0 /* SignUpViewModel.swift in Sources */,
 				F48AD05C2A8339FF00F693F7 /* ProfileViewController.swift in Sources */,
+				F4C931132A87BA1300EAC7DF /* Utils.swift in Sources */,
 				F45BD7F82A83E80C0099E22F /* Widgets.swift in Sources */,
 				F48AD0382A83334D00F693F7 /* AppDelegate.swift in Sources */,
 				F48AD0652A833AFA00F693F7 /* CartViewController.swift in Sources */,
