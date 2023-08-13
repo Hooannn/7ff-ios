@@ -85,6 +85,7 @@ final class Widgets {
         textField.font = UIFont.systemFont(ofSize: tokens.textFieldFontSize)
         textField.layer.cornerRadius = tokens.buttonCornerRadius
         textField.keyboardType = _type
+        
         return textField
     }
 }

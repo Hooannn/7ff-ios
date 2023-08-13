@@ -6,18 +6,68 @@
 //
 
 import UIKit
-
+import Alamofire
 final class SignUpViewController: UIViewController {
     private let tokens = Tokens.shared
     private let widgets = Widgets.shared
-    private var topView: UIView!
-    private var screenTitleLabel: UILabel!
-    private var separatorView: UIView!
-    private var bottomView: UIView!
-    private var headerView: UIView!
-    private var closeButton: UIButton!
-    private var formView: SignUpFormView!
-    private var googleAuthButton: UIButton!
+    
+    private lazy var topView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var screenTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Create an account"
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: tokens.titleFontSize)
+        return label
+    }()
+    
+    private lazy var separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray2
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var bottomView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var headerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var closeButton: UIButton = {
+        let button = UIButton(type: .close)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var formView: SignUpFormView = {
+        let formView = SignUpFormView(textFieldDelegate: self)
+        formView.delegate = self
+        return formView
+    }()
+    
+    private lazy var googleAuthButton: UIButton = {
+        widgets.createGoogleAuthButton(title: "Continue with Google", target: self, action: #selector(didTapGoogleAuthButton))
+    }()
+    
+    private lazy var viewModel: SignUpViewModel = {
+        let viewModel = SignUpViewModel()
+        viewModel.delegate = self
+        return viewModel
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
@@ -27,52 +77,6 @@ final class SignUpViewController: UIViewController {
     }
     
     private func setupViews() {
-        
-        headerView = {
-            let view = UIView()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
-
-        topView = {
-            let view = UIView()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
-        
-        separatorView = {
-            let view = UIView()
-            view.backgroundColor = .systemGray2
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
-        
-        bottomView = {
-            let view = UIView()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
-        
-        screenTitleLabel = {
-            let label = UILabel()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.text = "Create an account"
-            label.textAlignment = .center
-            label.font = UIFont.boldSystemFont(ofSize: tokens.titleFontSize)
-            return label
-        }()
-        
-        formView = SignUpFormView(textFieldDelegate: self)
-        formView.delegate = self
-        
-        closeButton = {
-            let button = UIButton(type: .close)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
-            return button
-        }()
-        
-        googleAuthButton = widgets.createGoogleAuthButton(title: "Continue with Google", target: self, action: #selector(didTapGoogleAuthButton))
         view.addSubviews(headerView, topView, separatorView, bottomView)
         headerView.addSubviews(closeButton)
         topView.addSubviews(screenTitleLabel, formView)
@@ -129,7 +133,7 @@ final class SignUpViewController: UIViewController {
     }
     
     @objc func didTapGoogleAuthButton() {
-        print("tapped google Auth")
+        debugPrint("tapped google Auth")
     }
 }
 
@@ -137,16 +141,24 @@ final class SignUpViewController: UIViewController {
 
 extension SignUpViewController: UITextFieldDelegate, SignUpFormViewDelegate {
     func didTapCreateAccountButton(form _form: SignUpForm) {
-        print("Create Account \(_form)")
+        viewModel.performSignUp(with: _form)
     }
-    
     func didTapAlreadyHaveAccountButton() {
-        print("Already have account")
+        debugPrint("Already have account")
     }
-    
     func didValidateFailed(messages _messages: [String]) {
-        if let rootWindow = UIApplication.shared.windows.first {
-            rootWindow.displayToast(with: "\(_messages)")
-        }
+        Toast.shared.display(with: _messages.first)
+    }
+}
+
+extension SignUpViewController: SignUpViewModelDelegate {
+    func didSignUpSuccess(with data: Response<SignUpResponseData>?) {
+        debugPrint("Sign up success -> \(data)")
+    }
+    func didSignUpFailure(with error: Error?) {
+        Toast.shared.display(with: error?.localizedDescription)
+    }
+    func didUpdateLoading(_ isLoading: Bool) {
+        debugPrint("Loading... \(isLoading)")
     }
 }

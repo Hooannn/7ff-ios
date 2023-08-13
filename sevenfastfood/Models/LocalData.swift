@@ -17,15 +17,24 @@ struct OnboardingScreen {
 }
 
 final class LocalData {
+    private lazy var client = UserDefaults.standard
     public static let shared = LocalData()
     private let onboardingScreens: [OnboardingScreen] = [
-        OnboardingScreen(title: "Onboarding 1", description: "Description 1", displayImage: UIImage(named: "Onboarding_1"), buttonTitle: "Continue", isFinal: false),
-        OnboardingScreen(title: "Onboarding 2", description: "Description 2", displayImage: UIImage(named: "Onboarding_2"), buttonTitle: "Continue", isFinal: false),
-        OnboardingScreen(title: "Onboarding 3", description: "Description 3", displayImage: UIImage(named: "Onboarding_3"), buttonTitle: "Let's started", isFinal: true),
+        OnboardingScreen(title: "We Are 7ff", description: "7FF (short for 7 Fast Food) is a food chain that specialize in providing refreshment and snack as well as conventional fast food", displayImage: UIImage(named: "Onboarding_1"), buttonTitle: "Continue", isFinal: false),
+        OnboardingScreen(title: "Just A Message From 7ff ...", description: "We are always aware of customers’ evolving tastes", displayImage: UIImage(named: "Onboarding_2"), buttonTitle: "Continue", isFinal: false),
+        OnboardingScreen(title: "Start-Up Story Of 7ff", description: "“Don’t worry about failure, you only have to be right once” - Drew Houston", displayImage: UIImage(named: "Onboarding_3"), buttonTitle: "Let's started", isFinal: true),
     ]
     
     
     public func getOnboardingScreens() -> [OnboardingScreen] {
         onboardingScreens
+    }
+    
+    public func getAccessToken() -> String? {
+        client.string(forKey: "accessToken")
+    }
+    
+    public func getRefreshToken() -> String? {
+        client.string(forKey: "refreshToken")
     }
 }

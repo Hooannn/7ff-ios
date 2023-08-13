@@ -103,6 +103,7 @@ final class OnboardingViewController: UIViewController {
         let titleLabel = {
             let label = UILabel()
             label.text = _title
+            label.numberOfLines = 0
             label.textColor = tokens.secondaryColor
             label.font = UIFont.boldSystemFont(ofSize: tokens.titleFontSize)
             label.textAlignment = .center
@@ -113,6 +114,7 @@ final class OnboardingViewController: UIViewController {
         let descriptionLabel = {
             let label = UILabel()
             label.text = _description
+            label.numberOfLines = 0
             label.textColor = .gray
             label.textAlignment = .center
             label.font.withSize(tokens.descriptionFontSize)
