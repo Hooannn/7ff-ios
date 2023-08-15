@@ -13,14 +13,13 @@ enum UserRole: String, Codable {
 
 struct User: Codable {
     let _id: String
-    let firstName: String?
-    let lastName: String?
+    let firstName: String
+    let lastName: String
     let email: String
-    let address: String
+    let address: String?
     let phoneNumber: String?
     let refreshToken: String?
     let avatar: String?
-    let orders: [String]
+    let orders: [String]?
     let role: UserRole
-    let cartItems: [CartItem]
 }

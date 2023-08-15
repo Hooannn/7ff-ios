@@ -7,9 +7,15 @@
 
 import UIKit
 import Alamofire
+import GoogleSignIn
+protocol SignUpViewControllerDelegate: AnyObject {
+    func didTapAlreadyHaveAccountButton()
+}
+
 final class SignUpViewController: UIViewController {
     private let tokens = Tokens.shared
     private let widgets = Widgets.shared
+    weak var delegate: SignUpViewControllerDelegate!
     
     private lazy var topView: UIView = {
         let view = UIView()
@@ -58,10 +64,19 @@ final class SignUpViewController: UIViewController {
         return formView
     }()
     
+    private lazy var laterButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didTapLaterButton), for: .touchUpInside)
+        button.setTitle("Later", for: .normal)
+        button.tintColor = .systemGray
+        return button
+    }()
+    
     private lazy var googleAuthButton: UIButton = {
         widgets.createGoogleAuthButton(title: "Continue with Google", target: self, action: #selector(didTapGoogleAuthButton))
     }()
-    
+
     private lazy var viewModel: SignUpViewModel = {
         let viewModel = SignUpViewModel()
         viewModel.delegate = self
@@ -71,14 +86,13 @@ final class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
-        navigationItem.title = "Sign up"
         setupViews()
         setupConstraints()
     }
     
     private func setupViews() {
         view.addSubviews(headerView, topView, separatorView, bottomView)
-        headerView.addSubviews(closeButton)
+        headerView.addSubviews(closeButton, laterButton)
         topView.addSubviews(screenTitleLabel, formView)
         bottomView.addSubviews(googleAuthButton)
     }
@@ -110,6 +124,8 @@ final class SignUpViewController: UIViewController {
         NSLayoutConstraint.activate([
             closeButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 24),
             closeButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+            laterButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -24),
+            laterButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
             
             screenTitleLabel.widthAnchor.constraint(equalTo: topView.widthAnchor, multiplier: 0.7),
             screenTitleLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
@@ -133,7 +149,23 @@ final class SignUpViewController: UIViewController {
     }
     
     @objc func didTapGoogleAuthButton() {
-        debugPrint("tapped google Auth")
+        let root = UIApplication.shared.keyWindow?.rootViewController
+        GIDSignIn.sharedInstance.signIn(withPresenting: root!) {
+            result, error in
+            if error == nil {
+                guard let googleAccessToken = result?.user.accessToken else {
+                    Toast.shared.display(with: "Missing google access token")
+                    return
+                }
+                self.viewModel.performGoogleAuthentication(with: googleAccessToken.tokenString)
+                return
+            }
+            Toast.shared.display(with: error?.localizedDescription)
+        }
+    }
+    
+    @objc func didTapLaterButton() {
+        changeScene(to: .main)
     }
 }
 
@@ -144,7 +176,9 @@ extension SignUpViewController: UITextFieldDelegate, SignUpFormViewDelegate {
         viewModel.performSignUp(with: _form)
     }
     func didTapAlreadyHaveAccountButton() {
-        debugPrint("Already have account")
+        dismiss(animated: true) {
+            self.delegate.didTapAlreadyHaveAccountButton()
+        }
     }
     func didValidateFailed(messages _messages: [String]) {
         Toast.shared.display(with: _messages.first)
@@ -152,13 +186,14 @@ extension SignUpViewController: UITextFieldDelegate, SignUpFormViewDelegate {
 }
 
 extension SignUpViewController: SignUpViewModelDelegate {
-    func didSignUpSuccess(with data: Response<SignUpResponseData>?) {
-        debugPrint("Sign up success -> \(data)")
+    func didSignUpSuccess(with data: Response<SignInResponseData>?) {
+        Toast.shared.display(with: data?.message ?? "Success")
+        changeScene(to: .main)
     }
     func didSignUpFailure(with error: Error?) {
         Toast.shared.display(with: error?.localizedDescription)
     }
     func didUpdateLoading(_ isLoading: Bool) {
-        debugPrint("Loading... \(isLoading)")
+        formView.setLoading(isLoading)
     }
 }

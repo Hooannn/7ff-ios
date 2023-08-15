@@ -9,69 +9,53 @@ import UIKit
 import Validator
 
 fileprivate enum TextFieldType: Int {
-    case firstName = 1
-    case lastName
-    case email
+    case email = 1
     case password
 }
 
-struct SignUpForm {
-    var lastName: String
-    var firstName: String
+struct SignInForm {
     var email: String
-    var password: String 
+    var password: String
 }
 
-protocol SignUpFormViewDelegate: AnyObject {
+protocol SignInFormViewDelegate: AnyObject {
     func didValidateFailed(messages _messages: [String])
-    func didTapCreateAccountButton(form _form: SignUpForm)
-    func didTapAlreadyHaveAccountButton()
+    func didTapSignInButton(form _form: SignInForm)
+    func didTapDoNotHaveAnAccountYetButton()
 }
 
-final class SignUpFormView: UIView {
-    weak var delegate: SignUpFormViewDelegate!
+final class SignInFormView: UIView {
+    weak var delegate: SignInFormViewDelegate!
     weak var textFieldDelegate: UITextFieldDelegate!
     private let utils = Utils.shared
     private let widgets = Widgets.shared
     private lazy var stackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [firstNameTextField, lastNameTextField, emailTextField, passwordTextField, submitButton, directToSignInButton])
+        let view = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, submitButton, directToSignUpButton])
         view.spacing = 12
         view.axis = .vertical
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
-    private lazy var firstNameTextField: UITextField = {
-        let textField = widgets.createTextField(placeholder: "Enter your first name...", delegate: self.textFieldDelegate!, keyboardType: .default)
-        textField.tag = TextFieldType.firstName.rawValue
-        return textField
-    }()
-
-    private lazy var lastNameTextField: UITextField = {
-        let textField = widgets.createTextField(placeholder: "Enter your last name...", delegate:  self.textFieldDelegate!, keyboardType: .default)
-        textField.tag = TextFieldType.lastName.rawValue
-        return textField
-    }()
-
+    
     private lazy var emailTextField: UITextField = {
         let textField = widgets.createTextField(placeholder: "Enter your email...", delegate:  self.textFieldDelegate!, keyboardType: .emailAddress)
         textField.tag = TextFieldType.email.rawValue
         return textField
     }()
-
+    
     private lazy var passwordTextField: UITextField = {
         let textField = widgets.createTextField(placeholder: "Enter your password...", delegate:  self.textFieldDelegate!, keyboardType: .default)
         textField.tag = TextFieldType.password.rawValue
         textField.isSecureTextEntry = true
         return textField
     }()
-
+    
     private lazy var submitButton: UIButton = {
-        widgets.createPrimaryButton(title: "Create an Account", target: self, action: #selector(didTapCreateButton))
+        widgets.createPrimaryButton(title: "Sign in", target: self, action: #selector(didTapSubmitButton))
     }()
-
-    private lazy var directToSignInButton: UIButton = {
-        widgets.createTextButton(title: "Already have an account?", target: self, action: #selector(didTapAlreadyHaveAccountButton))
+    
+    private lazy var directToSignUpButton: UIButton = {
+        widgets.createTextButton(title: "Don't have an account yet?", target: self, action: #selector(didTapDoNotHaveAnAccountYetButton))
     }()
     
     override init(frame: CGRect) {
@@ -103,8 +87,6 @@ final class SignUpFormView: UIView {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.topAnchor.constraint(equalTo: topAnchor),
-            firstNameTextField.heightAnchor.constraint(equalToConstant: 44),
-            lastNameTextField.heightAnchor.constraint(equalToConstant: 44),
             emailTextField.heightAnchor.constraint(equalToConstant: 44),
             passwordTextField.heightAnchor.constraint(equalToConstant: 44),
         ])
@@ -113,10 +95,8 @@ final class SignUpFormView: UIView {
     private func validateTextFields() -> (Bool, [String]) {
         
         let emailValidationResult = emailTextField.validate(rule: utils.emailRule())
-        let firstNameValidationResult = firstNameTextField.validate(rule: utils.minLengthOf1Rule(for: "First name"))
-        let lastNameValidationResult = lastNameTextField.validate(rule: utils.minLengthOf1Rule(for: "Last name"))
         let passwordValidationResult = passwordTextField.validate(rule: utils.minLengthOf6Rule(for: "Password"))
-        let results: [ValidationResult] = [emailValidationResult, firstNameValidationResult, lastNameValidationResult, passwordValidationResult]
+        let results: [ValidationResult] = [emailValidationResult, passwordValidationResult]
         let errors = results.compactMap({
             result in
             switch result {
@@ -133,7 +113,7 @@ final class SignUpFormView: UIView {
         return (false, errors)
     }
     
-    @objc func didTapCreateButton() {
+    @objc func didTapSubmitButton() {
         
         let (isValid, messages) = validateTextFields()
 
@@ -142,12 +122,12 @@ final class SignUpFormView: UIView {
             return
         }
         
-        let form = SignUpForm(lastName: lastNameTextField.text!, firstName: firstNameTextField.text!, email: emailTextField.text!, password: passwordTextField.text!)
+        let form = SignInForm(email: emailTextField.text!, password: passwordTextField.text!)
 
-        delegate.didTapCreateAccountButton(form: form)
+        delegate.didTapSignInButton(form: form)
     }
     
-    @objc func didTapAlreadyHaveAccountButton() {
-        delegate.didTapAlreadyHaveAccountButton()
+    @objc func didTapDoNotHaveAnAccountYetButton() {
+        delegate.didTapDoNotHaveAnAccountYetButton()
     }
 }

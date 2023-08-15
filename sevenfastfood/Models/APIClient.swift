@@ -8,6 +8,9 @@
 import Foundation
 import Alamofire
 
+struct ResponseError: Decodable {
+    let message: String?
+}
 class Interceptor: RequestInterceptor {
     private lazy var localDataModel = LocalData()
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
@@ -24,7 +27,6 @@ class Interceptor: RequestInterceptor {
         completion(.doNotRetry)
     }
 }
-
 final class APIClient {
     fileprivate let baseUrl = "https://sevenfastfood-be.onrender.com"
     fileprivate var session: Session?
@@ -63,11 +65,32 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .get, parameters: params, headers: headers).responseDecodable(of: T.self) {
+        session.request("\(baseUrl)\(subpath)", method: .get, parameters: params, headers: headers).responseJSON {
             response in
+            
+            guard let httpResponse = response.response,
+                  (200...299).contains(httpResponse.statusCode) else {
+                let statusCode = response.response?.statusCode ?? -1
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(ResponseError.self, from: response.data!)
+                    let errorMessage = response.message ?? "API request failed with status code \(statusCode)"
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: errorMessage])))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
+                return
+            }
+            
             switch response.result {
             case .success(let data):
-                completion(.success(data))
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(type.self, from: response.data!)
+                    completion(.success(response))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: response.response?.statusCode ?? 100, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -78,20 +101,32 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .post, parameters: params, headers: headers).responseDecodable(of: T.self) {
+        session.request("\(baseUrl)\(subpath)", method: .post, parameters: params, headers: headers).responseJSON {
             response in
             
             guard let httpResponse = response.response,
                   (200...299).contains(httpResponse.statusCode) else {
                 let statusCode = response.response?.statusCode ?? -1
-                print(response.data)
-                let errorMessage = "API request failed with status code \(statusCode)"
-                completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: errorMessage])))
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(ResponseError.self, from: response.data!)
+                    let errorMessage = response.message ?? "API request failed with status code \(statusCode)"
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: errorMessage])))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
                 return
             }
+            
             switch response.result {
             case .success(let data):
-                completion(.success(data))
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(type.self, from: response.data!)
+                    completion(.success(response))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: response.response?.statusCode ?? 100, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -102,11 +137,32 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .put, parameters: params, headers: headers).responseDecodable(of: T.self) {
+        session.request("\(baseUrl)\(subpath)", method: .put, parameters: params, headers: headers).responseJSON {
             response in
+            
+            guard let httpResponse = response.response,
+                  (200...299).contains(httpResponse.statusCode) else {
+                let statusCode = response.response?.statusCode ?? -1
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(ResponseError.self, from: response.data!)
+                    let errorMessage = response.message ?? "API request failed with status code \(statusCode)"
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: errorMessage])))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
+                return
+            }
+
             switch response.result {
             case .success(let data):
-                completion(.success(data))
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(type.self, from: response.data!)
+                    completion(.success(response))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: response.response?.statusCode ?? 100, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -117,11 +173,32 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .patch, parameters: params, headers: headers).responseDecodable(of: T.self) {
+        session.request("\(baseUrl)\(subpath)", method: .patch, parameters: params, headers: headers).responseJSON {
             response in
+            
+            guard let httpResponse = response.response,
+                  (200...299).contains(httpResponse.statusCode) else {
+                let statusCode = response.response?.statusCode ?? -1
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(ResponseError.self, from: response.data!)
+                    let errorMessage = response.message ?? "API request failed with status code \(statusCode)"
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: errorMessage])))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
+                return
+            }
+
             switch response.result {
             case .success(let data):
-                completion(.success(data))
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(type.self, from: response.data!)
+                    completion(.success(response))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: response.response?.statusCode ?? 100, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -132,11 +209,32 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .delete, parameters: params, headers: headers).responseDecodable(of: T.self) {
+        session.request("\(baseUrl)\(subpath)", method: .delete, parameters: params, headers: headers).responseJSON {
             response in
+            
+            guard let httpResponse = response.response,
+                  (200...299).contains(httpResponse.statusCode) else {
+                let statusCode = response.response?.statusCode ?? -1
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(ResponseError.self, from: response.data!)
+                    let errorMessage = response.message ?? "API request failed with status code \(statusCode)"
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: errorMessage])))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
+                return
+            }
+
             switch response.result {
             case .success(let data):
-                completion(.success(data))
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(type.self, from: response.data!)
+                    completion(.success(response))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: response.response?.statusCode ?? 100, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }

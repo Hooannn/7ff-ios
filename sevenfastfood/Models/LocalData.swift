@@ -30,11 +30,41 @@ final class LocalData {
         onboardingScreens
     }
     
+    public func setAccessToken(_ token: String) -> Void {
+        client.set(token, forKey: "accessToken")
+    }
+    
+    public func setRefreshToken(_ token: String) -> Void {
+        client.set(token, forKey: "refreshToken")
+    }
+    
+    public func setLoggedUser(_ user: User) -> Void {
+        let encoder = JSONEncoder()
+        if let encodedUser = try? encoder.encode(user) {
+            client.set(encodedUser, forKey: "user")
+        }
+    }
+    
     public func getAccessToken() -> String? {
         client.string(forKey: "accessToken")
     }
     
     public func getRefreshToken() -> String? {
         client.string(forKey: "refreshToken")
+    }
+    
+    public func getLoggedUser() -> User? {
+        if let user = client.object(forKey: "user") as? Data {
+            let decoder = JSONDecoder()
+            let decodedUser = try? decoder.decode(User.self, from: user)
+            return decodedUser
+        }
+        return nil
+    }
+    
+    public func cleanup() {
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
     }
 }

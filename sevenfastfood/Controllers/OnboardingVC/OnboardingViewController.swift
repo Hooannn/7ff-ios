@@ -7,13 +7,8 @@
 
 import UIKit
 
-protocol OnboardingViewControllerDelegate: AnyObject {
-    
-}
-
 final class OnboardingViewController: UIViewController {
     let viewModel = OnboardingViewModel()
-    weak var delegate: OnboardingViewControllerDelegate!
     private let tokens = Tokens.shared
     private let widgets = Widgets.shared
     private let pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -43,7 +38,10 @@ final class OnboardingViewController: UIViewController {
     }
     
     @objc func didTapSkipButton() {
-        print("didTapSkipButton")
+        let signInVC = SignInViewController()
+        signInVC.delegate = self
+        signInVC.modalPresentationStyle = .automatic
+        navigationController?.present(signInVC, animated: true)
     }
     
     @objc func didTapContinueButton() {
@@ -52,6 +50,7 @@ final class OnboardingViewController: UIViewController {
     
     @objc func didTapStartedButton() {
         let signUpVC = SignUpViewController()
+        signUpVC.delegate = self
         signUpVC.modalPresentationStyle = .automatic
         navigationController?.present(signUpVC, animated: true)
     }
@@ -185,5 +184,16 @@ extension OnboardingViewController: UIPageViewControllerDataSource {
         }
         
         return viewControllers![previousIndex]
+    }
+}
+
+
+extension OnboardingViewController: SignUpViewControllerDelegate, SignInViewControllerDelegate {
+    func didTapAlreadyHaveAccountButton() {
+        didTapSkipButton()
+    }
+    
+    func didTapDoNotHaveAnAccountYetButton() {
+        didTapStartedButton()
     }
 }

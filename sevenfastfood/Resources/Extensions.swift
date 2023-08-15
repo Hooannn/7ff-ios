@@ -7,6 +7,13 @@
 
 import UIKit
 
+extension UIViewController {
+    func changeScene(to screen: Screen) -> Void {
+        if let scene = UIApplication.shared.connectedScenes.first, let sd: SceneDelegate = (scene.delegate as? SceneDelegate) {
+            sd.changeScreen(to: screen)
+        }
+    }
+}
 
 extension UIView {
     func addSubviews(_ views: UIView...) {
@@ -42,7 +49,7 @@ extension UIWindow {
             label.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
             label.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8)
         ])
-
+        
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 24),
             containerView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -24),
@@ -70,5 +77,29 @@ extension UIWindow {
                 })
             })
         })
+    }
+}
+
+extension UIButton {
+    func setLoading(_ isLoading: Bool) {
+        let tag = 808404
+        if isLoading {
+            self.isEnabled = false
+            self.alpha = 0.5
+            let indicator = UIActivityIndicatorView()
+            let buttonHeight = self.bounds.size.height
+            let buttonWidth = self.bounds.size.width
+            indicator.center = CGPoint(x: buttonWidth/2, y: buttonHeight/2)
+            indicator.tag = tag
+            self.addSubview(indicator)
+            indicator.startAnimating()
+        } else {
+            self.isEnabled = true
+            self.alpha = 1.0
+            if let indicator = self.viewWithTag(tag) as? UIActivityIndicatorView {
+                indicator.stopAnimating()
+                indicator.removeFromSuperview()
+            }
+        }
     }
 }

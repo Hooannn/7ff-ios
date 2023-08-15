@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		444E23AE013A562074F6A880 /* Pods_sevenfastfood.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 614A216A7D856A6706AFEC75 /* Pods_sevenfastfood.framework */; };
+		F42E408A2A8BD32100DDB629 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E40892A8BD32100DDB629 /* HeaderView.swift */; };
 		F45BD7F82A83E80C0099E22F /* Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45BD7F72A83E80C0099E22F /* Widgets.swift */; };
 		F45BD7FA2A83EB270099E22F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45BD7F92A83EB270099E22F /* Extensions.swift */; };
 		F46E5C6C2A834B2600889BB0 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E5C6B2A834B2600889BB0 /* Tokens.swift */; };
@@ -37,6 +38,7 @@
 		F48AD0652A833AFA00F693F7 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0642A833AFA00F693F7 /* CartViewController.swift */; };
 		F48AD0672A833B0300F693F7 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0662A833B0300F693F7 /* CartViewModel.swift */; };
 		F494B0B82A868E4C002B8F07 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F494B0B72A868E4C002B8F07 /* SignUpFormView.swift */; };
+		F49E198C2A8A8BF700FF38AB /* SignInFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E198B2A8A8BF700FF38AB /* SignInFormView.swift */; };
 		F4A5B22C2A888660000A8F6F /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A5B22B2A888660000A8F6F /* APIClient.swift */; };
 		F4A5B22F2A88873A000A8F6F /* AuthenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A5B22E2A88873A000A8F6F /* AuthenService.swift */; };
 		F4A5B2312A8891A1000A8F6F /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A5B2302A8891A1000A8F6F /* Response.swift */; };
@@ -56,6 +58,7 @@
 		614A216A7D856A6706AFEC75 /* Pods_sevenfastfood.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sevenfastfood.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAF4121C0DBEE9CB7CB48367 /* Pods-sevenfastfood.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sevenfastfood.release.xcconfig"; path = "Target Support Files/Pods-sevenfastfood/Pods-sevenfastfood.release.xcconfig"; sourceTree = "<group>"; };
 		EB3550663BFFCAFA08C46641 /* Pods-sevenfastfood.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sevenfastfood.debug.xcconfig"; path = "Target Support Files/Pods-sevenfastfood/Pods-sevenfastfood.debug.xcconfig"; sourceTree = "<group>"; };
+		F42E40892A8BD32100DDB629 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		F45BD7F72A83E80C0099E22F /* Widgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widgets.swift; sourceTree = "<group>"; };
 		F45BD7F92A83EB270099E22F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F46E5C6B2A834B2600889BB0 /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
@@ -87,6 +90,7 @@
 		F48AD0642A833AFA00F693F7 /* CartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		F48AD0662A833B0300F693F7 /* CartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		F494B0B72A868E4C002B8F07 /* SignUpFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
+		F49E198B2A8A8BF700FF38AB /* SignInFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFormView.swift; sourceTree = "<group>"; };
 		F4A5B22B2A888660000A8F6F /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		F4A5B22E2A88873A000A8F6F /* AuthenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenService.swift; sourceTree = "<group>"; };
 		F4A5B2302A8891A1000A8F6F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -129,6 +133,14 @@
 				EAF4121C0DBEE9CB7CB48367 /* Pods-sevenfastfood.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F42E40882A8BD30F00DDB629 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F42E40892A8BD32100DDB629 /* HeaderView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		F46E5C6F2A834EFA00889BB0 /* SignInVC */ = {
@@ -261,7 +273,9 @@
 		F48AD04F2A8333E400F693F7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F42E40882A8BD30F00DDB629 /* Home */,
 				F494B0B72A868E4C002B8F07 /* SignUpFormView.swift */,
+				F49E198B2A8A8BF700FF38AB /* SignInFormView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -462,9 +476,11 @@
 				F48AD0382A83334D00F693F7 /* AppDelegate.swift in Sources */,
 				F48AD0652A833AFA00F693F7 /* CartViewController.swift in Sources */,
 				F48AD03A2A83334D00F693F7 /* SceneDelegate.swift in Sources */,
+				F42E408A2A8BD32100DDB629 /* HeaderView.swift in Sources */,
 				F46E5C892A83AB1F00889BB0 /* LocalData.swift in Sources */,
 				F4A5B23A2A88DC14000A8F6F /* CartItem.swift in Sources */,
 				F48AD0622A833AD000F693F7 /* NotificationsViewModel.swift in Sources */,
+				F49E198C2A8A8BF700FF38AB /* SignInFormView.swift in Sources */,
 				F46E5C802A8353C500889BB0 /* ResetPasswordViewController.swift in Sources */,
 				F4A5B2442A894111000A8F6F /* Toast.swift in Sources */,
 				F48AD0542A83383400F693F7 /* MainTabBarController.swift in Sources */,
@@ -635,6 +651,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -663,6 +680,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

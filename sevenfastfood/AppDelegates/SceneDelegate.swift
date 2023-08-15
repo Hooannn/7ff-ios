@@ -21,7 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.makeKeyAndVisible()
         
-        changeScreen(to: .auth)
+        let token = LocalData.shared.getAccessToken()
+        if token != nil {
+            changeScreen(to: .main)
+        } else {
+            changeScreen(to: .auth)
+        }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -66,7 +71,7 @@ extension SceneDelegate {
         window?.rootViewController = authenNavigationController
     }
     
-    private func changeScreen(to screen: Screen) {
+    public func changeScreen(to screen: Screen) {
         switch screen {
         case .auth:
             createAuth()

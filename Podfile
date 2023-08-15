@@ -7,6 +7,7 @@ target 'sevenfastfood' do
   pod 'Alamofire'
   pod 'IQKeyboardManagerSwift'
   pod 'Validator'
+  pod 'GoogleSignIn'
   # Pods for sevenfastfood
 
 end
