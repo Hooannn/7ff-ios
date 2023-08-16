@@ -7,6 +7,23 @@
 
 import UIKit
 
+extension UIImageView {
+    func loadRemoteUrl(from url: String?) {
+        guard let url, let parsedUrl = URL(string: url) else {
+            return
+        }
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: parsedUrl) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
+}
+
 extension UIViewController {
     func changeScene(to screen: Screen) -> Void {
         if let scene = UIApplication.shared.connectedScenes.first, let sd: SceneDelegate = (scene.delegate as? SceneDelegate) {

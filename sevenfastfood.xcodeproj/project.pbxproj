@@ -52,6 +52,11 @@
 		F4A5B2422A88DE8E000A8F6F /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A5B2412A88DE8E000A8F6F /* Reservation.swift */; };
 		F4A5B2442A894111000A8F6F /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A5B2432A894111000A8F6F /* Toast.swift */; };
 		F4C931132A87BA1300EAC7DF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C931122A87BA1300EAC7DF /* Utils.swift */; };
+		F4DE9FA52A8D0DA100AF2068 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE9FA42A8D0DA100AF2068 /* SearchBarView.swift */; };
+		F4DE9FA72A8D0DB300AF2068 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE9FA62A8D0DB300AF2068 /* CategoriesView.swift */; };
+		F4DE9FA92A8D0DD900AF2068 /* PromotionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE9FA82A8D0DD900AF2068 /* PromotionsView.swift */; };
+		F4DE9FAB2A8D0DE400AF2068 /* ProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE9FAA2A8D0DE400AF2068 /* ProductsView.swift */; };
+		F4DE9FAD2A8D226300AF2068 /* CategoriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DE9FAC2A8D226300AF2068 /* CategoriesService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +109,11 @@
 		F4A5B2412A88DE8E000A8F6F /* Reservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
 		F4A5B2432A894111000A8F6F /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		F4C931122A87BA1300EAC7DF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		F4DE9FA42A8D0DA100AF2068 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		F4DE9FA62A8D0DB300AF2068 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
+		F4DE9FA82A8D0DD900AF2068 /* PromotionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionsView.swift; sourceTree = "<group>"; };
+		F4DE9FAA2A8D0DE400AF2068 /* ProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsView.swift; sourceTree = "<group>"; };
+		F4DE9FAC2A8D226300AF2068 /* CategoriesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +149,10 @@
 			isa = PBXGroup;
 			children = (
 				F42E40892A8BD32100DDB629 /* HeaderView.swift */,
+				F4DE9FA42A8D0DA100AF2068 /* SearchBarView.swift */,
+				F4DE9FA62A8D0DB300AF2068 /* CategoriesView.swift */,
+				F4DE9FA82A8D0DD900AF2068 /* PromotionsView.swift */,
+				F4DE9FAA2A8D0DE400AF2068 /* ProductsView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -329,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				F4A5B22E2A88873A000A8F6F /* AuthenService.swift */,
+				F4DE9FAC2A8D226300AF2068 /* CategoriesService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -470,6 +485,8 @@
 				F4A5B2342A88D957000A8F6F /* User.swift in Sources */,
 				F4A5B2362A88DC04000A8F6F /* Product.swift in Sources */,
 				F4A5B2402A88DD82000A8F6F /* Voucher.swift in Sources */,
+				F4DE9FA52A8D0DA100AF2068 /* SearchBarView.swift in Sources */,
+				F4DE9FA72A8D0DB300AF2068 /* CategoriesView.swift in Sources */,
 				F4A5B2382A88DC0C000A8F6F /* Order.swift in Sources */,
 				F45BD7F82A83E80C0099E22F /* Widgets.swift in Sources */,
 				F4A5B22C2A888660000A8F6F /* APIClient.swift in Sources */,
@@ -478,8 +495,10 @@
 				F48AD03A2A83334D00F693F7 /* SceneDelegate.swift in Sources */,
 				F42E408A2A8BD32100DDB629 /* HeaderView.swift in Sources */,
 				F46E5C892A83AB1F00889BB0 /* LocalData.swift in Sources */,
+				F4DE9FA92A8D0DD900AF2068 /* PromotionsView.swift in Sources */,
 				F4A5B23A2A88DC14000A8F6F /* CartItem.swift in Sources */,
 				F48AD0622A833AD000F693F7 /* NotificationsViewModel.swift in Sources */,
+				F4DE9FAB2A8D0DE400AF2068 /* ProductsView.swift in Sources */,
 				F49E198C2A8A8BF700FF38AB /* SignInFormView.swift in Sources */,
 				F46E5C802A8353C500889BB0 /* ResetPasswordViewController.swift in Sources */,
 				F4A5B2442A894111000A8F6F /* Toast.swift in Sources */,
@@ -497,6 +516,7 @@
 				F46E5C6E2A834EDF00889BB0 /* AuthenNavigationController.swift in Sources */,
 				F46E5C7C2A8353B100889BB0 /* ForgotPasswordViewController.swift in Sources */,
 				F48AD05E2A833A1800F693F7 /* ProfileViewModel.swift in Sources */,
+				F4DE9FAD2A8D226300AF2068 /* CategoriesService.swift in Sources */,
 				F45BD7FA2A83EB270099E22F /* Extensions.swift in Sources */,
 				F48AD0602A833AC800F693F7 /* NotificationsViewController.swift in Sources */,
 				F46E5C7E2A8353B900889BB0 /* ForgotPasswordViewModel.swift in Sources */,

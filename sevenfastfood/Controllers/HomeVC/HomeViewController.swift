@@ -9,10 +9,31 @@ import UIKit
 
 final class HomeViewController: UIViewController {
     private lazy var safeAreaInsets = UIApplication.shared.keyWindow?.rootViewController?.view.safeAreaInsets
+    private let localDataClient = LocalData.shared
+    private let viewModel = HomeViewModel()
+    private lazy var containerView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [headerView, searchBarView, categoriesView])
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .vertical
+        view.spacing = 24
+        return view
+    }()
     
     private lazy var headerView: HomeHeaderView = {
-        let view = HomeHeaderView(displayName: "Khai Hoan", displayImage: UIImage(named: "Profile")!)
+        let user = localDataClient.getLoggedUser()
+        let view = HomeHeaderView(displayName: "\(user!.lastName) \(user!.firstName)", displayImage: UIImage(named: "Profile")!, avatar: user?.avatar)
         view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var searchBarView: SearchBarView = {
+        let view = SearchBarView()
+        return view
+    }()
+    
+    private lazy var categoriesView: CategoriesView = {
+        let view = CategoriesView()
+        view.backgroundColor = .black
         return view
     }()
     
@@ -21,18 +42,23 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setupViews()
         setupConstraints()
+        
+        viewModel.fetchCategories()
     }
     
     private func setupViews() {
-        view.addSubviews(headerView)
+        view.addSubview(containerView)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: safeAreaInsets!.top),
-            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 50)
+            containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: safeAreaInsets!.top + 16),
+            containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            
+            headerView.heightAnchor.constraint(equalToConstant: 54),
+            searchBarView.heightAnchor.constraint(equalToConstant: 54),
+            categoriesView.heightAnchor.constraint(equalToConstant: 54)
         ])
     }
 }

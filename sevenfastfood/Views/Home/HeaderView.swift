@@ -10,11 +10,12 @@ import UIKit
 final class HomeHeaderView: UIView {
     private var displayName: String?
     private var displayImage: UIImage?
-
+    private var avatar: String?
     private lazy var displayImageView: UIImageView = {
         let imageView = UIImageView(image: displayImage)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
         return imageView
     }()
@@ -45,8 +46,9 @@ final class HomeHeaderView: UIView {
     }()
     
 
-    convenience init(displayName name: String, displayImage image: UIImage) {
+    convenience init(displayName name: String, displayImage image: UIImage, avatar: String?) {
         self.init()
+        self.avatar = avatar
         self.displayName = name
         self.displayImage = image
         setupViews()
@@ -62,6 +64,7 @@ final class HomeHeaderView: UIView {
     }
     
     private func setupViews() {
+        displayImageView.loadRemoteUrl(from: avatar)
         addSubviews(greetingView, displayImageView)
     }
     

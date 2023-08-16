@@ -10,5 +10,5 @@ import Foundation
 struct Category: Codable {
     let name: Content
     let description: Content
-    let icon: String
+    let icon: String?
 }
