@@ -64,6 +64,7 @@ final class HomeHeaderView: UIView {
     }
     
     private func setupViews() {
+        translatesAutoresizingMaskIntoConstraints = false
         displayImageView.loadRemoteUrl(from: avatar)
         addSubviews(greetingView, displayImageView)
     }

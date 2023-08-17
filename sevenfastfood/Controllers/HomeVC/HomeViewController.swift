@@ -10,7 +10,11 @@ import UIKit
 final class HomeViewController: UIViewController {
     private lazy var safeAreaInsets = UIApplication.shared.keyWindow?.rootViewController?.view.safeAreaInsets
     private let localDataClient = LocalData.shared
-    private let viewModel = HomeViewModel()
+    private lazy var viewModel: HomeViewModel = {
+        let viewModel = HomeViewModel()
+        viewModel.delegate = self
+        return viewModel
+    }()
     private lazy var containerView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [headerView, searchBarView, categoriesView])
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +26,6 @@ final class HomeViewController: UIViewController {
     private lazy var headerView: HomeHeaderView = {
         let user = localDataClient.getLoggedUser()
         let view = HomeHeaderView(displayName: "\(user!.lastName) \(user!.firstName)", displayImage: UIImage(named: "Profile")!, avatar: user?.avatar)
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -32,8 +35,9 @@ final class HomeViewController: UIViewController {
     }()
     
     private lazy var categoriesView: CategoriesView = {
-        let view = CategoriesView()
-        view.backgroundColor = .black
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let view = CategoriesView(frame: .zero, collectionViewLayout: layout)
         return view
     }()
     
@@ -58,7 +62,16 @@ final class HomeViewController: UIViewController {
             
             headerView.heightAnchor.constraint(equalToConstant: 54),
             searchBarView.heightAnchor.constraint(equalToConstant: 54),
-            categoriesView.heightAnchor.constraint(equalToConstant: 54)
+            categoriesView.heightAnchor.constraint(equalToConstant: 36)
         ])
+    }
+}
+
+extension HomeViewController: HomeViewModelDelegate {
+    func didFetchedCategoriesFailure(_ error: Error) {
+        debugPrint("fetched categories error: \(error)")
+    }
+    func didFetchedCategoriesSuccess(_ categories: [Category]?) {
+        categoriesView.categories = categories
     }
 }

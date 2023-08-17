@@ -67,7 +67,6 @@ final class APIClient {
         }
         session.request("\(baseUrl)\(subpath)", method: .get, parameters: params, headers: headers).responseJSON {
             response in
-            
             guard let httpResponse = response.response,
                   (200...299).contains(httpResponse.statusCode) else {
                 let statusCode = response.response?.statusCode ?? -1
