@@ -7,66 +7,17 @@
 
 import UIKit
 
-final class CategoryViewCell: UICollectionViewCell {
-    let label: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .systemGray2
-        label.textAlignment = .center
-        return label
-    }()
-    
-    private let dotView: UIView = {
-        let dot = UIView()
-        dot.translatesAutoresizingMaskIntoConstraints = false
-        dot.layer.cornerRadius = 4
-        dot.backgroundColor = .black
-        dot.isHidden = true
-        return dot
-    }()
-    
-    func setSelected(_ isSelected: Bool) {
-        if isSelected {
-            label.textColor = .black
-            dotView.isHidden = false
-        } else {
-            label.textColor = .systemGray2
-            dotView.isHidden = true
-        }
-    }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        contentView.addSubviews(label, dotView)
-        setupConstraints()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            label.topAnchor.constraint(equalTo: contentView.topAnchor),
-            label.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.7),
-            
-            dotView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            dotView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.3),
-            dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
-            dotView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8)
-        ])
-    }
+protocol CategoriesViewDelegate: AnyObject {
+    func didSelectCategory(_ category: Category?)
 }
-
 final class CategoriesView: UICollectionView {
+    weak var categoryViewDelegate: CategoriesViewDelegate!
     private let cellIdentifier = "Category"
     var selectedCategoryIndex: Int = 0
     var categories: [Category]? = []
     {
         didSet(newValue) {
-            let allCategory = Category(name: Content(vi: "Tất cả", en: "All"), description: Content(vi: "Tất cả", en: "All"), icon: nil)
+            let allCategory = Category(_id: "all", name: Content(vi: "Tất cả", en: "All"), description: Content(vi: "Tất cả", en: "All"), icon: nil)
             categories?.insert(allCategory, at: 0)
             reloadData()
         }
@@ -116,22 +67,18 @@ extension CategoriesView: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        debugPrint("Did select item at \(indexPath.item)")
         if let cell = collectionView.cellForItem(at: indexPath) as? CategoryViewCell {
-            cell.setSelected(true)
+            cell.isSelected = true
+            let category = categories?[indexPath.item]
+            categoryViewDelegate.didSelectCategory(category)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        debugPrint("Did deselect item at \(indexPath.item)")
         if let cell = collectionView.cellForItem(at: indexPath) as? CategoryViewCell {
-            cell.setSelected(false)
+            cell.isSelected = false
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        true
     }
 }

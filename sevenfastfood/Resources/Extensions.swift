@@ -13,12 +13,14 @@ extension UIImageView {
             return
         }
         DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: parsedUrl) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
+            do {
+                let data = try Data(contentsOf: parsedUrl)
+                let image = UIImage(data: data)
+                DispatchQueue.main.async {
+                    self?.image = image
                 }
+            } catch {
+                debugPrint("Error \(error)")
             }
         }
     }
