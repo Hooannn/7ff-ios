@@ -12,15 +12,19 @@ extension UIImageView {
         guard let url, let parsedUrl = URL(string: url) else {
             return
         }
-        DispatchQueue.global().async { [weak self] in
+        DispatchQueue.main.async { [weak self] in
+            self?.showAnimatedGradientSkeleton()
+        }
+        DispatchQueue.global().async {
             do {
                 let data = try Data(contentsOf: parsedUrl)
                 let image = UIImage(data: data)
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
                     self?.image = image
+                    self?.hideSkeleton()
                 }
             } catch {
-                debugPrint("Error \(error)")
+                debugPrint("Error")
             }
         }
     }
@@ -41,7 +45,6 @@ extension UIView {
         } )
     }
 }
-
 
 extension UIWindow {
     func displayToast(with message: String) {

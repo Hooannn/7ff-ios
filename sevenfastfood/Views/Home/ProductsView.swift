@@ -11,15 +11,18 @@ final class ProductsView: UICollectionView {
     private let cellIdentifier = "Product"
     var products: [Product]? = []
     {
-        didSet(_value) {
+        didSet {
             reloadData()
+            DispatchQueue.main.async {
+                [weak self] in
+                self?.hideSkeleton()
+            }
         }
     }
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         setupViews()
-        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -27,31 +30,37 @@ final class ProductsView: UICollectionView {
     }
     
     private func setupViews() {
-        register(ProductViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
         dataSource = self
+        isSkeletonable = true
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
         delegate = self
         translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    private func setupConstraints() {
-        
+        register(ProductViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
     }
 }
 
 extension ProductsView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        products?.count ?? 0
+        if products!.count > 0 {
+            return products?.count ?? 0
+        } else {
+            return 10
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProductViewCell
-        let product = products?[indexPath.item]
-        cell.productName = product?.name.en
-        cell.productDescription = product?.category?.name.en
-        cell.productPrice = "\(product!.price) VND"
-        cell.productFeaturedImage = product?.featuredImages?.first
+        if indexPath.item < products!.count {
+            let product = products?[indexPath.item]
+            cell.productName = product?.name.en
+            cell.productDescription = product?.category?.name.en
+            cell.productPrice = "\(product!.price) VND"
+            cell.productFeaturedImage = product?.featuredImages?.first
+            cell.isHidden = false
+        } else {
+            cell.isHidden = true
+        }
         return cell
     }
     

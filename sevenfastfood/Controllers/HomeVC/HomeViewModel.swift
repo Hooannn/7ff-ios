@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 protocol HomeViewModelDelegate: AnyObject {
     func didFetchedCategoriesSuccess(_ categories: [Category]?)
@@ -29,8 +30,8 @@ final class HomeViewModel {
         }
     }
     
-    func fetchProducts() {
-        productsService.fetchProducts {
+    func fetchProducts(withParams params: Parameters?) {
+        productsService.fetchProducts(withParams: params) {
             result in switch result {
             case.success(let data):
                 self.delegate.didFetchedProductsSuccess(data?.data)

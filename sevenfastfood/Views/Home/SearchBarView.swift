@@ -6,8 +6,11 @@
 //
 
 import UIKit
-
-final class SearchBarView: UIStackView {
+protocol SearchBarViewDelegate: AnyObject {
+    func didTapSearchBar(_ sender: UIGestureRecognizer)
+}
+final class SearchBarView: ClickableView {
+    weak var delegate: SearchBarViewDelegate!
     private var widgets = Widgets.shared
     private lazy var magnifyButton: UIButton = {
         let button = UIButton(type: .system)
@@ -30,10 +33,24 @@ final class SearchBarView: UIStackView {
     private lazy var searchTextLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Search something..."
+        label.text = "Search..."
         label.textColor = .systemGray2
         return label
     }()
+    
+    private lazy var contentStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [magnifyButton, searchTextLabel, filterButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .leading
+        stackView.spacing = 12
+        return stackView
+    }()
+    
+    override func didTap(_ sender: UIGestureRecognizer) {
+        super.didTap(sender)
+        delegate.didTapSearchBar(sender)
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,21 +66,22 @@ final class SearchBarView: UIStackView {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .systemGray6
         layer.cornerRadius = 12
-        addArrangedSubview(magnifyButton)
-        addArrangedSubview(searchTextLabel)
-        addArrangedSubview(filterButton)
-        axis = .horizontal
-        alignment = .leading
-        spacing = 12
+        clipsToBounds = true
+        addSubview(contentStackView)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            searchTextLabel.heightAnchor.constraint(equalTo: heightAnchor),
-            magnifyButton.heightAnchor.constraint(equalTo: heightAnchor),
-            magnifyButton.widthAnchor.constraint(equalTo: heightAnchor, constant: 16),
-            filterButton.heightAnchor.constraint(equalTo: heightAnchor),
-            filterButton.widthAnchor.constraint(equalTo: heightAnchor, constant: 16)
+            contentStackView.topAnchor.constraint(equalTo: topAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            searchTextLabel.heightAnchor.constraint(equalTo: contentStackView.heightAnchor),
+            magnifyButton.heightAnchor.constraint(equalTo: contentStackView.heightAnchor),
+            magnifyButton.widthAnchor.constraint(equalTo: contentStackView.heightAnchor, constant: 16),
+            filterButton.heightAnchor.constraint(equalTo: contentStackView.heightAnchor),
+            filterButton.widthAnchor.constraint(equalTo: contentStackView.heightAnchor, constant: 16)
         ])
     }
 }

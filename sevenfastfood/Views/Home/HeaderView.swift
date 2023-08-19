@@ -6,17 +6,19 @@
 //
 
 import UIKit
-
+import SkeletonView
 final class HomeHeaderView: UIView {
     private var displayName: String?
-    private var displayImage: UIImage?
     private var avatar: String?
     private lazy var displayImageView: UIImageView = {
-        let imageView = UIImageView(image: displayImage)
+        let image = UIImage()
+        let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
+        imageView.isSkeletonable = true
+        imageView.loadRemoteUrl(from: avatar)
         return imageView
     }()
     
@@ -46,11 +48,10 @@ final class HomeHeaderView: UIView {
     }()
     
 
-    convenience init(displayName name: String, displayImage image: UIImage, avatar: String?) {
+    convenience init(displayName name: String, avatar: String?) {
         self.init()
         self.avatar = avatar
         self.displayName = name
-        self.displayImage = image
         setupViews()
         setupConstraints()
     }
@@ -65,7 +66,6 @@ final class HomeHeaderView: UIView {
     
     private func setupViews() {
         translatesAutoresizingMaskIntoConstraints = false
-        displayImageView.loadRemoteUrl(from: avatar)
         addSubviews(greetingView, displayImageView)
     }
     

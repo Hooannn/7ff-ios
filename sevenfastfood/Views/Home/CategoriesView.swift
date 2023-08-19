@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 protocol CategoriesViewDelegate: AnyObject {
     func didSelectCategory(_ category: Category?)
@@ -13,19 +14,44 @@ protocol CategoriesViewDelegate: AnyObject {
 final class CategoriesView: UICollectionView {
     weak var categoryViewDelegate: CategoriesViewDelegate!
     private let cellIdentifier = "Category"
-    var selectedCategoryIndex: Int = 0
+    var isLoading: Bool = false
+    {
+        didSet {
+            if isLoading {
+                
+            } else {
+                
+            }
+        }
+    }
+    var selectedCategory: Category?
+    {
+        didSet {
+            categoryViewDelegate.didSelectCategory(selectedCategory)
+        }
+    }
     var categories: [Category]? = []
     {
-        didSet(newValue) {
-            let allCategory = Category(_id: "all", name: Content(vi: "Tất cả", en: "All"), description: Content(vi: "Tất cả", en: "All"), icon: nil)
-            categories?.insert(allCategory, at: 0)
-            reloadData()
+        didSet(oldValue) {
+            if oldValue!.count == 0 {
+                let allCategory = Category(_id: "all", name: Content(vi: "Tất cả", en: "All"), description: Content(vi: "Tất cả", en: "All"), icon: nil)
+                categories?.insert(allCategory, at: 0)
+                let indexPath = IndexPath(row: 0, section: 0)
+                reloadData()
+                DispatchQueue.main.async {
+                    [weak self] in
+                    self?.hideSkeleton()
+                    self?.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+                    self?.selectedCategory = allCategory
+                }
+            } else {
+                reloadData()
+            }
         }
     }
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         setupViews()
-        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -36,47 +62,63 @@ final class CategoriesView: UICollectionView {
         translatesAutoresizingMaskIntoConstraints = false
         dataSource = self
         delegate = self
+        isSkeletonable = true
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
         register(CategoryViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
     }
-    
-    private func setupConstraints() {
-        
-    }
 }
 
-extension CategoriesView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension CategoriesView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SkeletonCollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        categories?.count ?? 0
+        if categories!.count > 0 {
+            return categories?.count ?? 0
+        } else {
+            return 10
+        }
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        cellIdentifier
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! CategoryViewCell
-        cell.label.text = categories?[indexPath.item].name.en
+        if indexPath.item < categories!.count {
+            let category = categories?[indexPath.item]
+            cell.label.text = category?.name.en
+            if category?._id == selectedCategory?._id {
+                cell.isSelected = true
+            }
+        } else {
+            cell.label.text = "Loading"
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! CategoryViewCell
-        let text = categories?[indexPath.item].name.en
-        let textSize = text!.size(withAttributes: [
-            NSAttributedString.Key.font: cell.label.font ?? UIFont.boldSystemFont(ofSize: 16)
-        ])
-        return CGSize(width: textSize.width + 5, height: textSize.height)
+        var text: String?
+        if indexPath.item < categories!.count {
+            text = categories?[indexPath.item].name.en
+            let textSize = text!.size(withAttributes: [
+                NSAttributedString.Key.font: cell.label.font ?? UIFont.boldSystemFont(ofSize: 16)
+            ])
+            return CGSize(width: textSize.width + 5, height: textSize.height)
+        } else {
+            return CGSize(width: 70, height: 40)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        debugPrint("Did select item at \(indexPath.item)")
         if let cell = collectionView.cellForItem(at: indexPath) as? CategoryViewCell {
             cell.isSelected = true
             let category = categories?[indexPath.item]
-            categoryViewDelegate.didSelectCategory(category)
+            selectedCategory = category
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        debugPrint("Did deselect item at \(indexPath.item)")
         if let cell = collectionView.cellForItem(at: indexPath) as? CategoryViewCell {
             cell.isSelected = false
         }

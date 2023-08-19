@@ -11,9 +11,9 @@ import UIKit
 final class CategoryViewCell: UICollectionViewCell {
     override var isSelected: Bool
     {
-        didSet(newValue) {
-            label.textColor = newValue ? .black : .systemGray2
-            dotView.isHidden = newValue ? false : true
+        didSet {
+            label.textColor = isSelected ? .black : .systemGray2
+            dotView.isHidden = isSelected ? false : true
         }
     }
     let label: UILabel = {
@@ -35,6 +35,7 @@ final class CategoryViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isSkeletonable = true
         contentView.addSubviews(label, dotView)
         setupConstraints()
     }

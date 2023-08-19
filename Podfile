@@ -8,6 +8,7 @@ target 'sevenfastfood' do
   pod 'IQKeyboardManagerSwift'
   pod 'Validator'
   pod 'GoogleSignIn'
+  pod 'SkeletonView'
   # Pods for sevenfastfood
 
 end

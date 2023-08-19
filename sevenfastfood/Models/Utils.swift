@@ -34,4 +34,15 @@ final class Utils {
         ValidationRulePattern(pattern: EmailValidationPattern.standard, error: ReturnValidationError("\(str) must be valid"))
     }
     
+    func dictionaryToJson(_ dict: [String: Any]?) -> String? {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                return jsonString
+            }
+        } catch {
+            debugPrint("Parsed error \(error)")
+        }
+        return nil
+    }
 }

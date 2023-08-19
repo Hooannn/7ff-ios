@@ -6,7 +6,11 @@
 //
 
 import UIKit
-final class PromotionsView: UIView {
+protocol PromotionsViewDelegate: AnyObject {
+    func didTapPromotion(_ sender: UIGestureRecognizer)
+}
+final class PromotionsView: ClickableView {
+    weak var delegate: PromotionsViewDelegate!
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -20,6 +24,11 @@ final class PromotionsView: UIView {
         imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return imageView
     }()
+    
+    override func didTap(_ sender: UIGestureRecognizer) {
+        super.didTap(sender)
+        delegate.didTapPromotion(sender)
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
