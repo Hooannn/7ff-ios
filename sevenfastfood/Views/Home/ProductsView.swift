@@ -8,6 +8,7 @@
 import UIKit
 
 final class ProductsView: UICollectionView {
+    weak var productCellDelegate: ProductViewCellDelegate!
     private let cellIdentifier = "Product"
     var products: [Product]? = []
     {
@@ -37,6 +38,7 @@ final class ProductsView: UICollectionView {
         delegate = self
         translatesAutoresizingMaskIntoConstraints = false
         register(ProductViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        register(PromotionsView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: cellIdentifier)
     }
 }
 
@@ -53,6 +55,8 @@ extension ProductsView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         let cell = dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProductViewCell
         if indexPath.item < products!.count {
             let product = products?[indexPath.item]
+            cell.id = product?._id
+            cell.delegate = productCellDelegate
             cell.productName = product?.name.en
             cell.productDescription = product?.category?.name.en
             cell.productPrice = "\(product!.price) VND"
@@ -67,5 +71,18 @@ extension ProductsView: UICollectionViewDelegate, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (bounds.width - 10) / 2
         return CGSize(width: width, height: width * 1.3)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: cellIdentifier, for: indexPath)
+        return headerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: frame.width, height: 160)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0)
     }
 }

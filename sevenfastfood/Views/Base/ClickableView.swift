@@ -34,11 +34,18 @@ class ClickableView: UIView {
         switch sender.state {
         case.began:
             animateHoverEffect(completion: nil)
-        case .cancelled, .ended:
+        case .cancelled:
             restoreOriginalState()
+        case .ended:
+            restoreOriginalState()
+            didEndLongPress()
         default:
             return
         }
+    }
+    
+    func didEndLongPress() -> Void {
+        
     }
 
     private func animateHoverEffect(completion: (() -> Void)?) {

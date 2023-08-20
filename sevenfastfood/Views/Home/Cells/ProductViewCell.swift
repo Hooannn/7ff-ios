@@ -9,7 +9,15 @@ import Foundation
 import UIKit
 import SkeletonView
 
+protocol ProductViewCellDelegate: AnyObject {
+    func didTapOnProduct(withId productId: String?)
+    func didEndLongPressOnProduct(withId productId: String?)
+    func didTapCartButton(withId productId: String?)
+}
+
 final class ProductViewCell: ClickableCollectionViewCell {
+    weak var delegate: ProductViewCellDelegate!
+    var id: String?
     var productName: String?
     {
         didSet {
@@ -38,14 +46,13 @@ final class ProductViewCell: ClickableCollectionViewCell {
         }
     }
     
-    override func didPress(_ sender: UILongPressGestureRecognizer) {
-        super.didPress(sender)
-        debugPrint("Add")
+    override func didEndLongPress() {
+        delegate.didEndLongPressOnProduct(withId: id)
     }
     
     override func didTap(_ sender: UIGestureRecognizer) {
         super.didTap(sender)
-        debugPrint("Good")
+        delegate.didTapOnProduct(withId: id)
     }
     
     override func prepareForReuse() {
@@ -142,6 +149,6 @@ final class ProductViewCell: ClickableCollectionViewCell {
     }
     
     @objc func didTapCartButton() {
-        
+        delegate.didTapCartButton(withId: id)
     }
 }

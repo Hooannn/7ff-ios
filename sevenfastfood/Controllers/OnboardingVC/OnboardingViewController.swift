@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class OnboardingViewController: UIViewController {
+final class OnboardingViewController: ViewControllerWithoutNavigationBar {
     let viewModel = OnboardingViewModel()
     private let tokens = Tokens.shared
     private let widgets = Widgets.shared
@@ -21,6 +21,7 @@ final class OnboardingViewController: UIViewController {
         safeAreaInsets = UIApplication.shared.keyWindow?.rootViewController?.view.safeAreaInsets
         setupPages()
     }
+
     private func createSkipButton() -> Void {
         let button = UIButton(type: .system)
         button.setTitle("Skip", for: .normal)

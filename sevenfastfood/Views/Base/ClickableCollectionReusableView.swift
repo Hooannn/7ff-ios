@@ -6,7 +6,7 @@
 //
 
 import UIKit
-class ClickableCollectionViewCell: UICollectionViewCell {
+class ClickableCollectionReusableView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true

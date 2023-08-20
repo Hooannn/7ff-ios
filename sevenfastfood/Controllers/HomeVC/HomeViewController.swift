@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: ViewControllerWithoutNavigationBar {
     private lazy var safeAreaInsets = UIApplication.shared.keyWindow?.rootViewController?.view.safeAreaInsets
     private let localDataClient = LocalData.shared
     private lazy var viewModel: HomeViewModel = {
@@ -17,7 +17,7 @@ final class HomeViewController: UIViewController {
     }()
     
     private lazy var containerView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [headerView, searchBarView, categoriesView, promotionsView, productsView])
+        let view = UIStackView(arrangedSubviews: [headerView, searchBarView, categoriesView, productsView])
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
         view.spacing = 24
@@ -35,34 +35,22 @@ final class HomeViewController: UIViewController {
         view.delegate = self
         return view
     }()
-    
-    private lazy var scrollView: UIScrollView = {
-        let view = UIScrollView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.delegate = self
-        view.clipsToBounds = true
-        return view
-    }()
-    
+
     private lazy var categoriesView: CategoriesView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 12
+        
         let view = CategoriesView(frame: .zero, collectionViewLayout: layout)
         view.categoryViewDelegate = self
         return view
     }()
-    
-    private lazy var promotionsView: PromotionsView = {
-        let view = PromotionsView()
-        view.delegate = self
-        return view
-    }()
-    
+
     private lazy var productsView: ProductsView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let view = ProductsView(frame: .zero, collectionViewLayout: layout)
+        view.productCellDelegate = self
         return view
     }()
     
@@ -72,17 +60,16 @@ final class HomeViewController: UIViewController {
         setupViews()
         setupConstraints()
         
+        setupCategories()
+    }
+    
+    private func setupCategories() {
+        categoriesView.showAnimatedGradientSkeleton()
         viewModel.fetchCategories()
     }
     
     private func setupViews() {
-        //scrollView.addSubviews(promotionsView, productsView)
         view.addSubview(containerView)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        categoriesView.showAnimatedGradientSkeleton()
     }
     
     private func setupConstraints() {
@@ -94,17 +81,16 @@ final class HomeViewController: UIViewController {
             
             headerView.heightAnchor.constraint(equalToConstant: 54),
             searchBarView.heightAnchor.constraint(equalToConstant: 54),
-            categoriesView.heightAnchor.constraint(equalToConstant: 36),
-            promotionsView.heightAnchor.constraint(equalToConstant: 160),
+            categoriesView.heightAnchor.constraint(equalToConstant: 36)
         ])
         
         view.layoutIfNeeded()
     }
 }
 
-extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate {
+extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate, ProductViewCellDelegate {
     func didFetchedCategoriesFailure(_ error: Error) {
-        debugPrint("Fetched categories error: \(error)")
+        Toast.shared.display(with: "Fetched categories error: \(error.localizedDescription)")
     }
     
     func didFetchedCategoriesSuccess(_ categories: [Category]?) {
@@ -116,7 +102,7 @@ extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate {
     }
     
     func didFetchedProductsFailure(_ error: Error) {
-        debugPrint("Fetched products error: \(error)")
+        Toast.shared.display(with: "Fetched products error: \(error.localizedDescription)")
     }
     
     func didSelectCategory(_ category: Category?) {
@@ -135,21 +121,44 @@ extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate {
         }
         productsView.showAnimatedGradientSkeleton()
     }
-}
-
-extension HomeViewController: SearchBarViewDelegate, PromotionsViewDelegate {
-    func didTapPromotion(_ sender: UIGestureRecognizer) {
-        
+    
+    private func createProductDetailVC(withId productId: String?) -> ProductDetailViewController {
+        let vc = ProductDetailViewController(productId: productId!)
+        return vc
     }
     
+    func didTapCartButton(withId productId: String?) {
+        didEndLongPressOnProduct(withId: productId)
+    }
+    
+    func didTapOnProduct(withId productId: String?) {
+        let productDetailVC = createProductDetailVC(withId: productId)
+        productDetailVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(productDetailVC, animated: true)
+    }
+    
+    func didEndLongPressOnProduct(withId productId: String?) {
+        let productDetailVC = createProductDetailVC(withId: productId)
+        let nav = UINavigationController(rootViewController: productDetailVC)
+
+        if #available(iOS 15.0, *) {
+            if let sheet = nav.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+                sheet.preferredCornerRadius = CGFloat(12)
+            }
+            present(nav, animated: true)
+        } else {
+            didTapOnProduct(withId: productId)
+        }
+    }
+}
+
+extension HomeViewController: SearchBarViewDelegate {
     func didTapSearchBar(_ sender: UIGestureRecognizer) {
         let searchVC = SearchViewController()
         let navigation = UINavigationController(rootViewController: searchVC)
         navigation.modalPresentationStyle = .fullScreen
         navigationController?.present(navigation, animated: true)
     }
-}
-
-extension HomeViewController: UIScrollViewDelegate {
-    
 }

@@ -9,7 +9,7 @@ import UIKit
 protocol PromotionsViewDelegate: AnyObject {
     func didTapPromotion(_ sender: UIGestureRecognizer)
 }
-final class PromotionsView: ClickableView {
+final class PromotionsView: ClickableCollectionReusableView {
     weak var delegate: PromotionsViewDelegate!
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,9 +27,8 @@ final class PromotionsView: ClickableView {
     
     override func didTap(_ sender: UIGestureRecognizer) {
         super.didTap(sender)
-        delegate.didTapPromotion(sender)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
