@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ProductDetailViewModelDelegate: AnyObject {
-    func didFetchedProductDetailSuccess(_ product: Response<Product>?)
+    func didFetchedProductDetailSuccess(_ product: Product?)
     func didFetchedProductDetailFailure(_ error: Error)
 }
 
@@ -22,7 +22,7 @@ final class ProductDetailViewModel {
             result in
             switch result {
             case .success(let data):
-                self.delegate.didFetchedProductDetailSuccess(data)
+                self.delegate.didFetchedProductDetailSuccess(data?.data)
             case .failure(let error):
                 self.delegate.didFetchedProductDetailFailure(error)
             }

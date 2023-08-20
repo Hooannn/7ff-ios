@@ -119,7 +119,7 @@ extension ProductDetailViewController: ProductDetailViewModelDelegate {
         Toast.shared.display(with: "Fetched product detail error: \(error.localizedDescription)")
     }
     
-    func didFetchedProductDetailSuccess(_ product: Response<Product>?) {
-        setupProductViews(withProduct: product?.data)
+    func didFetchedProductDetailSuccess(_ product: Product?) {
+        setupProductViews(withProduct: product)
     }
 }
