@@ -21,10 +21,6 @@ final class Widgets {
         button.setTitle(_title, for: .normal)
         button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         button.layer.cornerRadius = tokens.buttonCornerRadius
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.2
-        button.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
-        button.layer.shadowRadius = 4
         button.addTarget(target, action: action, for: `for`!)
         return button
     }
@@ -38,15 +34,11 @@ final class Widgets {
         button.setTitle(_title, for: .normal)
         button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         button.layer.cornerRadius = tokens.buttonCornerRadius
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.2
-        button.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
-        button.layer.shadowRadius = 4
         button.addTarget(target, action: action, for: `for`!)
         return button
     }
     
-    func createGoogleAuthButton(title _title: String, target: Any?, action: Selector, `for`: UIButton.Event? = .touchUpInside) -> UIButton {
+    public func createGoogleAuthButton(title _title: String, target: Any?, action: Selector, `for`: UIButton.Event? = .touchUpInside) -> UIButton {
         let button = UIButton(type: .system)
         let googleImage = UIImage(named: "Google")
         button.setImage(googleImage, for: .normal)
@@ -87,5 +79,13 @@ final class Widgets {
         textField.keyboardType = _type
         
         return textField
+    }
+    
+    func createLabel() -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = Tokens.shared.secondaryColor
+        return label
     }
 }

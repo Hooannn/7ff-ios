@@ -10,7 +10,7 @@ import Alamofire
 final class CategoriesService {
     private var apiClient = APIClient.shared
     private var localDataClient = LocalData.shared
-
+    static let shared = CategoriesService()
     public func fetchCategories(completion: @escaping (Result<Response<[Category]>?, Error>) -> Void) {
         apiClient.performGet(withResponseType: Response<[Category]>.self, withSubpath: "/categories", withParams: nil, completion: completion)
     }

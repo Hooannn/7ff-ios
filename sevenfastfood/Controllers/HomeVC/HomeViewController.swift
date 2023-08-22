@@ -75,8 +75,8 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: safeAreaInsets!.top + 16),
-            containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 32),
-            containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -32),
+            containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: Tokens.shared.containerXPadding),
+            containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -Tokens.shared.containerXPadding),
             containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
             headerView.heightAnchor.constraint(equalToConstant: 54),
@@ -89,41 +89,40 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
 }
 
 extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate, ProductViewCellDelegate {
-    func didFetchedCategoriesFailure(_ error: Error) {
+    func didFetchCategoriesFailure(_ error: Error) {
         Toast.shared.display(with: "Fetched categories error: \(error.localizedDescription)")
     }
     
-    func didFetchedCategoriesSuccess(_ categories: [Category]?) {
+    func didFetchCategoriesSuccess(_ categories: [Category]?) {
         categoriesView.categories = categories
     }
     
-    func didFetchedProductsSuccess(_ products: [Product]?) {
+    func didFetchProductsSuccess(_ products: [Product]?) {
         productsView.products = products
     }
     
-    func didFetchedProductsFailure(_ error: Error) {
+    func didFetchProductsFailure(_ error: Error) {
         Toast.shared.display(with: "Fetched products error: \(error.localizedDescription)")
     }
     
     func didSelectCategory(_ category: Category?) {
-        if category?._id == "all" {
-            viewModel.fetchProducts(withParams: nil)
-        } else {
-            let queryDict = [
-                "category": [
-                    "_id": category!._id!
-                ]
+        var queryDict: [String: Any] = [
+            "isAvailable": true
+        ]
+        if category?._id != "all" {
+            queryDict["category"] = [
+                "_id": category!._id
             ]
-            let params = [
-                "filter": Utils.shared.dictionaryToJson(queryDict)!
-            ]
-            viewModel.fetchProducts(withParams: params)
         }
+        let params = [
+            "filter": Utils.shared.dictionaryToJson(queryDict)!
+        ]
+        viewModel.fetchProducts(withParams: params)
         productsView.showAnimatedGradientSkeleton()
     }
     
-    private func createProductDetailVC(withId productId: String?) -> ProductDetailViewController {
-        let vc = ProductDetailViewController(productId: productId!)
+    private func createProductDetailVC(withId productId: String?, wasPresented: Bool) -> ProductDetailViewController {
+        let vc = ProductDetailViewController(productId: productId!, wasPresented: wasPresented)
         return vc
     }
     
@@ -132,18 +131,18 @@ extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate, Pro
     }
     
     func didTapOnProduct(withId productId: String?) {
-        let productDetailVC = createProductDetailVC(withId: productId)
+        let productDetailVC = createProductDetailVC(withId: productId, wasPresented: false)
         productDetailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(productDetailVC, animated: true)
     }
     
     func didEndLongPressOnProduct(withId productId: String?) {
-        let productDetailVC = createProductDetailVC(withId: productId)
+        let productDetailVC = createProductDetailVC(withId: productId, wasPresented: true)
         let nav = UINavigationController(rootViewController: productDetailVC)
 
         if #available(iOS 15.0, *) {
             if let sheet = nav.sheetPresentationController {
-                sheet.detents = [.medium(), .large()]
+                sheet.detents = [.large()]
                 sheet.prefersGrabberVisible = true
                 sheet.preferredCornerRadius = CGFloat(12)
             }

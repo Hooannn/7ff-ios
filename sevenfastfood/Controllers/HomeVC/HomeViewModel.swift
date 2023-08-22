@@ -9,34 +9,32 @@ import Foundation
 import Alamofire
 
 protocol HomeViewModelDelegate: AnyObject {
-    func didFetchedCategoriesSuccess(_ categories: [Category]?)
-    func didFetchedCategoriesFailure(_ error: Error)
-    func didFetchedProductsSuccess(_ products: [Product]?)
-    func didFetchedProductsFailure(_ error: Error)
+    func didFetchCategoriesSuccess(_ categories: [Category]?)
+    func didFetchCategoriesFailure(_ error: Error)
+    func didFetchProductsSuccess(_ products: [Product]?)
+    func didFetchProductsFailure(_ error: Error)
 }
 
 final class HomeViewModel {
-    private let categoriesService = CategoriesService()
-    private let productsService = ProductsService()
     weak var delegate: HomeViewModelDelegate!
     func fetchCategories() {
-        categoriesService.fetchCategories {
+        CategoriesService.shared.fetchCategories {
             result in switch result {
             case.success(let data):
-                self.delegate.didFetchedCategoriesSuccess(data?.data)
+                self.delegate.didFetchCategoriesSuccess(data?.data)
             case.failure(let error):
-                self.delegate.didFetchedCategoriesFailure(error)
+                self.delegate.didFetchCategoriesFailure(error)
             }
         }
     }
     
     func fetchProducts(withParams params: Parameters?) {
-        productsService.fetchProducts(withParams: params) {
+        ProductsService.shared.fetchProducts(withParams: params) {
             result in switch result {
             case.success(let data):
-                self.delegate.didFetchedProductsSuccess(data?.data)
+                self.delegate.didFetchProductsSuccess(data?.data)
             case.failure(let error):
-                self.delegate.didFetchedProductsFailure(error)
+                self.delegate.didFetchProductsFailure(error)
             }
         }
     }

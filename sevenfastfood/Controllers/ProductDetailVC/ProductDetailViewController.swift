@@ -35,12 +35,21 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
         return button
     }()
     
+    private lazy var closeButton: UIButton = {
+        let button = UIButton(type: .close)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didTapCloseButton(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var productId: String = ""
+    private lazy var wasPresented: Bool = false
 
-    init(productId: String) {
+    init(productId: String, wasPresented: Bool) {
         super.init(nibName: nil, bundle: nil)
         navigationItem.hidesBackButton = true
         self.productId = productId
+        self.wasPresented = wasPresented
     }
     
     required init?(coder: NSCoder) {
@@ -61,7 +70,11 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
             loadingIndicator.startAnimating()
             viewModel.fetchProductDetail(withId: productId)
         }
-        view.bringSubviewToFront(backButton)
+        if wasPresented {
+            view.bringSubviewToFront(closeButton)
+        } else {
+            view.bringSubviewToFront(backButton)
+        }
     }
     
     private func removeLoading() {
@@ -73,12 +86,19 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
     }
     
     private func setupViews() {
-        view.addSubview(backButton)
+        if wasPresented {
+            view.addSubview(closeButton)
+            setupCloseButtonConstraints()
+        } else {
+            view.addSubview(backButton)
+            setupBackButtonConstraints()
+        }
     }
     
     private func setupProductViews(withProduct product: Product?) {
         removeLoading()
         let productDetailView = ProductDetailView(product: product, topConstant: CGFloat(safeAreaInsets!.top + 50))
+        productDetailView.delegate = self
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.view.addSubview(productDetailView)
@@ -89,8 +109,30 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
                 productDetailView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             ])
             self.view.layoutIfNeeded()
-            self.view.bringSubviewToFront(self.backButton)
+            if self.wasPresented {
+                self.view.bringSubviewToFront(self.closeButton)
+            } else {
+                self.view.bringSubviewToFront(self.backButton)
+            }
         }
+    }
+    
+    private func setupCloseButtonConstraints() {
+        let constraints: [NSLayoutConstraint] = [
+            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ]
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+    private func setupBackButtonConstraints() {
+        let constraints: [NSLayoutConstraint] = [
+            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: safeAreaInsets!.top),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Tokens.shared.containerXPadding),
+            backButton.widthAnchor.constraint(equalToConstant: 50),
+            backButton.heightAnchor.constraint(equalToConstant: 50)
+        ]
+        NSLayoutConstraint.activate(constraints)
     }
     
     private func setupConstraints() {
@@ -98,12 +140,7 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
             loadingIndicator.topAnchor.constraint(equalTo: view.topAnchor),
             loadingIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             loadingIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            loadingIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: safeAreaInsets!.top),
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            backButton.widthAnchor.constraint(equalToConstant: 50),
-            backButton.heightAnchor.constraint(equalToConstant: 50),
+            loadingIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
         view.layoutIfNeeded()
@@ -112,14 +149,27 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
     @objc func didTapBackButton(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
+    
+    @objc func didTapCloseButton(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
 }
 
 extension ProductDetailViewController: ProductDetailViewModelDelegate {
-    func didFetchedProductDetailFailure(_ error: Error) {
+    func didFetchProductDetailFailure(_ error: Error) {
         Toast.shared.display(with: "Fetched product detail error: \(error.localizedDescription)")
     }
     
-    func didFetchedProductDetailSuccess(_ product: Product?) {
+    func didFetchProductDetailSuccess(_ product: Product?) {
         setupProductViews(withProduct: product)
     }
 }
+
+extension ProductDetailViewController: ProductDetailViewDelegate {
+    func didTapAddToCartButton(_ sender: UIButton) {
+        CartService.shared.addItem(productId: productId, quantity: 1) {
+            _ in debugPrint("Invoked addItem")
+        }
+    }
+}
+

@@ -10,7 +10,7 @@ import Alamofire
 final class ProductsService {
     private var apiClient = APIClient.shared
     private var localDataClient = LocalData.shared
-
+    static let shared = ProductsService()
     public func fetchProducts(withParams params: Parameters?, completion: @escaping (Result<Response<[Product]>?, Error>) -> Void) {
         apiClient.performGet(withResponseType: Response<[Product]>.self, withSubpath: "/products", withParams: params, completion: completion)
     }

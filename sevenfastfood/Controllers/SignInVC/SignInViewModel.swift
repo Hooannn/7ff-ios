@@ -17,11 +17,10 @@ protocol SignInViewModelDelegate: AnyObject {
 
 final class SignInViewModel {
     weak var delegate: SignInViewModelDelegate!
-    private var authenService = AuthenService()
     func performSignIn(with form: SignInForm) {
         delegate.didUpdateLoading(true)
         
-        authenService.signIn(with: form) { [weak self]
+        AuthenService.shared.signIn(with: form) { [weak self]
             result in
             switch result {
             case.success(let data):
@@ -36,7 +35,7 @@ final class SignInViewModel {
     func performGoogleAuthentication(with accessToken: String) {
         delegate.didUpdateLoading(true)
         
-        authenService.authenWithGoogle(with: accessToken) { [weak self]
+        AuthenService.shared.authenWithGoogle(with: accessToken) { [weak self]
             result in
             switch result {
             case.success(let data):

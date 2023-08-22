@@ -11,42 +11,93 @@ import Alamofire
 struct ResponseError: Decodable {
     let message: String?
 }
-class Interceptor: RequestInterceptor {
-    private lazy var localDataModel = LocalData()
+class AuthenInterceptor: RequestInterceptor {
+    private var headers: HTTPHeaders = [
+        "Accept": "application/json"
+    ]
+    private let baseUrl = "https://sevenfastfood-be.onrender.com"
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         var urlRequest = urlRequest
-        let accessToken = localDataModel.getAccessToken()
-        if let token = accessToken {
+        if let token = LocalData.shared.getAccessToken() {
             urlRequest.headers.add(.authorization(bearerToken: token))
         }
-        
         completion(.success(urlRequest))
     }
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        completion(.doNotRetry)
+        let statusCode = request.response?.statusCode
+        if statusCode == 401 || statusCode == 403 {
+            debugPrint("Trace: Get 401 or 403 status code. Try to refresh")
+            guard let refreshToken = LocalData.shared.getRefreshToken() else {
+                Toast.shared.display(with: "Your session has been expired")
+                completion(.doNotRetry)
+                return
+            }
+            self.refresh(with: refreshToken) {
+                result in
+                switch result {
+                case.success(let token):
+                    debugPrint("Refresh success \(token)")
+                    LocalData.shared.setAccessToken(token)
+                    completion(.retry)
+                default: completion(.doNotRetry)
+                }
+            }
+        } else {
+            completion(.doNotRetry)
+        }
+    }
+    
+    private func refresh(with refreshToken: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let params = [
+            "refreshToken": refreshToken
+        ]
+        AF.request("\(baseUrl)/auth/refresh", method: .post, parameters: params, headers: headers).responseJSON {
+            result in
+            guard let httpResponse = result.response,
+                  (200...299).contains(httpResponse.statusCode) else {
+                let statusCode = result.response?.statusCode ?? -1
+                completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: "Refresh failed"])))
+                return
+            }
+            
+            switch result.result {
+            case .success(_):
+                let json = try? JSONSerialization.jsonObject(with: result.data!) as? [String: Any]
+                let data = json?["data"] as? [String: String]
+                if let accessToken = data?["accessToken"] {
+                    completion(.success(accessToken))
+                } else {
+                    completion(.failure(NSError(domain: "APIHandler", code: 1002, userInfo: [NSLocalizedDescriptionKey: "Refresh failed"])))
+                }
+            default: completion(.failure(NSError(domain: "APIHandler", code: 1002, userInfo: [NSLocalizedDescriptionKey: "Refresh failed"])))
+            }
+        }
     }
 }
 final class APIClient {
-    fileprivate let baseUrl = "https://sevenfastfood-be.onrender.com"
-    fileprivate var session: Session?
-    fileprivate lazy var localDataModel: LocalData = {
+    private let baseUrl = "https://sevenfastfood-be.onrender.com"
+    private var session: Session?
+
+    private lazy var localDataModel: LocalData = {
         let client = LocalData()
         return client
     }()
-    fileprivate lazy var headers: HTTPHeaders = {
+
+    private lazy var headers: HTTPHeaders = {
         [
             "Accept": "application/json"
         ]
     }()
     
     public static let shared = APIClient()
+    
     init() {
         setupBasicSession()
     }
     
     func setupBasicSession() {
-        let interceptor = Interceptor()
+        let interceptor = AuthenInterceptor()
         let cacher = ResponseCacher(behavior: .cache)
         let monitor = ClosureEventMonitor()
         monitor.dataTaskDidReceiveData = {
@@ -65,7 +116,7 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .get, parameters: params, headers: headers).responseJSON {
+        session.request("\(baseUrl)\(subpath)", method: .get, parameters: params, headers: headers).validate().responseJSON {
             response in
             guard let httpResponse = response.response,
                   (200...299).contains(httpResponse.statusCode) else {
@@ -100,7 +151,7 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .post, parameters: params, headers: headers).responseJSON {
+        session.request("\(baseUrl)\(subpath)", method: .post, parameters: params, headers: headers).validate().responseJSON {
             response in
             
             guard let httpResponse = response.response,
@@ -136,7 +187,7 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .put, parameters: params, headers: headers).responseJSON {
+        session.request("\(baseUrl)\(subpath)", method: .put, parameters: params, headers: headers).validate().responseJSON {
             response in
             
             guard let httpResponse = response.response,
@@ -172,7 +223,7 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .patch, parameters: params, headers: headers).responseJSON {
+        session.request("\(baseUrl)\(subpath)", method: .patch, parameters: params, headers: headers).validate().responseJSON {
             response in
             
             guard let httpResponse = response.response,
@@ -208,7 +259,7 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .delete, parameters: params, headers: headers).responseJSON {
+        session.request("\(baseUrl)\(subpath)", method: .delete, parameters: params, headers: headers).validate().responseJSON {
             response in
             
             guard let httpResponse = response.response,

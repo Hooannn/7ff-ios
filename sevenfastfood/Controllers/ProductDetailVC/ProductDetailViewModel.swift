@@ -8,23 +8,21 @@
 import Foundation
 
 protocol ProductDetailViewModelDelegate: AnyObject {
-    func didFetchedProductDetailSuccess(_ product: Product?)
-    func didFetchedProductDetailFailure(_ error: Error)
+    func didFetchProductDetailSuccess(_ product: Product?)
+    func didFetchProductDetailFailure(_ error: Error)
 }
 
 final class ProductDetailViewModel {
     weak var delegate: ProductDetailViewModelDelegate!
-    private let productsService: ProductsService = ProductsService()
-    
     
     func fetchProductDetail(withId id: String) {
-        productsService.fetchDetailProduct(withId: id) {
+        ProductsService.shared.fetchDetailProduct(withId: id) {
             result in
             switch result {
             case .success(let data):
-                self.delegate.didFetchedProductDetailSuccess(data?.data)
+                self.delegate.didFetchProductDetailSuccess(data?.data)
             case .failure(let error):
-                self.delegate.didFetchedProductDetailFailure(error)
+                self.delegate.didFetchProductDetailFailure(error)
             }
         }
     }

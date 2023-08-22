@@ -20,19 +20,21 @@ final class Tokens {
         return color
     }()
     
+    let containerXPadding = CGFloat(32)
+    
     let onPrimaryColor: UIColor = {
-        .darkText
+        .white
     }()
 
     let onSecondaryColor: UIColor = {
         .white
     }()
     
-    let systemFontSize = UIFont.systemFontSize
+    let systemFontSize = CGFloat(16)
     
     let smallSystemFontSize = UIFont.smallSystemFontSize
     
-    let buttonCornerRadius = CGFloat(8)
+    let buttonCornerRadius = CGFloat(12)
     
     let titleFontSize = CGFloat(24)
     

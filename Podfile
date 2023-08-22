@@ -9,6 +9,9 @@ target 'sevenfastfood' do
   pod 'Validator'
   pod 'GoogleSignIn'
   pod 'SkeletonView'
+  pod 'ImageSlideshow', '~> 1.9.0'
+  pod 'ImageSlideshow/Alamofire'
+  pod 'Cosmos', '~> 23.0'
   # Pods for sevenfastfood
 
 end

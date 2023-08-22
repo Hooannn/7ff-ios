@@ -8,9 +8,7 @@
 import Foundation
 
 final class OnboardingViewModel {
-    private let client = LocalData.shared
-
     public func fetchOnboardingScreens() -> [OnboardingScreen] {
-        client.getOnboardingScreens()
+        LocalData.shared.getOnboardingScreens()
     }
 }

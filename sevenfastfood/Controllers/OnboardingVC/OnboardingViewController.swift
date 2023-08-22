@@ -74,6 +74,8 @@ final class OnboardingViewController: ViewControllerWithoutNavigationBar {
         addChild(pageVC)
         view.addSubview(pageVC.view)
         pageVC.didMove(toParent: self)
+        
+        view.bringSubviewToFront(skipButton!)
     }
     
     private func setupOnboardingView(for vc: UIViewController, title _title: String, description _description: String, displayImage image: UIImage, buttonTitle _buttonTitle: String, isFinal _isFinal: Bool) {

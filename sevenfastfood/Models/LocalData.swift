@@ -67,4 +67,25 @@ final class LocalData {
             UserDefaults.standard.removePersistentDomain(forName: bundleID)
         }
     }
+    
+    public func getUserCart() -> [CartItem]? {
+        if let cartItems = client.object(forKey: "cartItems") as? Data {
+            let decoder = JSONDecoder()
+            let decoded = try? decoder.decode([CartItem].self, from: cartItems)
+            debugPrint("getUserCart -> ")
+            return decoded
+        }
+        return nil
+    }
+    
+    public func saveUserCart(cartItems: [CartItem]?) {
+        let encoder = JSONEncoder()
+        if let cartItems = cartItems {
+            if let encoded = try? encoder.encode(cartItems) {
+                client.set(encoded, forKey: "cartItems")
+                NotificationCenter.default.post(name: NSNotification.Name.didSaveCart, object: nil)
+                debugPrint("Saved and posted -> \(encoded)")
+            }
+        }
+    }
 }

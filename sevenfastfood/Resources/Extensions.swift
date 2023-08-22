@@ -125,3 +125,8 @@ extension UIButton {
         }
     }
 }
+
+extension NSNotification.Name {
+    static var didSaveCart: Notification.Name {
+              return .init(rawValue: "Cart.updated") }
+}

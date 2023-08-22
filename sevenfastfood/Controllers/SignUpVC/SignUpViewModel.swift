@@ -15,11 +15,10 @@ protocol SignUpViewModelDelegate: AnyObject {
 
 final class SignUpViewModel {
     weak var delegate: SignUpViewModelDelegate!
-    private var authenService = AuthenService()
     func performSignUp(with form: SignUpForm) {
         delegate.didUpdateLoading(true)
         
-        authenService.signUp(with: form) { [weak self]
+        AuthenService.shared.signUp(with: form) { [weak self]
             result in
             switch result {
             case.success(let data):
@@ -34,7 +33,7 @@ final class SignUpViewModel {
     func performGoogleAuthentication(with accessToken: String) {
         delegate.didUpdateLoading(true)
         
-        authenService.authenWithGoogle(with: accessToken) { [weak self]
+        AuthenService.shared.authenWithGoogle(with: accessToken) { [weak self]
             result in
             switch result {
             case.success(let data):

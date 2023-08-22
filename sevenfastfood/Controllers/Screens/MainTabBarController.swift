@@ -41,6 +41,8 @@ final class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigations()
+        
+        CartService.shared.fetchItems()
     }
     
     private func setupNavigations() {

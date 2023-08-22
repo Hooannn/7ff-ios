@@ -10,6 +10,7 @@ import Alamofire
 final class AuthenService {
     private var apiClient = APIClient.shared
     private var localDataClient = LocalData.shared
+    static let shared = AuthenService()
     public func signUp(with form: SignUpForm, completion: @escaping (Result<Response<SignInResponseData>?, Error>) -> Void) {
         let params: [String: String] = [
             "email": form.email,
@@ -21,7 +22,7 @@ final class AuthenService {
             result in
             switch result {
             case .success(let data):
-                guard let email = data?.data.email, let password = data?.data.password else {
+                guard let email = data?.data?.email, let password = data?.data?.password else {
                     completion(.failure(NSError(domain: "AuthenService.signUp", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Missing email and password when signup success"])))
                     return
                 }
@@ -44,13 +45,13 @@ final class AuthenService {
             result in
             switch result {
             case .success(let data):
-                if let accessToken = data?.data.accessToken {
+                if let accessToken = data?.data?.accessToken {
                     self.localDataClient.setAccessToken(accessToken)
                 }
-                if let refreshToken = data?.data.refreshToken {
+                if let refreshToken = data?.data?.refreshToken {
                     self.localDataClient.setRefreshToken(refreshToken)
                 }
-                if let user = data?.data.user {
+                if let user = data?.data?.user {
                     self.localDataClient.setLoggedUser(user)
                 }
                 completion(.success(data))
@@ -68,13 +69,13 @@ final class AuthenService {
             result in
             switch result {
             case .success(let data):
-                if let accessToken = data?.data.accessToken {
+                if let accessToken = data?.data?.accessToken {
                     self.localDataClient.setAccessToken(accessToken)
                 }
-                if let refreshToken = data?.data.refreshToken {
+                if let refreshToken = data?.data?.refreshToken {
                     self.localDataClient.setRefreshToken(refreshToken)
                 }
-                if let user = data?.data.user {
+                if let user = data?.data?.user {
                     self.localDataClient.setLoggedUser(user)
                 }
                 completion(.success(data))
