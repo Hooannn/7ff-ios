@@ -41,10 +41,36 @@ final class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigations()
-        
         CartService.shared.fetchItems()
     }
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setupNotificationCenter()
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        removeNotificationCenter()
+    }
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCartUpdateNotification(_:)), name: NSNotification.Name.didSaveCart, object: nil)
+    }
+    
+    private func removeNotificationCenter() {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.didSaveCart, object: nil)
+    }
+    
+    @objc func didReceiveCartUpdateNotification(_ notification: NSNotification) {
+        let cartItems = LocalData.shared.getUserCart()
+        let badgeValue = cartItems?.count
+        let cartTab = tabBar.items?.first(where: { tab in tab.tag == 2 })
+        cartTab?.badgeValue = String(badgeValue!)
+    }
+
     private func setupNavigations() {
         let homeVC = HomeViewController()
         let notificationsVC = NotificationsViewController()

@@ -12,19 +12,26 @@ extension UIImageView {
         guard let url, let parsedUrl = URL(string: url) else {
             return
         }
-        DispatchQueue.main.async { [weak self] in
-            self?.showAnimatedGradientSkeleton()
-        }
-        DispatchQueue.global().async {
-            do {
-                let data = try Data(contentsOf: parsedUrl)
-                let image = UIImage(data: data)
-                DispatchQueue.main.async { [weak self] in
-                    self?.image = image
-                    self?.hideSkeleton()
+        let cacheId = NSString(string: url)
+        if let cachedData = LocalData.shared.imageCache.object(forKey: cacheId) {
+            DispatchQueue.main.async { [weak self] in self?.image = UIImage(data: cachedData as Data) }
+        } else {
+            self.image = nil
+            DispatchQueue.main.async { [weak self] in
+                self?.showAnimatedGradientSkeleton()
+            }
+            DispatchQueue.global().async {
+                do {
+                    let data = try Data(contentsOf: parsedUrl)
+                    LocalData.shared.imageCache.setObject(data as NSData, forKey: cacheId)
+                    let image = UIImage(data: data)
+                    DispatchQueue.main.async { [weak self] in
+                        self?.image = image
+                        self?.hideSkeleton()
+                    }
+                } catch {
+                    Toast.shared.display(with: "Error when loading remote image: \(error.localizedDescription)")
                 }
-            } catch {
-                debugPrint("Error")
             }
         }
     }
@@ -88,12 +95,13 @@ extension UIWindow {
             self.layoutIfNeeded()
         }, completion: { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: { [weak self] in
-                UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+                guard let self = self else { return }
+                UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseOut, animations: {
                     NSLayoutConstraint.activate([
-                        containerView.topAnchor.constraint(equalTo: self!.bottomAnchor),
+                        containerView.topAnchor.constraint(equalTo: self.bottomAnchor),
                         containerView.heightAnchor.constraint(equalToConstant: 50)
                     ])
-                    self!.layoutIfNeeded()
+                    self.layoutIfNeeded()
                 }, completion: { _ in
                     containerView.removeFromSuperview()
                 })
@@ -128,5 +136,5 @@ extension UIButton {
 
 extension NSNotification.Name {
     static var didSaveCart: Notification.Name {
-              return .init(rawValue: "Cart.updated") }
+        return .init(rawValue: "Cart.updated") }
 }

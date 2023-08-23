@@ -13,12 +13,19 @@ protocol ProductDetailViewDelegate: AnyObject {
 }
 class ProductDetailView: UIView {
     weak var delegate: ProductDetailViewDelegate?
+    var isAddingItem: Bool = false
+    {
+        didSet(_old) {
+            addToCartButton.setLoading(isAddingItem)
+        }
+    }
     private lazy var product: Product? = nil
     private var topConstant: CGFloat!
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
     

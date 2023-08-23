@@ -44,6 +44,8 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
     
     private lazy var productId: String = ""
     private lazy var wasPresented: Bool = false
+    
+    private var productDetailView: ProductDetailView?
 
     init(productId: String, wasPresented: Bool) {
         super.init(nibName: nil, bundle: nil)
@@ -97,8 +99,10 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
     
     private func setupProductViews(withProduct product: Product?) {
         removeLoading()
-        let productDetailView = ProductDetailView(product: product, topConstant: CGFloat(safeAreaInsets!.top + 50))
+        let topConstant = wasPresented ? CGFloat(50) : CGFloat(safeAreaInsets!.top + 50)
+        let productDetailView = ProductDetailView(product: product, topConstant: topConstant)
         productDetailView.delegate = self
+        self.productDetailView = productDetailView
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.view.addSubview(productDetailView)
@@ -167,8 +171,17 @@ extension ProductDetailViewController: ProductDetailViewModelDelegate {
 
 extension ProductDetailViewController: ProductDetailViewDelegate {
     func didTapAddToCartButton(_ sender: UIButton) {
+        productDetailView?.isAddingItem = true
         CartService.shared.addItem(productId: productId, quantity: 1) {
-            _ in debugPrint("Invoked addItem")
+            [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
+                Toast.shared.display(with: "Added successfully")
+            case .failure(let error):
+                Toast.shared.display(with: "Something occured. \(error.localizedDescription.capitalized(with: .current))")
+            }
+            self.productDetailView?.isAddingItem = false
         }
     }
 }

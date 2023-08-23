@@ -14,16 +14,6 @@ protocol CategoriesViewDelegate: AnyObject {
 final class CategoriesView: UICollectionView {
     weak var categoryViewDelegate: CategoriesViewDelegate!
     private let cellIdentifier = "Category"
-    var isLoading: Bool = false
-    {
-        didSet {
-            if isLoading {
-                
-            } else {
-                
-            }
-        }
-    }
     var selectedCategory: Category?
     {
         didSet {

@@ -8,6 +8,6 @@
 import Foundation
 
 struct CartItem: Codable {
-    let product: Product
+    let product: ProductV2
     let quantity: Int
 }

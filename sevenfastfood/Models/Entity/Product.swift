@@ -19,3 +19,16 @@ struct Product: Codable {
     let ratingCount: Int?
     let featuredImages: [String]?
 }
+
+struct ProductV2: Codable {
+    let _id: String?
+    let name: Content
+    let description: Content
+    let price: Double
+    let stocks: Int?
+    let category: String?
+    let isAvailable: Bool
+    let rating: Double?
+    let ratingCount: Int?
+    let featuredImages: [String]?
+}
