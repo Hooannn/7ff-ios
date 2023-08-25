@@ -10,14 +10,25 @@ class ClickableView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
+        translatesAutoresizingMaskIntoConstraints = false
         setupGestureRecognizer()
+        setupViews()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupGestureRecognizer() {
+    internal func setupViews() {
+        
+    }
+    
+    internal func setupConstraints() {
+        
+    }
+    
+    internal func setupGestureRecognizer() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(didPress(_:)))
         addGestureRecognizer(tapGesture)
@@ -44,7 +55,7 @@ class ClickableView: UIView {
         }
     }
     
-    func didEndLongPress() -> Void {
+    internal func didEndLongPress() -> Void {
         
     }
 

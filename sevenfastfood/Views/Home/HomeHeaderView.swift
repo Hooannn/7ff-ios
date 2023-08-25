@@ -23,14 +23,14 @@ final class HomeHeaderView: UIView {
     }()
     
     private lazy var greetingView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [welcomeTextView, displayNameTextView])
+        let view = UIStackView(arrangedSubviews: [welcomeLabel, displayNameLabel])
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
         view.spacing = 4
         return view
     }()
     
-    private lazy var welcomeTextView: UILabel = {
+    private lazy var welcomeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Welcome"
@@ -38,7 +38,7 @@ final class HomeHeaderView: UIView {
         return label
     }()
     
-    private lazy var displayNameTextView: UILabel = {
+    private lazy var displayNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = displayName

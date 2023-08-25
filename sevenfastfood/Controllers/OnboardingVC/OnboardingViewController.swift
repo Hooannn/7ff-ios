@@ -152,6 +152,7 @@ final class OnboardingViewController: ViewControllerWithoutNavigationBar {
             
             actionButton.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor, constant: -(safeAreaInsets!.bottom + 24)),
             actionButton.widthAnchor.constraint(equalTo: bottomView.widthAnchor, multiplier: 0.7),
+            actionButton.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight),
             actionButton.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor),
             
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 24),

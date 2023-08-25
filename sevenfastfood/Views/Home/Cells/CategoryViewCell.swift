@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class CategoryViewCell: UICollectionViewCell {
+final class CategoryViewCell: ClickableCollectionViewCell {
     override var isSelected: Bool
     {
         didSet {
@@ -33,23 +33,21 @@ final class CategoryViewCell: UICollectionViewCell {
         return dot
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        isSkeletonable = true
-        contentView.addSubviews(label, dotView)
-        setupConstraints()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         isSelected = false
     }
+    
+    override func setupViews() {
+        isSkeletonable = true
+        contentView.addSubviews(label, dotView)
+    }
+    
+    override func setupGestureRecognizer() {
+        
+    }
 
-    private func setupConstraints() {
+    override func setupConstraints() {
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),

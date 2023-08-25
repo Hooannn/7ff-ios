@@ -13,10 +13,10 @@ extension UIImageView {
             return
         }
         let cacheId = NSString(string: url)
+        self.image = nil
         if let cachedData = LocalData.shared.imageCache.object(forKey: cacheId) {
             DispatchQueue.main.async { [weak self] in self?.image = UIImage(data: cachedData as Data) }
         } else {
-            self.image = nil
             DispatchQueue.main.async { [weak self] in
                 self?.showAnimatedGradientSkeleton()
             }
@@ -82,7 +82,7 @@ extension UIWindow {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 24),
             containerView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            containerView.topAnchor.constraint(equalTo: self.bottomAnchor),
+            containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 50),
             containerView.heightAnchor.constraint(equalToConstant: 50)
         ])
         self.layoutIfNeeded()
@@ -98,7 +98,7 @@ extension UIWindow {
                 guard let self = self else { return }
                 UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseOut, animations: {
                     NSLayoutConstraint.activate([
-                        containerView.topAnchor.constraint(equalTo: self.bottomAnchor),
+                        containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 50),
                         containerView.heightAnchor.constraint(equalToConstant: 50)
                     ])
                     self.layoutIfNeeded()

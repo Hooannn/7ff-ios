@@ -52,17 +52,7 @@ final class SearchBarView: ClickableView {
         delegate.didTapSearchBar(sender)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-        setupConstraints()
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupViews() {
+    override func setupViews() {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .systemGray6
         layer.cornerRadius = 12
@@ -70,7 +60,7 @@ final class SearchBarView: ClickableView {
         addSubview(contentStackView)
     }
     
-    private func setupConstraints() {
+    override func setupConstraints() {
         NSLayoutConstraint.activate([
             contentStackView.topAnchor.constraint(equalTo: topAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor),

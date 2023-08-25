@@ -18,31 +18,31 @@ protocol ProductViewCellDelegate: AnyObject {
 final class ProductViewCell: ClickableCollectionViewCell {
     weak var delegate: ProductViewCellDelegate!
     var id: String?
-    var productName: String?
+    var name: String?
     {
         didSet {
-            productNameLabel.text = productName
+            nameLabel.text = name
         }
     }
     
-    var productFeaturedImage: String?
+    var featuredImage: String?
     {
         didSet {
-            productFeaturedImageView.loadRemoteUrl(from: productFeaturedImage)
+            featuredImageView.loadRemoteUrl(from: featuredImage)
         }
     }
     
-    var productDescription: String?
+    var pdescription: String?
     {
         didSet {
-            productDescriptionLabel.text = productDescription
+            descriptionLabel.text = pdescription
         }
     }
     
-    var productPrice: String?
+    var price: Double?
     {
         didSet {
-            productPriceLabel.text = productPrice
+            priceLabel.text = "\(price!)đ"
         }
     }
     
@@ -59,7 +59,7 @@ final class ProductViewCell: ClickableCollectionViewCell {
         super.prepareForReuse()
     }
     
-    private lazy var productFeaturedImageView: UIImageView = {
+    private lazy var featuredImageView: UIImageView = {
         let image = UIImage()
         let view = UIImageView(image: image)
         view.contentMode = .scaleAspectFit
@@ -77,36 +77,36 @@ final class ProductViewCell: ClickableCollectionViewCell {
         return button
     }()
     
-    private lazy var productNameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.textColor = Tokens.shared.secondaryColor
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.textColor = Tokens.shared.secondaryColor
+        label.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize, weight: .medium)
         return label
     }()
     
-    private lazy var productDescriptionLabel: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: Tokens.shared.descriptionFontSize)
-        label.textAlignment = .center
         label.textColor = .systemGray
+        label.textAlignment = .center
         return label
     }()
     
-    private lazy var productPriceLabel: UILabel = {
+    private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .center
         label.textColor = Tokens.shared.secondaryColor
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize, weight: .medium)
         return label
     }()
     
     private lazy var contentStackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [productFeaturedImageView, productNameLabel, productDescriptionLabel, productPriceLabel])
+        let view = UIStackView(arrangedSubviews: [featuredImageView, nameLabel, descriptionLabel, priceLabel])
         view.axis = .vertical
         view.spacing = 4
         view.alignment = .center
@@ -114,18 +114,8 @@ final class ProductViewCell: ClickableCollectionViewCell {
         return view
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override func setupViews() {
         isSkeletonable = true
-        setupViews()
-        setupConstraints()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupViews() {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .systemGray6
         clipsToBounds = true
@@ -136,7 +126,7 @@ final class ProductViewCell: ClickableCollectionViewCell {
         contentView.addSubviews(contentStackView, cartButton)
     }
     
-    private func setupConstraints() {
+    override func setupConstraints() {
         NSLayoutConstraint.activate([
             contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),

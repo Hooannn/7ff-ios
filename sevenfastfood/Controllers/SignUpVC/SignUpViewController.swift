@@ -23,15 +23,6 @@ final class SignUpViewController: UIViewController {
         return view
     }()
     
-    private lazy var screenTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Create an account"
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: tokens.titleFontSize)
-        return label
-    }()
-    
     private lazy var separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray2
@@ -93,7 +84,7 @@ final class SignUpViewController: UIViewController {
     private func setupViews() {
         view.addSubviews(headerView, topView, separatorView, bottomView)
         headerView.addSubviews(closeButton, laterButton)
-        topView.addSubviews(screenTitleLabel, formView)
+        topView.addSubviews(formView)
         bottomView.addSubviews(googleAuthButton)
     }
     
@@ -108,7 +99,7 @@ final class SignUpViewController: UIViewController {
             topView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             topView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            topView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.55),
+            topView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.65),
             
             separatorView.topAnchor.constraint(equalTo: topView.bottomAnchor),
             separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
@@ -127,20 +118,16 @@ final class SignUpViewController: UIViewController {
             laterButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -24),
             laterButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
             
-            screenTitleLabel.widthAnchor.constraint(equalTo: topView.widthAnchor, multiplier: 0.7),
-            screenTitleLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
-            screenTitleLabel.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-            screenTitleLabel.heightAnchor.constraint(equalToConstant: 80),
-            
-            formView.topAnchor.constraint(equalTo: screenTitleLabel.bottomAnchor),
+            formView.topAnchor.constraint(equalTo: topView.topAnchor, constant: 24),
             formView.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 24),
             formView.trailingAnchor.constraint(equalTo: topView.trailingAnchor, constant: -24),
-            formView.bottomAnchor.constraint(equalTo: separatorView.topAnchor),
+            formView.bottomAnchor.constraint(equalTo: separatorView.topAnchor, constant: -24),
             
             googleAuthButton.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 24),
             googleAuthButton.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -24),
             googleAuthButton.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor),
-            googleAuthButton.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor)
+            googleAuthButton.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
+            googleAuthButton.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight)
         ])
     }
     

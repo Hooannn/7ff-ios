@@ -32,7 +32,7 @@ final class ProfileViewController: UIViewController {
             signOutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             signOutButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
             signOutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            signOutButton.heightAnchor.constraint(equalToConstant: 48)
+            signOutButton.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight)
         ])
     }
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProductsView: UICollectionView {
+final class ProductsView: BaseCollectionView {
     weak var productCellDelegate: ProductViewCellDelegate!
     private let cellIdentifier = "Product"
     var products: [Product]? = []
@@ -21,16 +21,7 @@ final class ProductsView: UICollectionView {
         }
     }
     
-    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
-        super.init(frame: frame, collectionViewLayout: layout)
-        setupViews()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupViews() {
+    override func setupViews() {
         dataSource = self
         isSkeletonable = true
         showsVerticalScrollIndicator = false
@@ -57,10 +48,10 @@ extension ProductsView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             let product = products?[indexPath.item]
             cell.id = product?._id
             cell.delegate = productCellDelegate
-            cell.productName = product?.name.en
-            cell.productDescription = product?.category?.name.en
-            cell.productPrice = "\(product!.price) VND"
-            cell.productFeaturedImage = product?.featuredImages?.first
+            cell.name = product?.name.en
+            cell.pdescription = product?.category?.name.en
+            cell.price = product!.price
+            cell.featuredImage = product?.featuredImages?.first
             cell.isHidden = false
         } else {
             cell.isHidden = true

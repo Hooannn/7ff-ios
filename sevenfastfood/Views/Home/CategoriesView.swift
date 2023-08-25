@@ -11,7 +11,7 @@ import SkeletonView
 protocol CategoriesViewDelegate: AnyObject {
     func didSelectCategory(_ category: Category?)
 }
-final class CategoriesView: UICollectionView {
+final class CategoriesView: BaseCollectionView {
     weak var categoryViewDelegate: CategoriesViewDelegate!
     private let cellIdentifier = "Category"
     var selectedCategory: Category?
@@ -39,16 +39,8 @@ final class CategoriesView: UICollectionView {
             }
         }
     }
-    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
-        super.init(frame: frame, collectionViewLayout: layout)
-        setupViews()
-    }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupViews() {
+    override func setupViews() {
         translatesAutoresizingMaskIntoConstraints = false
         dataSource = self
         delegate = self

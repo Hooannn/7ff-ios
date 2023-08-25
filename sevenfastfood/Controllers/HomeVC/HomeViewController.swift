@@ -8,7 +8,7 @@
 import UIKit
 
 final class HomeViewController: ViewControllerWithoutNavigationBar {
-    private lazy var safeAreaInsets = UIApplication.shared.keyWindow?.rootViewController?.view.safeAreaInsets
+    private lazy var safeAreaInsets = Tokens.shared.safeAreaInsets
     private let localDataClient = LocalData.shared
     private lazy var viewModel: HomeViewModel = {
         let viewModel = HomeViewModel()

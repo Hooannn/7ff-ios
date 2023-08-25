@@ -11,10 +11,6 @@ protocol PromotionsViewDelegate: AnyObject {
 }
 final class PromotionsView: ClickableCollectionReusableView {
     weak var delegate: PromotionsViewDelegate!
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-    }
     
     private lazy var bannerImageView: UIImageView = {
         let image = UIImage(named: "Promotion_banner")
@@ -28,12 +24,8 @@ final class PromotionsView: ClickableCollectionReusableView {
     override func didTap(_ sender: UIGestureRecognizer) {
         super.didTap(sender)
     }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
-    private func setupViews() {
+    override func setupViews() {
         addSubviews(bannerImageView)
         translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = true

@@ -34,11 +34,20 @@ final class SignUpFormView: UIView {
     private let utils = Utils.shared
     private let widgets = Widgets.shared
     private lazy var stackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [firstNameTextField, lastNameTextField, emailTextField, passwordTextField, submitButton, directToSignInButton])
+        let view = UIStackView(arrangedSubviews: [titleLabel, firstNameTextField, lastNameTextField, emailTextField, passwordTextField, submitButton, directToSignInButton])
         view.spacing = 12
         view.axis = .vertical
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Create an account"
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: Tokens.shared.titleFontSize)
+        return label
     }()
 
     private lazy var firstNameTextField: UITextField = {
@@ -100,13 +109,16 @@ final class SignUpFormView: UIView {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stackView.centerXAnchor.constraint(equalTo: trailingAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: topAnchor),
-            firstNameTextField.heightAnchor.constraint(equalToConstant: 44),
-            lastNameTextField.heightAnchor.constraint(equalToConstant: 44),
-            emailTextField.heightAnchor.constraint(equalToConstant: 44),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 44),
+            firstNameTextField.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight - 4),
+            lastNameTextField.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight - 4),
+            emailTextField.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight - 4),
+            passwordTextField.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight - 4),
+            submitButton.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight),
+            directToSignInButton.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight)
         ])
     }
     
