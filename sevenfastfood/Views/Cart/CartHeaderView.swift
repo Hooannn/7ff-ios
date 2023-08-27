@@ -10,7 +10,7 @@ import UIKit
 class CartHeaderView: BaseView {
     var itemsCount: Int = 0
     {
-        didSet(_old) {
+        didSet {
             itemsCountLabel.text = "\(itemsCount) items"
         }
     }

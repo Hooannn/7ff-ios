@@ -15,7 +15,7 @@ class ProductDetailView: UIView {
     weak var delegate: ProductDetailViewDelegate?
     var isAddingItem: Bool = false
     {
-        didSet(_old) {
+        didSet {
             addToCartButton.setLoading(isAddingItem)
         }
     }

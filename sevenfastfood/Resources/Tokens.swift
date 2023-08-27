@@ -15,6 +15,11 @@ final class Tokens {
         return color
     }()
     
+    let primaryBackgroundColor: UIColor = {
+        let color = UIColor(red: CGFloat(255.0/255.0), green: CGFloat(190.0/255.0), blue: CGFloat(51.0/255.0), alpha: CGFloat(0.1))
+        return color
+    }()
+    
     let defaultButtonHeight = CGFloat(54)
     
     lazy var safeAreaInsets = UIApplication.shared.keyWindow?.rootViewController?.view.safeAreaInsets

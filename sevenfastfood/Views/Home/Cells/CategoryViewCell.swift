@@ -16,17 +16,16 @@ final class CategoryViewCell: ClickableCollectionViewCell {
             dotView.isHidden = isSelected ? false : true
         }
     }
+    
     let label: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let label = Widgets.shared.createLabel()
         label.textColor = .systemGray2
         label.textAlignment = .center
         return label
     }()
     
-    private let dotView: UIView = {
-        let dot = UIView()
-        dot.translatesAutoresizingMaskIntoConstraints = false
+    private let dotView: BaseView = {
+        let dot = BaseView()
         dot.layer.cornerRadius = 4
         dot.backgroundColor = .black
         dot.isHidden = true
