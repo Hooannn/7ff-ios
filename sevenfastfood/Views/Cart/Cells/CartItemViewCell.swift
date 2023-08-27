@@ -23,17 +23,37 @@ class CartItemViewCell: ClickableCollectionViewCell {
         }
     }
     
+    var category: String?
+    {
+        didSet {
+            guard let category = category else { return }
+            categoryLabel.text = category
+        }
+    }
+    
     var unitPrice: Double?
     {
         didSet {
-            unitPriceLabel.text = "Unit price: \(unitPrice ?? 0)đ"
+            guard let quantity = quantity, let unitPrice = unitPrice else { return }
+            totalPrice = unitPrice * Double(quantity)
         }
     }
     
     var quantity: Int?
     {
         didSet {
-            quantityLabel.text = "Quantity: \(quantity ?? 0)"
+            guard let quantity = quantity else { return }
+            quantityInput.updateValue(quantity)
+            guard let unitPrice = unitPrice else { return }
+            totalPrice = unitPrice * Double(quantity)
+        }
+    }
+    
+    var totalPrice: Double?
+    {
+        didSet {
+            guard let totalPrice = totalPrice else { return }
+            totalPriceLabel.text = "\(totalPrice)đ"
         }
     }
 
@@ -46,39 +66,54 @@ class CartItemViewCell: ClickableCollectionViewCell {
     }()
     
     private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.textColor = Tokens.shared.secondaryColor
-        label.textAlignment = .center
+        let label = Widgets.shared.createLabel()
+        label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize, weight: .medium)
         return label
     }()
     
-    private lazy var quantityLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: Tokens.shared.descriptionFontSize)
-        label.textAlignment = .center
+    private lazy var categoryLabel: UILabel = {
+        let label = Widgets.shared.createLabel()
+        label.textAlignment = .left
         label.textColor = .systemGray
-        return label
-    }()
-    
-    private lazy var unitPriceLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.textColor = Tokens.shared.secondaryColor
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: Tokens.shared.descriptionFontSize)
         return label
     }()
     
-    private lazy var descriptionStackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [nameLabel, unitPriceLabel, quantityLabel])
+    private lazy var totalPriceLabel: UILabel = {
+        let label = Widgets.shared.createLabel()
+        label.font = UIFont.boldSystemFont(ofSize: Tokens.shared.systemFontSize)
+        label.text = String(totalPrice ?? 0)
+        return label
+    }()
+
+    private lazy var titleAndUnitPriceView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [nameLabel, categoryLabel])
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
         view.alignment = .leading
         view.spacing = 2
+        return view
+    }()
+    
+    private lazy var quantityInput: QuantityInputView = {
+        let view = QuantityInputView()
+        view.delegate = self
+        return view
+    }()
+    
+    private lazy var totalPriceAndQuantityView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [totalPriceLabel, quantityInput])
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .horizontal
+        view.alignment = .trailing
+        return view
+    }()
+
+    private lazy var descriptionStackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [titleAndUnitPriceView, totalPriceAndQuantityView])
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .vertical
         return view
     }()
     
@@ -89,11 +124,6 @@ class CartItemViewCell: ClickableCollectionViewCell {
         view.spacing = 12
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-    }()
-    
-    private lazy var quantityCounterView: UIView = {
-        let v = UIView()
-        return v
     }()
     
     override func setupViews() {
@@ -113,8 +143,19 @@ class CartItemViewCell: ClickableCollectionViewCell {
             contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
             contentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             
-            featuredImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.8),
-            featuredImageView.widthAnchor.constraint(equalTo: featuredImageView.heightAnchor)
+            featuredImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.9),
+            featuredImageView.widthAnchor.constraint(equalTo: featuredImageView.heightAnchor),
+            totalPriceAndQuantityView.heightAnchor.constraint(equalToConstant: 40),
+            quantityInput.widthAnchor.constraint(equalTo: totalPriceAndQuantityView.widthAnchor, multiplier: 0.35),
+            quantityInput.heightAnchor.constraint(equalTo: totalPriceAndQuantityView.heightAnchor, multiplier: 0.7),
+            totalPriceLabel.heightAnchor.constraint(equalTo: totalPriceAndQuantityView.heightAnchor, multiplier: 0.7),
+            
         ])
+    }
+}
+
+extension CartItemViewCell: QuantityInputDelegate {
+    func quantityInput(_ quantityInput: QuantityInputView, didChangeWithValue value: Int) {
+        debugPrint("Receive new value -> \(value)")
     }
 }

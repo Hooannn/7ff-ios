@@ -14,6 +14,8 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
         return viewModel
     }()
     
+    private var cartViewModel: CartViewModel?
+    
     private lazy var loadingIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
@@ -21,17 +23,27 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
     }()
     
     private lazy var backButton: UIButton = {
-        let button = UIButton(type: .custom)
+        let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.clipsToBounds = true
         button.layer.cornerRadius = 12
-        button.layer.borderWidth = 1
         button.layer.zPosition = 10
         button.backgroundColor = .systemGray6
         button.tintColor = Tokens.shared.secondaryColor
-        button.layer.borderColor = CGColor(gray: 40, alpha: 1)
         button.setImage(UIImage(named: "Back"), for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var cartButton: BadgeButton = {
+        let button = BadgeButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 12
+        button.layer.zPosition = 10
+        button.backgroundColor = .systemGray6
+        button.tintColor = Tokens.shared.secondaryColor
+        button.setImage(UIImage(named: "Cart"), for: .normal)
+        button.addTarget(self, action: #selector(didTapCartButton(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -93,8 +105,15 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
             setupCloseButtonConstraints()
         } else {
             view.addSubview(backButton)
+            view.addSubview(cartButton)
             setupBackButtonConstraints()
+            setupCartButtonConstraints()
+            setupCartViewModel()
         }
+    }
+    
+    private func setupCartViewModel() {
+        self.cartViewModel = CartViewModel(delegate: self)
     }
     
     private func setupProductViews(withProduct product: Product?) {
@@ -117,6 +136,7 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
                 self.view.bringSubviewToFront(self.closeButton)
             } else {
                 self.view.bringSubviewToFront(self.backButton)
+                self.view.bringSubviewToFront(self.cartButton)
             }
         }
     }
@@ -125,6 +145,16 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
         let constraints: [NSLayoutConstraint] = [
             closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
             closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ]
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+    private func setupCartButtonConstraints() {
+        let constraints: [NSLayoutConstraint] = [
+            cartButton.topAnchor.constraint(equalTo: view.topAnchor, constant: safeAreaInsets!.top),
+            cartButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Tokens.shared.containerXPadding),
+            cartButton.widthAnchor.constraint(equalToConstant: 50),
+            cartButton.heightAnchor.constraint(equalToConstant: 50)
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -152,6 +182,10 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
     
     @objc func didTapBackButton(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func didTapCartButton(_ sender: UIButton) {
+        tabBarController?.selectedIndex = 1
     }
     
     @objc func didTapCloseButton(_ sender: UIButton) {
@@ -186,3 +220,9 @@ extension ProductDetailViewController: ProductDetailViewDelegate {
     }
 }
 
+extension ProductDetailViewController: CartViewModelDelegate {
+    func didReceiveCartUpdate(_ cartItems: [CartItem]?) {
+        let itemsCount = cartItems?.count ?? 0
+        cartButton.badgeValue = itemsCount
+    }
+}

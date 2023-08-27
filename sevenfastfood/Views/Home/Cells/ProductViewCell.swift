@@ -78,18 +78,14 @@ final class ProductViewCell: ClickableCollectionViewCell {
     }()
     
     private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
+        let label = Widgets.shared.createLabel()
         label.textAlignment = .center
-        label.textColor = Tokens.shared.secondaryColor
         label.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize, weight: .medium)
         return label
     }()
     
     private lazy var descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let label = Widgets.shared.createLabel()
         label.font = UIFont.systemFont(ofSize: Tokens.shared.descriptionFontSize)
         label.textColor = .systemGray
         label.textAlignment = .center
@@ -97,9 +93,7 @@ final class ProductViewCell: ClickableCollectionViewCell {
     }()
     
     private lazy var priceLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = Tokens.shared.secondaryColor
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let label = Widgets.shared.createLabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize, weight: .medium)
         return label

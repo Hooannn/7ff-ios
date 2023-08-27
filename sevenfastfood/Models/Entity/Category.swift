@@ -10,6 +10,6 @@ import Foundation
 struct Category: Codable {
     let _id: String?
     let name: Content
-    let description: Content
+    let description: Content?
     let icon: String?
 }

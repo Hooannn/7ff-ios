@@ -23,7 +23,7 @@ class CartItemsView: BaseView {
 
     var items: [CartItem]? = []
     {
-        didSet(_old) {
+        didSet {
             cartItemsCollectionView.reloadData()
         }
     }
@@ -55,12 +55,13 @@ extension CartItemsView: UICollectionViewDelegate, UICollectionViewDataSource, U
         cell.name = item?.product.name.en
         cell.quantity = item?.quantity
         cell.unitPrice = item?.product.price
+        cell.category = item?.product.category?.name.en
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = CGFloat(bounds.width)
-        let height = CGFloat(128)
+        let height = CGFloat(114)
         return CGSizeMake(width, height)
     }
 }
