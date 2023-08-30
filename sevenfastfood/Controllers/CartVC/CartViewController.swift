@@ -18,6 +18,7 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
     
     private lazy var cartItemsView: CartItemsView = {
         let view = CartItemsView()
+        view.cartItemCellDelegate = self
         return view
     }()
     
@@ -63,11 +64,36 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
         
         view.layoutIfNeeded()
     }
+    
+    private func updateTotalPrice(with cartItems: [CartItem]?) {
+        let totalPrice = cartItems?.reduce(0.0) {
+            (result, cartItem) in
+            let next = Double(cartItem.quantity) * cartItem.product.price
+            return result + next
+        }
+        footerView.totalPrice = totalPrice ?? 0.0
+    }
 }
 
-extension CartViewController: CartViewModelDelegate {
+extension CartViewController: CartViewModelDelegate, CartItemCellDelegate {
     func didReceiveCartUpdate(_ cartItems: [CartItem]?) {
         headerView.itemsCount = cartItems?.count ?? 0
         cartItemsView.items = cartItems
+        
+        self.updateTotalPrice(with: cartItems)
+    }
+    
+    func didChangeItemQuantity(_ newValue: Int,_ productId: String) {
+        cartItemsView.setCellLoading(isLoading: true, with: productId)
+        viewModel?.updateCartItemQuantity(newValue, productId)
+    }
+    
+    func didUpdateCartItemSuccess(_ productId: String,_ cartItems: [CartItem]?) {
+        cartItemsView.setCellLoading(isLoading: false, with: productId)
+    }
+    
+    func didUpdateCartItemFailure(_ productId: String,_ error: Error) {
+        cartItemsView.setCellLoading(isLoading: false, with: productId)
+        Toast.shared.display(with: "Updated failure due to \(error.localizedDescription) for product with \(productId)")
     }
 }

@@ -46,3 +46,21 @@ final class Utils {
         return nil
     }
 }
+
+final class Debouncer {
+    private let delay: TimeInterval
+    private var timer: Timer?
+    private let queue: DispatchQueue
+
+    init(delay: TimeInterval, queue: DispatchQueue = .main) {
+        self.delay = delay
+        self.queue = queue
+    }
+
+    func debounce(action: @escaping () -> Void) {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { _ in
+            action()
+        }
+    }
+}

@@ -7,8 +7,26 @@
 
 import UIKit
 
+protocol CartItemCellDelegate: AnyObject {
+    func didChangeItemQuantity(_ newValue: Int,_ productId: String)
+}
+
 class CartItemViewCell: ClickableCollectionViewCell {
-    var id: String?
+    weak var delegate: CartItemCellDelegate?
+    private let debouncer = Debouncer(delay: 0.5)
+    var productId: String?
+    
+    var isLoading: Bool?
+    {
+        didSet {
+            if isLoading ?? false {
+                showLoading()
+            } else {
+                hideLoading()
+            }
+        }
+    }
+    
     var name: String?
     {
         didSet {
@@ -53,10 +71,17 @@ class CartItemViewCell: ClickableCollectionViewCell {
     {
         didSet {
             guard let totalPrice = totalPrice else { return }
-            totalPriceLabel.text = "\(totalPrice)đ"
+            let formatter = NumberFormatter()
+            formatter.locale = Locale.init(identifier: "vi_VN")
+            formatter.numberStyle = .currency
+            if let formattedTotalPrice = formatter.string(from: totalPrice as NSNumber) {
+                totalPriceLabel.text = "\(formattedTotalPrice)"
+            }
         }
     }
-
+    
+    private var centerOrigin: CGPoint?
+    
     private lazy var featuredImageView: UIImageView = {
         let image = UIImage()
         let view = UIImageView(image: image)
@@ -86,7 +111,7 @@ class CartItemViewCell: ClickableCollectionViewCell {
         label.text = String(totalPrice ?? 0)
         return label
     }()
-
+    
     private lazy var titleAndUnitPriceView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [nameLabel, categoryLabel])
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -109,7 +134,7 @@ class CartItemViewCell: ClickableCollectionViewCell {
         view.alignment = .trailing
         return view
     }()
-
+    
     private lazy var descriptionStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [titleAndUnitPriceView, totalPriceAndQuantityView])
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -126,8 +151,22 @@ class CartItemViewCell: ClickableCollectionViewCell {
         return view
     }()
     
+    private lazy var loadingView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        view.frame = self.bounds
+        view.backgroundColor = UIColor(white: 1, alpha: 0.3)
+        view.hidesWhenStopped = true
+        return view
+    }()
+    
+    override func prepareForReuse() {
+        hideLoading()
+    }
+    
     override func setupViews() {
-        addSubviews(contentStackView)
+        centerOrigin = center
+        contentView.addSubviews(contentStackView, loadingView)
+        //addPanGesture()
         backgroundColor = .systemGray6
         clipsToBounds = true
         layer.cornerRadius = 12
@@ -152,10 +191,47 @@ class CartItemViewCell: ClickableCollectionViewCell {
             
         ])
     }
+    
+    private func showLoading() {
+        DispatchQueue.main.async { [weak self] in
+            self?.loadingView.startAnimating()
+        }
+    }
+    
+    private func hideLoading() {
+        DispatchQueue.main.async { [weak self] in
+            self?.loadingView.stopAnimating()
+        }
+    }
+    
+    private func addPanGesture() {
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        contentView.addGestureRecognizer(gesture)
+    }
+    
+    @objc func handlePanGesture(_ sender: UIPanGestureRecognizer) {
+        var translation = sender.translation(in: contentView)
+        var velocity = sender.velocity(in: contentView)
+        if sender.state == .began {
+            debugPrint("Pan began -> translation -> \(translation) -> velocity -> \(velocity)")
+        } else if sender.state == .changed {
+            debugPrint("Pan changed -> translation -> \(translation) -> velocity -> \(velocity)")
+            var newOffsetX = center.x + translation.x
+            center = CGPoint(x: newOffsetX, y: center.y)
+        } else if sender.state == .ended {
+            center = centerOrigin!
+        }
+    }
 }
 
 extension CartItemViewCell: QuantityInputDelegate {
     func quantityInput(_ quantityInput: QuantityInputView, didChangeWithValue value: Int) {
-        debugPrint("Receive new value -> \(value)")
+        debouncer.debounce { [weak self] in guard let self = self else { return }
+            if let productId = productId {
+                delegate?.didChangeItemQuantity(value, productId)
+            } else {
+                Toast.shared.display(with: "Missing product id")
+            }
+        }
     }
 }
