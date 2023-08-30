@@ -13,7 +13,7 @@ extension UIImageView {
             return
         }
         let cacheId = NSString(string: url)
-        self.image = nil
+        image = nil
         if let cachedData = LocalData.shared.imageCache.object(forKey: cacheId) {
             DispatchQueue.main.async { [weak self] in self?.image = UIImage(data: cachedData as Data) }
         } else {

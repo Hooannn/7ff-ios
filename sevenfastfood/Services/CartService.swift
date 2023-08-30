@@ -57,7 +57,7 @@ final class CartService {
             "product": productId,
             "quantity": quantity
         ] as [String : Any]
-        apiClient.performPatch(withResponseType: Response<[CartItem]>.self, withSubpath: "/users/cart/remove", withParams: nil) {
+        apiClient.performPatch(withResponseType: Response<[CartItem]>.self, withSubpath: "/users/cart/remove", withParams: params) {
             result in
             switch result {
             case .success(let data):

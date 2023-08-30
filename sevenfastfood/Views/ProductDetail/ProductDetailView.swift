@@ -118,7 +118,12 @@ class ProductDetailView: UIView {
         titleLabel.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize)
         let priceLabel = Widgets.shared.createLabel()
         if let price = product?.price {
-            priceLabel.text = "\(price)VND"
+            let formatter = NumberFormatter()
+            formatter.locale = Locale.init(identifier: "vi_VN")
+            formatter.numberStyle = .currency
+            if let formattedPrice = formatter.string(from: price as NSNumber) {
+                priceLabel.text = "\(formattedPrice)"
+            }
         }
         priceLabel.font = UIFont.systemFont(ofSize: Tokens.shared.titleFontSize, weight: .bold)
         

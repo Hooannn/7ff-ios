@@ -42,7 +42,13 @@ final class ProductViewCell: ClickableCollectionViewCell {
     var price: Double?
     {
         didSet {
-            priceLabel.text = "\(price!)đ"
+            guard let price = price else { return }
+            let formatter = NumberFormatter()
+            formatter.locale = Locale.init(identifier: "vi_VN")
+            formatter.numberStyle = .currency
+            if let formattedPrice = formatter.string(from: price as NSNumber) {
+                priceLabel.text = "\(formattedPrice)"
+            }
         }
     }
     

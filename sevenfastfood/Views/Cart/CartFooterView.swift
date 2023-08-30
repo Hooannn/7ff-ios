@@ -8,7 +8,17 @@
 import UIKit
 
 class CartFooterView: BaseView {
-    var totalPrice: Double = 20000
+    var totalPrice: Double = 0
+    {
+        didSet {
+            let formatter = NumberFormatter()
+            formatter.locale = Locale.init(identifier: "vi_VN")
+            formatter.numberStyle = .currency
+            if let formattedTotalPrice = formatter.string(from: totalPrice as NSNumber) {
+                totalPriceLabel.text = "\(formattedTotalPrice)"
+            }
+        }
+    }
     private lazy var checkoutButton: UIButton = {
         let button = Widgets.shared.createSecondaryButton(title: "Checkout", target: self, action: #selector(didTapCheckoutButton(_:)))
         button.setImage(UIImage(systemName: "exclamationmark.lock"), for: .normal)
@@ -21,7 +31,6 @@ class CartFooterView: BaseView {
         label.textAlignment = .right
         label.font = UIFont.boldSystemFont(ofSize: Tokens.shared.titleFontSize)
         label.textColor = .alizarin
-        label.text = "\(totalPrice)đ"
         return label
     }()
 
