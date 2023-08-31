@@ -36,7 +36,7 @@ class CartFooterView: BaseView {
 
     private lazy var totalPriceView: UIStackView = {
         let titleLabel = Widgets.shared.createLabel()
-        titleLabel.text = "Total"
+        titleLabel.text = "Subtotal"
         let view = UIStackView(arrangedSubviews: [titleLabel, totalPriceLabel])
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .horizontal

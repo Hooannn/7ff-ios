@@ -54,7 +54,7 @@ final class SearchBarView: ClickableView {
     
     override func setupViews() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemGray6
+        backgroundColor = .white
         layer.cornerRadius = 12
         clipsToBounds = true
         addSubview(contentStackView)

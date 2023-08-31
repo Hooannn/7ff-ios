@@ -28,7 +28,7 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
         button.clipsToBounds = true
         button.layer.cornerRadius = 12
         button.layer.zPosition = 10
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = .white
         button.tintColor = Tokens.shared.secondaryColor
         button.setImage(UIImage(named: "Back"), for: .normal)
         button.addTarget(self, action: #selector(didTapBackButton(_:)), for: .touchUpInside)
@@ -40,7 +40,7 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 12
         button.layer.zPosition = 10
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = .white
         button.tintColor = Tokens.shared.secondaryColor
         button.setImage(UIImage(named: "Cart"), for: .normal)
         button.addTarget(self, action: #selector(didTapCartButton(_:)), for: .touchUpInside)
@@ -72,7 +72,7 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = Tokens.shared.lightBackgroundColor
         setupLoading()
         setupViews()
         setupConstraints()

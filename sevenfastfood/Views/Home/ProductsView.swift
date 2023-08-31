@@ -26,6 +26,7 @@ final class ProductsView: BaseCollectionView {
         isSkeletonable = true
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
+        backgroundColor = .clear
         delegate = self
         translatesAutoresizingMaskIntoConstraints = false
         register(ProductViewCell.self, forCellWithReuseIdentifier: cellIdentifier)

@@ -38,6 +38,7 @@ class CartItemsView: BaseView {
 
     override func setupViews() {
         addSubviews(cartItemsCollectionView)
+        cartItemsCollectionView.backgroundColor = .clear
         cartItemsCollectionView.register(CartItemViewCell.self, forCellWithReuseIdentifier: identifier)
     }
     
