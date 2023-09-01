@@ -16,9 +16,24 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
         return view
     }()
     
+    private lazy var discountProgressView: CartDiscountProgressView = {
+        let view = CartDiscountProgressView()
+        return view
+    }()
+    
     private lazy var cartItemsView: CartItemsView = {
         let view = CartItemsView()
         view.cartItemCellDelegate = self
+        return view
+    }()
+    
+    private lazy var emptyView: CartEmptyView = {
+        let view = CartEmptyView()
+        view.isHidden = true
+        view.backgroundColor = .clear
+        view.didTapShoppingButton = {
+            self.tabBarController?.selectedIndex = 0
+        }
         return view
     }()
     
@@ -28,7 +43,7 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
     }()
     
     private lazy var containerView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [headerView, cartItemsView, footerView])
+        let stackView = UIStackView(arrangedSubviews: [headerView, discountProgressView, cartItemsView, footerView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 24
@@ -48,7 +63,7 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
     }
     
     private func setupViews() {
-        view.addSubviews(containerView)
+        view.addSubviews(containerView, emptyView)
     }
     
     private func setupConstraints() {
@@ -58,7 +73,13 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
             containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -Tokens.shared.containerXPadding),
             containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
+            emptyView.topAnchor.constraint(equalTo: view.topAnchor),
+            emptyView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            emptyView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            emptyView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
             headerView.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight),
+            discountProgressView.heightAnchor.constraint(equalToConstant: 34),
             footerView.heightAnchor.constraint(equalToConstant: 100)
         ])
         
@@ -72,20 +93,42 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
             return result + next
         }
         footerView.totalPrice = totalPrice ?? 0.0
+        discountProgressView.totalPrice = totalPrice ?? 0.0
+    }
+    
+    private func displayEmptyView() {
+        containerView.isHidden = true
+        emptyView.isHidden = false
+    }
+    
+    private func hideEmptyView() {
+        containerView.isHidden = false
+        emptyView.isHidden = true
     }
 }
 
 extension CartViewController: CartViewModelDelegate, CartItemCellDelegate {
     func didReceiveCartUpdate(_ cartItems: [CartItem]?) {
-        headerView.itemsCount = cartItems?.count ?? 0
+        let cartItemsCount = cartItems?.count ?? 0
+        headerView.itemsCount = cartItemsCount
         cartItemsView.items = cartItems
-        
         self.updateTotalPrice(with: cartItems)
+        
+        if cartItemsCount > 0 {
+            hideEmptyView()
+        } else {
+            displayEmptyView()
+        }
     }
     
     func didChangeItemQuantity(_ newValue: Int,_ productId: String) {
         cartItemsView.setCellLoading(isLoading: true, with: productId)
         viewModel?.updateCartItemQuantity(newValue, productId)
+    }
+    
+    func didConfirmItemDeletion(_ productId: String) {
+        cartItemsView.setCellLoading(isLoading: true, with: productId)
+        viewModel?.deleteCartItem(for: productId)
     }
     
     func didUpdateCartItemSuccess(_ productId: String,_ cartItems: [CartItem]?) {

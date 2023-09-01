@@ -29,16 +29,21 @@ class ClickableCollectionReusableView: UICollectionReusableView {
     }
     
     internal func setupGestureRecognizer() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(performTapAnimation(_:)))
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(didPress(_:)))
         addGestureRecognizer(tapGesture)
         addGestureRecognizer(longPressGesture)
     }
     
-    @objc func didTap(_ sender: UIGestureRecognizer) {
+    @objc func performTapAnimation(_ sender: UIGestureRecognizer) {
         animateHoverEffect {
             self.restoreOriginalState()
+            self.didTap(sender)
         }
+    }
+    
+    @objc func didTap(_ sender: UIGestureRecognizer) {
+        
     }
     
     @objc func didPress(_ sender: UILongPressGestureRecognizer) {

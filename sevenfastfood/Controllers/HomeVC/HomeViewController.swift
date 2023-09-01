@@ -27,6 +27,9 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
     private lazy var headerView: HomeHeaderView = {
         let user = localDataClient.getLoggedUser()
         let view = HomeHeaderView(displayName: "\(user!.lastName) \(user!.firstName)", avatar: user?.avatar)
+        view.didTapAvatar = {
+            self.tabBarController?.selectedIndex = 3
+        }
         return view
     }()
     

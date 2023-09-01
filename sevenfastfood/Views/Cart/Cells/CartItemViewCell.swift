@@ -9,6 +9,7 @@ import UIKit
 
 protocol CartItemCellDelegate: AnyObject {
     func didChangeItemQuantity(_ newValue: Int,_ productId: String)
+    func didConfirmItemDeletion(_ productId: String)
 }
 
 fileprivate class DeleteView: ClickableView {
@@ -19,6 +20,8 @@ fileprivate class DeleteView: ClickableView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    public var didConfirmDeletion: ((UIAlertAction) -> Void)?
     
     override func setupViews() {
         backgroundColor = .alizarin
@@ -35,7 +38,14 @@ fileprivate class DeleteView: ClickableView {
     }
     
     override func didTap(_ sender: UIGestureRecognizer) {
-        debugPrint("did tap delete")
+        let alertVC = UIAlertController(title: "Delete confirmation", message: "Are you sure you want to delete this item ?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+        let acceptAction = UIAlertAction(title: "Delete", style: .destructive, handler: didConfirmDeletion)
+        alertVC.addAction(cancelAction)
+        alertVC.addAction(acceptAction)
+        if let root = UIApplication.shared.keyWindow?.rootViewController {
+            root.present(alertVC, animated: true)
+        }
     }
 }
 
@@ -191,11 +201,20 @@ class CartItemViewCell: BaseCollectionViewCell {
     }()
     
     private lazy var deleteView: DeleteView = {
-        DeleteView()
+        let view = DeleteView()
+        view.didConfirmDeletion = {
+            [weak self] _ in guard let productId = self?.productId else { return }
+            self?.backToOriginalState {
+                self?.delegate?.didConfirmItemDeletion(productId)
+            }
+        }
+        return view
     }()
-
+    
     override func prepareForReuse() {
         hideLoading()
+        backToOriginalState()
+        originalCenter = center
     }
     
     override func setupViews() {
@@ -210,6 +229,15 @@ class CartItemViewCell: BaseCollectionViewCell {
         layer.shadowOpacity = 0.3
     }
     
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if isHidden || alpha == 0 || clipsToBounds { return super.hitTest(point, with: event) }
+        // convert the point into subview's coordinate system
+        let subviewPoint = self.convert(point, to: deleteView)
+        // if the converted point lies in subview's bound, tell UIKit that subview should be the one that receives this event
+        if !deleteView.isHidden && deleteView.bounds.contains(subviewPoint) { return deleteView }
+        return super.hitTest(point, with: event)
+    }
+    
     override func setupConstraints() {
         NSLayoutConstraint.activate([
             contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
@@ -220,7 +248,7 @@ class CartItemViewCell: BaseCollectionViewCell {
             deleteView.widthAnchor.constraint(equalToConstant: 70),
             deleteView.heightAnchor.constraint(equalTo: heightAnchor),
             deleteView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 82),
-
+            
             featuredImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.9),
             featuredImageView.widthAnchor.constraint(equalTo: featuredImageView.heightAnchor),
             totalPriceAndQuantityView.heightAnchor.constraint(equalToConstant: 40),
@@ -247,26 +275,29 @@ class CartItemViewCell: BaseCollectionViewCell {
         contentView.addGestureRecognizer(gesture)
     }
     
-    private func backToOriginalState() {
-        UIView.animate(withDuration: 0.2) { [weak self] in
-            self?.center = self!.originalCenter!
+    private func backToOriginalState(completion: (() -> Void)? = nil) {
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.center.x = self!.originalCenter!.x
+        }) {
+            _ in
+            completion?()
         }
     }
     
     @objc func handlePanGesture(_ sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: contentView)
-        let threshold = 82
+        let threshold = CGFloat(82)
         if sender.state == .began {
             trayOriginalCenter = center
         } else if sender.state == .changed {
-            // Swipe left only
-            let maxCenterX = trayOriginalCenter.x
-            let translationX = abs(translation.x) >= CGFloat(threshold) ? -CGFloat(threshold) : translation.x
-            let offset = trayOriginalCenter.x + translationX
+            let maxCenterX = originalCenter!.x
+            let minCenterX = originalCenter!.x - threshold
+            let translationX = translation.x <= -threshold ? -threshold : translation.x
+            let offset = trayOriginalCenter.x + translationX <= minCenterX ? minCenterX : trayOriginalCenter.x + translationX
             let newCenterX = min(maxCenterX, offset)
             center = CGPoint(x: newCenterX, y: center.y)
         } else if sender.state == .ended {
-            if abs(translation.x) >= CGFloat(threshold) {
+            if translation.x <= -threshold {
                 
             } else {
                 backToOriginalState()
@@ -279,6 +310,7 @@ extension CartItemViewCell: QuantityInputDelegate {
     func quantityInput(_ quantityInput: QuantityInputView, didChangeWithValue value: Int) {
         debouncer.debounce { [weak self] in guard let self = self else { return }
             if let productId = productId {
+                backToOriginalState()
                 delegate?.didChangeItemQuantity(value, productId)
             } else {
                 Toast.shared.display(with: "Missing product id")

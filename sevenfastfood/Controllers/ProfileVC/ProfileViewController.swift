@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfileViewController: UIViewController {
+final class ProfileViewController: ViewControllerWithoutNavigationBar {
     private let widgets = Widgets.shared
     private let viewModel = ProfileViewModel()
     private lazy var signOutButton: UIButton = {
@@ -15,30 +15,37 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        navigationItem.title = "Profile"
+        view.backgroundColor = Tokens.shared.lightBackgroundColor
         setupViews()
         setupConstraints()
     }
     
     func setupViews() {
-        view.addSubviews(signOutButton)
+        view.addSubviews(scrollView)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            signOutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            signOutButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
-            signOutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            signOutButton.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight)
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
     @objc func didTapSignOutButton() {
         let signOutAlertVC = UIAlertController(title: "Sign out", message: "Are you sure you want to sign out ?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
         let acceptAction = UIAlertAction(title: "Confirm", style: .destructive) {
             _ in self.doSignOut()
         }

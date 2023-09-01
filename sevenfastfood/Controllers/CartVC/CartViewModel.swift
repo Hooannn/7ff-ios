@@ -44,6 +44,17 @@ final class CartViewModel {
         delegate?.didReceiveCartUpdate(cartItems)
     }
     
+    func deleteCartItem(for productId: String) {
+        CartService.shared.removeItem(productId: productId, quantity: 999999) {
+            [weak self] result in switch result {
+            case .success(let data):
+                self?.delegate?.didUpdateCartItemSuccess(productId, data?.data)
+            case .failure(let error):
+                self?.delegate?.didUpdateCartItemFailure(productId, error)
+            }
+        }
+    }
+    
     func updateCartItemQuantity(_ newValue: Int,_ productId: String) {
         let cartItems = LocalData.shared.getUserCart()
         guard let target = cartItems?.first(where: { cartItem in cartItem.product._id == productId }) else { return }
