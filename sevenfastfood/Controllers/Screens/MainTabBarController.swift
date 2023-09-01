@@ -41,6 +41,7 @@ final class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigations()
+        self.didReceiveCartUpdateNotification()
         CartService.shared.fetchItems()
     }
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -64,7 +65,7 @@ final class MainTabBarController: UITabBarController {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.didSaveCart, object: nil)
     }
     
-    @objc func didReceiveCartUpdateNotification(_ notification: NSNotification) {
+    @objc func didReceiveCartUpdateNotification(_ notification: NSNotification? = nil) {
         let cartItems = LocalData.shared.getUserCart()
         let badgeValue = cartItems?.count
         let cartTab = tabBar.items?.first(where: { tab in tab.tag == 2 })

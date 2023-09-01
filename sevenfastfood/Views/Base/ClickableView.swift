@@ -29,16 +29,21 @@ class ClickableView: UIView {
     }
     
     internal func setupGestureRecognizer() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(performTapAnimation(_:)))
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(didPress(_:)))
         addGestureRecognizer(tapGesture)
         addGestureRecognizer(longPressGesture)
     }
     
-    @objc func didTap(_ sender: UIGestureRecognizer) {
+    @objc func performTapAnimation(_ sender: UIGestureRecognizer) {
         animateHoverEffect {
-            self.restoreOriginalState()
+            self.restoreOriginalState(completion: nil)
+            self.didTap(sender)
         }
+    }
+    
+    @objc func didTap(_ sender: UIGestureRecognizer) {
+        
     }
     
     @objc func didPress(_ sender: UILongPressGestureRecognizer) {
@@ -46,9 +51,9 @@ class ClickableView: UIView {
         case.began:
             animateHoverEffect(completion: nil)
         case .cancelled:
-            restoreOriginalState()
+            restoreOriginalState(completion: nil)
         case .ended:
-            restoreOriginalState()
+            restoreOriginalState(completion: nil)
             didEndLongPress()
         default:
             return
@@ -70,11 +75,13 @@ class ClickableView: UIView {
         }
     }
     
-    private func restoreOriginalState() {
+    private func restoreOriginalState(completion: (() -> Void)?) {
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
             self.alpha = 1
             self.transform = self.transform.scaledBy(x: 1 / 0.97, y: 1 / 0.97)
-        })
+        }) { _ in
+            completion?()
+        }
     }
     
 }
