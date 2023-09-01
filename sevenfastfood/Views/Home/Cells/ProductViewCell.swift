@@ -117,7 +117,7 @@ final class ProductViewCell: ClickableCollectionViewCell {
     override func setupViews() {
         isSkeletonable = true
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemGray6
+        backgroundColor = .white
         clipsToBounds = true
         layer.cornerRadius = 12
         layer.shadowOffset = CGSize(width: 2, height: 2)

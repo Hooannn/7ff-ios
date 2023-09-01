@@ -102,7 +102,8 @@ class ProductDetailView: UIView {
     
     private lazy var footerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGray6
+        view.layer.shadowOffset = CGSize(width: 1, height: 1)
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

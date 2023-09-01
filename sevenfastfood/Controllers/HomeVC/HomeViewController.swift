@@ -56,10 +56,9 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = Tokens.shared.lightBackgroundColor
         setupViews()
         setupConstraints()
-        
         setupCategories()
     }
     
@@ -77,7 +76,7 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
             containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: safeAreaInsets!.top + 16),
             containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: Tokens.shared.containerXPadding),
             containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -Tokens.shared.containerXPadding),
-            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
             headerView.heightAnchor.constraint(equalToConstant: 54),
             searchBarView.heightAnchor.constraint(equalToConstant: 54),

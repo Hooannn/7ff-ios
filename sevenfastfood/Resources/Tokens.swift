@@ -10,6 +10,9 @@ import UIKit
 final class Tokens {
     public static let shared = Tokens()
     let textFieldFontSize = CGFloat(14)
+    
+    let lightBackgroundColor: UIColor = .systemGray6
+    
     let primaryColor: UIColor = {
         let color = UIColor(red: CGFloat(255.0/255.0), green: CGFloat(190.0/255.0), blue: CGFloat(51.0/255.0), alpha: CGFloat(1.0))
         return color

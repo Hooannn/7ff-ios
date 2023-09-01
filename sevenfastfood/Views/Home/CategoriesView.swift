@@ -45,6 +45,7 @@ final class CategoriesView: BaseCollectionView {
         dataSource = self
         delegate = self
         isSkeletonable = true
+        backgroundColor = .clear
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
         register(CategoryViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
