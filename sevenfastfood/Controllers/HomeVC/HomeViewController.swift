@@ -59,7 +59,6 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Tokens.shared.lightBackgroundColor
         setupViews()
         setupConstraints()
         setupCategories()
@@ -71,6 +70,7 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
     }
     
     private func setupViews() {
+        view.backgroundColor = Tokens.shared.lightBackgroundColor
         view.addSubview(containerView)
     }
     

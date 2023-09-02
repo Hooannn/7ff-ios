@@ -86,7 +86,8 @@ class CartDiscountProgressView: BaseView {
             progressBarContainerView.heightAnchor.constraint(equalToConstant: 6),
             
             progressBarInnerView.heightAnchor.constraint(equalTo: progressBarContainerView.heightAnchor),
-            progressBarInnerView.leadingAnchor.constraint(equalTo: progressBarContainerView.leadingAnchor)
+            progressBarInnerView.leadingAnchor.constraint(equalTo: progressBarContainerView.leadingAnchor),
+            progressBarInnerView.widthAnchor.constraint(equalToConstant: 0)
         ])
         layoutIfNeeded()
     }

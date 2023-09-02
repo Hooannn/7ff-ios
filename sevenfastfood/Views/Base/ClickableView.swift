@@ -15,7 +15,7 @@ class ClickableView: UIView {
         setupViews()
         setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -35,15 +35,15 @@ class ClickableView: UIView {
         addGestureRecognizer(longPressGesture)
     }
     
-    @objc func performTapAnimation(_ sender: UIGestureRecognizer) {
+    @objc func performTapAnimation(_ sender: UITapGestureRecognizer) {
         animateHoverEffect {
             self.restoreOriginalState(completion: nil)
             self.didTap(sender)
         }
     }
     
-    @objc func didTap(_ sender: UIGestureRecognizer) {
-        
+    @objc func didTap(_ sender: UITapGestureRecognizer) {
+    
     }
     
     @objc func didPress(_ sender: UILongPressGestureRecognizer) {
@@ -64,7 +64,7 @@ class ClickableView: UIView {
         
     }
 
-    private func animateHoverEffect(completion: (() -> Void)?) {
+    internal func animateHoverEffect(completion: (() -> Void)?) {
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: {
             self.alpha = 0.97
             self.transform = self.transform.scaledBy(x: 0.97, y: 0.97)
@@ -75,7 +75,7 @@ class ClickableView: UIView {
         }
     }
     
-    private func restoreOriginalState(completion: (() -> Void)?) {
+    internal func restoreOriginalState(completion: (() -> Void)?) {
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
             self.alpha = 1
             self.transform = self.transform.scaledBy(x: 1 / 0.97, y: 1 / 0.97)

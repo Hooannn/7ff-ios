@@ -181,6 +181,7 @@ class ProductDetailView: UIView {
             addToCartButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -Tokens.shared.containerXPadding),
             addToCartButton.widthAnchor.constraint(equalTo: footerView.widthAnchor, multiplier: 0.4),
             addToCartButton.heightAnchor.constraint(equalTo: footerView.heightAnchor, multiplier: 0.45),
+            
             priceView.centerYAnchor.constraint(equalTo: footerView.centerYAnchor),
             priceView.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: Tokens.shared.containerXPadding),
             priceView.trailingAnchor.constraint(equalTo: addToCartButton.leadingAnchor),

@@ -47,7 +47,7 @@ final class SearchBarView: ClickableView {
         return stackView
     }()
     
-    override func didTap(_ sender: UIGestureRecognizer) {
+    override func didTap(_ sender: UITapGestureRecognizer) {
         super.didTap(sender)
         delegate.didTapSearchBar(sender)
     }
