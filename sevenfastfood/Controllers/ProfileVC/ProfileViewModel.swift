@@ -9,8 +9,14 @@ import Foundation
 
 
 final class ProfileViewModel {
-    public func performSignOut(completion: @escaping () -> Void) {
+    func performSignOut(completion: @escaping () -> Void) {
         LocalData.shared.cleanup()
         completion()
+    }
+    
+    func getUser(completion: @escaping (User?) -> Void) {
+        let user = LocalData.shared.getLoggedUser()
+        
+        completion(user)
     }
 }

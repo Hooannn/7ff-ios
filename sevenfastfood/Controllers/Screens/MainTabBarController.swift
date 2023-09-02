@@ -27,7 +27,7 @@ struct Tab {
     private mutating func setup() {
         let navigation = UINavigationController(rootViewController: viewController)
         let tabBarItem = UITabBarItem(title: title, image: image, tag: tag)
-        navigation.navigationBar.prefersLargeTitles = true
+        navigation.navigationBar.prefersLargeTitles = false
         navigation.tabBarItem = tabBarItem
         navigation.navigationItem.largeTitleDisplayMode = .never
         self.navigation = navigation

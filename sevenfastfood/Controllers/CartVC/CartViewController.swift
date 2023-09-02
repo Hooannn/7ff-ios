@@ -52,7 +52,6 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Tokens.shared.lightBackgroundColor
         setupViewModel()
         setupViews()
         setupConstraints()
@@ -63,6 +62,7 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
     }
     
     private func setupViews() {
+        view.backgroundColor = Tokens.shared.lightBackgroundColor
         view.addSubviews(containerView, emptyView)
     }
     

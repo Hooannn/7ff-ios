@@ -38,6 +38,23 @@ final class Widgets {
         return button
     }
     
+    func createDangerButton(outline: Bool, title: String, target: Any?, action: Selector, `for`: UIButton.Event? = .touchUpInside) -> UIButton {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = outline ? .alizarin : .white
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)
+        button.backgroundColor = outline ? .clear : .alizarin
+        button.setTitle(title, for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        button.layer.cornerRadius = tokens.buttonCornerRadius
+        if outline {
+            button.layer.borderColor = UIColor.alizarin.cgColor
+            button.layer.borderWidth = 1
+        }
+        button.addTarget(target, action: action, for: `for`!)
+        return button
+    }
+    
     public func createGoogleAuthButton(title: String, target: Any?, action: Selector, `for`: UIButton.Event? = .touchUpInside) -> UIButton {
         let button = UIButton(type: .system)
         let googleImage = UIImage(named: "Google")

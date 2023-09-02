@@ -8,48 +8,13 @@
 import UIKit
 import SkeletonView
 
-fileprivate class DisplayImageView: ClickableView {
-    var didTapAvatar: (() -> Void)?
-    private lazy var imageView: UIImageView = {
-        let image = UIImage()
-        let imageView = UIImageView(image: image)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 12
-        imageView.isSkeletonable = true
-        return imageView
-    }()
-    
-    func loadRemoteImageUrl(from avatar: String?) {
-        imageView.loadRemoteUrl(from: avatar)
-    }
-    
-    override func setupViews() {
-        addSubview(imageView)
-    }
-    
-    override func setupConstraints() {
-        NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            imageView.topAnchor.constraint(equalTo: topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
-    }
-    
-    override func didTap(_ sender: UIGestureRecognizer) {
-        didTapAvatar?()
-    }
-}
-
 final class HomeHeaderView: UIView {
     private var displayName: String?
     private var avatar: String?
     
     var didTapAvatar: (() -> Void)?
-    private lazy var displayImageView: DisplayImageView = {
-        let imageView = DisplayImageView()
+    private lazy var displayImageView: AvatarView = {
+        let imageView = AvatarView()
         imageView.loadRemoteImageUrl(from: avatar)
         imageView.didTapAvatar = {
             self.didTapAvatar?()
