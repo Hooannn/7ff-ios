@@ -29,6 +29,7 @@ struct Tab {
         let tabBarItem = UITabBarItem(title: title, image: image, tag: tag)
         navigation.navigationBar.prefersLargeTitles = false
         navigation.tabBarItem = tabBarItem
+        navigation.navigationBar.tintColor = Tokens.shared.primaryColor
         navigation.navigationItem.largeTitleDisplayMode = .never
         self.navigation = navigation
     }
