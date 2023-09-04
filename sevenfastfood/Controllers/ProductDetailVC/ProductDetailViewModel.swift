@@ -16,7 +16,7 @@ final class ProductDetailViewModel {
     weak var delegate: ProductDetailViewModelDelegate!
     
     func fetchProductDetail(withId id: String) {
-        ProductsService.shared.fetchDetailProduct(withId: id) {
+        ProductsService.shared.fetchDetail(withId: id) {
             result in
             switch result {
             case .success(let data):

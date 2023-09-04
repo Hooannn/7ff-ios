@@ -9,7 +9,7 @@ import UIKit
 
 final class AvatarView: ClickableView {
     var didTapAvatar: (() -> Void)?
-    private lazy var imageView: UIImageView = {
+    lazy var imageView: UIImageView = {
         let image = UIImage()
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false

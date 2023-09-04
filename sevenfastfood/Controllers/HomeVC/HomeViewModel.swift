@@ -18,7 +18,7 @@ protocol HomeViewModelDelegate: AnyObject {
 final class HomeViewModel {
     weak var delegate: HomeViewModelDelegate!
     func fetchCategories() {
-        CategoriesService.shared.fetchCategories {
+        CategoriesService.shared.fetch {
             result in switch result {
             case.success(let data):
                 self.delegate.didFetchCategoriesSuccess(data?.data)
@@ -29,7 +29,7 @@ final class HomeViewModel {
     }
     
     func fetchProducts(withParams params: Parameters?) {
-        ProductsService.shared.fetchProducts(withParams: params) {
+        ProductsService.shared.fetch(withParams: params) {
             result in switch result {
             case.success(let data):
                 self.delegate.didFetchProductsSuccess(data?.data)

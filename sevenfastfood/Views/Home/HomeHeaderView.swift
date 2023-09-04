@@ -9,13 +9,18 @@ import UIKit
 import SkeletonView
 
 final class HomeHeaderView: UIView {
-    private var displayName: String?
-    private var avatar: String?
-    
+    var user: User?
+    {
+        didSet {
+            displayImageView.loadRemoteImageUrl(from: user?.avatar)
+            if let firstName = user?.firstName, let lastName = user?.lastName {
+                displayNameLabel.text = "\(firstName) \(lastName)"
+            }
+        }
+    }
     var didTapAvatar: (() -> Void)?
     private lazy var displayImageView: AvatarView = {
         let imageView = AvatarView()
-        imageView.loadRemoteImageUrl(from: avatar)
         imageView.didTapAvatar = {
             self.didTapAvatar?()
         }
@@ -41,23 +46,15 @@ final class HomeHeaderView: UIView {
     private lazy var displayNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = displayName
         label.tintColor = .black
         label.font = UIFont.boldSystemFont(ofSize: Tokens.shared.titleFontSize)
         return label
     }()
     
-
-    convenience init(displayName name: String, avatar: String?) {
-        self.init()
-        self.avatar = avatar
-        self.displayName = name
-        setupViews()
-        setupConstraints()
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupViews()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {

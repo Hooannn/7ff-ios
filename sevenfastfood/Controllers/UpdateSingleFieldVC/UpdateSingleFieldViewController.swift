@@ -37,12 +37,13 @@ final class UpdateSingleFieldViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: Tokens.shared.textFieldFontSize)
-        textField.withFlag = true
+        textField.withFlag = false
         textField.withPrefix = true
         textField.withExamplePlaceholder = true
         if !isEmpty && identifier != .password {
             textField.text = try? textField.phoneNumberKit.parse("+\(defaultValue)").numberString
         }
+        textField.textAlignment = .center
         return textField
     }()
     
@@ -55,6 +56,7 @@ final class UpdateSingleFieldViewController: UIViewController {
         if identifier == .password {
             textField.isSecureTextEntry = true
         }
+        textField.textAlignment = .center
         textField.clearButtonMode = .whileEditing
         return textField
     }()
@@ -64,6 +66,7 @@ final class UpdateSingleFieldViewController: UIViewController {
         if identifier == .password {
             textField.isSecureTextEntry = true
         }
+        textField.textAlignment = .center
         textField.clearButtonMode = .whileEditing
         return textField
     }()
