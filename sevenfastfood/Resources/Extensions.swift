@@ -43,6 +43,11 @@ extension UIViewController {
             sd.changeScreen(to: screen)
         }
     }
+    
+    func pushViewControllerWithoutBottomBar(_ vc: UIViewController) {
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension UIView {
@@ -137,4 +142,7 @@ extension UIButton {
 extension NSNotification.Name {
     static var didSaveCart: Notification.Name {
         return .init(rawValue: "Cart.updated") }
+    static var didSaveUser: Notification.Name {
+        return .init(rawValue: "User.updated")
+    }
 }

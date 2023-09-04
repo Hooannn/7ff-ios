@@ -26,7 +26,6 @@ final class LocalData {
         OnboardingScreen(title: "Start-Up Story Of 7ff", description: "“Don’t worry about failure, you only have to be right once” - Drew Houston", displayImage: UIImage(named: "Onboarding_3"), buttonTitle: "Let's started", isFinal: true),
     ]
     
-    
     public func getOnboardingScreens() -> [OnboardingScreen] {
         onboardingScreens
     }
@@ -43,6 +42,7 @@ final class LocalData {
         let encoder = JSONEncoder()
         if let encodedUser = try? encoder.encode(user) {
             client.set(encodedUser, forKey: "user")
+            NotificationCenter.default.post(name: NSNotification.Name.didSaveUser, object: nil)
         }
     }
     

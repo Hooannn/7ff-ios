@@ -26,6 +26,16 @@
 		F44DA43B2A90D708006DF337 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44DA43A2A90D708006DF337 /* SearchViewController.swift */; };
 		F44DA43D2A90D718006DF337 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44DA43C2A90D718006DF337 /* SearchViewModel.swift */; };
 		F45032192A9B928D0033C5F9 /* QuantityInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45032182A9B928D0033C5F9 /* QuantityInputView.swift */; };
+		F450746C2AA431EF0019D8F9 /* ProfileTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450746B2AA431EF0019D8F9 /* ProfileTableCell.swift */; };
+		F45074702AA496880019D8F9 /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450746F2AA496880019D8F9 /* MyOrdersViewController.swift */; };
+		F45074722AA496960019D8F9 /* MyOrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074712AA496960019D8F9 /* MyOrdersViewModel.swift */; };
+		F45074742AA496A00019D8F9 /* MyReservationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074732AA496A00019D8F9 /* MyReservationsViewController.swift */; };
+		F45074762AA496B00019D8F9 /* MyReservationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074752AA496B00019D8F9 /* MyReservationsViewModel.swift */; };
+		F45074792AA497EB0019D8F9 /* DeactivateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074782AA497EB0019D8F9 /* DeactivateAccountViewController.swift */; };
+		F450747B2AA497F80019D8F9 /* DeactivateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450747A2AA497F80019D8F9 /* DeactivateAccountViewModel.swift */; };
+		F450747E2AA498C80019D8F9 /* UpdateSingleFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450747D2AA498C80019D8F9 /* UpdateSingleFieldViewController.swift */; };
+		F45074802AA498D40019D8F9 /* UpdateSingleFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450747F2AA498D40019D8F9 /* UpdateSingleFieldViewModel.swift */; };
+		F45074822AA4CF1C0019D8F9 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074812AA4CF1C0019D8F9 /* ProfileService.swift */; };
 		F45BD7F82A83E80C0099E22F /* Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45BD7F72A83E80C0099E22F /* Widgets.swift */; };
 		F45BD7FA2A83EB270099E22F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45BD7F92A83EB270099E22F /* Extensions.swift */; };
 		F464B1182A98DAC1006EBD77 /* CartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F464B1172A98DAC1006EBD77 /* CartHeaderView.swift */; };
@@ -110,6 +120,16 @@
 		F44DA43A2A90D708006DF337 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		F44DA43C2A90D718006DF337 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		F45032182A9B928D0033C5F9 /* QuantityInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityInputView.swift; sourceTree = "<group>"; };
+		F450746B2AA431EF0019D8F9 /* ProfileTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableCell.swift; sourceTree = "<group>"; };
+		F450746F2AA496880019D8F9 /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
+		F45074712AA496960019D8F9 /* MyOrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewModel.swift; sourceTree = "<group>"; };
+		F45074732AA496A00019D8F9 /* MyReservationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReservationsViewController.swift; sourceTree = "<group>"; };
+		F45074752AA496B00019D8F9 /* MyReservationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReservationsViewModel.swift; sourceTree = "<group>"; };
+		F45074782AA497EB0019D8F9 /* DeactivateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivateAccountViewController.swift; sourceTree = "<group>"; };
+		F450747A2AA497F80019D8F9 /* DeactivateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivateAccountViewModel.swift; sourceTree = "<group>"; };
+		F450747D2AA498C80019D8F9 /* UpdateSingleFieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSingleFieldViewController.swift; sourceTree = "<group>"; };
+		F450747F2AA498D40019D8F9 /* UpdateSingleFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSingleFieldViewModel.swift; sourceTree = "<group>"; };
+		F45074812AA4CF1C0019D8F9 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		F45BD7F72A83E80C0099E22F /* Widgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widgets.swift; sourceTree = "<group>"; };
 		F45BD7F92A83EB270099E22F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F464B1172A98DAC1006EBD77 /* CartHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartHeaderView.swift; sourceTree = "<group>"; };
@@ -238,6 +258,7 @@
 		F43D84D82AA3856A00D6FD4A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				F450746B2AA431EF0019D8F9 /* ProfileTableCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -274,6 +295,42 @@
 				F44DA43C2A90D718006DF337 /* SearchViewModel.swift */,
 			);
 			path = SearchVC;
+			sourceTree = "<group>";
+		};
+		F450746D2AA4963E0019D8F9 /* MyOrdersVC */ = {
+			isa = PBXGroup;
+			children = (
+				F450746F2AA496880019D8F9 /* MyOrdersViewController.swift */,
+				F45074712AA496960019D8F9 /* MyOrdersViewModel.swift */,
+			);
+			path = MyOrdersVC;
+			sourceTree = "<group>";
+		};
+		F450746E2AA4964B0019D8F9 /* MyReservationsVC */ = {
+			isa = PBXGroup;
+			children = (
+				F45074732AA496A00019D8F9 /* MyReservationsViewController.swift */,
+				F45074752AA496B00019D8F9 /* MyReservationsViewModel.swift */,
+			);
+			path = MyReservationsVC;
+			sourceTree = "<group>";
+		};
+		F45074772AA497C90019D8F9 /* DeactivateAccountVC */ = {
+			isa = PBXGroup;
+			children = (
+				F45074782AA497EB0019D8F9 /* DeactivateAccountViewController.swift */,
+				F450747A2AA497F80019D8F9 /* DeactivateAccountViewModel.swift */,
+			);
+			path = DeactivateAccountVC;
+			sourceTree = "<group>";
+		};
+		F450747C2AA498960019D8F9 /* UpdateSingleFieldVC */ = {
+			isa = PBXGroup;
+			children = (
+				F450747D2AA498C80019D8F9 /* UpdateSingleFieldViewController.swift */,
+				F450747F2AA498D40019D8F9 /* UpdateSingleFieldViewModel.swift */,
+			);
+			path = UpdateSingleFieldVC;
 			sourceTree = "<group>";
 		};
 		F464B1162A98DAB1006EBD77 /* Cart */ = {
@@ -400,6 +457,10 @@
 		F48AD04D2A8333D700F693F7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F450747C2AA498960019D8F9 /* UpdateSingleFieldVC */,
+				F45074772AA497C90019D8F9 /* DeactivateAccountVC */,
+				F450746E2AA4964B0019D8F9 /* MyReservationsVC */,
+				F450746D2AA4963E0019D8F9 /* MyOrdersVC */,
 				F435CEF62A92199000F452FC /* ProductDetailVC */,
 				F44DA4392A90D6F9006DF337 /* SearchVC */,
 				F46E5C832A83542500889BB0 /* OnboardingVC */,
@@ -495,6 +556,7 @@
 				F4DE9FAC2A8D226300AF2068 /* CategoriesService.swift */,
 				F44514112A8FC756004522FA /* ProductsService.swift */,
 				F444F4632A94F8A4007AF140 /* CartService.swift */,
+				F45074812AA4CF1C0019D8F9 /* ProfileService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -637,6 +699,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F450746C2AA431EF0019D8F9 /* ProfileTableCell.swift in Sources */,
 				F46E5C742A83537C00889BB0 /* SignInViewController.swift in Sources */,
 				F46E5C7A2A8353A400889BB0 /* SignUpViewModel.swift in Sources */,
 				F48AD05C2A8339FF00F693F7 /* ProfileViewController.swift in Sources */,
@@ -654,6 +717,7 @@
 				F435CEF52A91C0E600F452FC /* ClickableCollectionReusableView.swift in Sources */,
 				F43A6D2F2AA23E0B00DA625B /* CartEmptyView.swift in Sources */,
 				F4A5B2382A88DC0C000A8F6F /* Order.swift in Sources */,
+				F45074822AA4CF1C0019D8F9 /* ProfileService.swift in Sources */,
 				F45BD7F82A83E80C0099E22F /* Widgets.swift in Sources */,
 				F4A5B22C2A888660000A8F6F /* APIClient.swift in Sources */,
 				F48AD0382A83334D00F693F7 /* AppDelegate.swift in Sources */,
@@ -664,11 +728,14 @@
 				F48AD03A2A83334D00F693F7 /* SceneDelegate.swift in Sources */,
 				F464B11F2A98DB14006EBD77 /* CartItemsView.swift in Sources */,
 				F44514152A8FCC1D004522FA /* ProductViewCell.swift in Sources */,
+				F450747E2AA498C80019D8F9 /* UpdateSingleFieldViewController.swift in Sources */,
 				F42E408A2A8BD32100DDB629 /* HomeHeaderView.swift in Sources */,
 				F46E5C892A83AB1F00889BB0 /* LocalData.swift in Sources */,
 				F4BD17772AA0ECB000B83C95 /* PanDirectionGestureRecognizer.swift in Sources */,
 				F4DE9FA92A8D0DD900AF2068 /* PromotionsView.swift in Sources */,
+				F45074762AA496B00019D8F9 /* MyReservationsViewModel.swift in Sources */,
 				F4A5B23A2A88DC14000A8F6F /* CartItem.swift in Sources */,
+				F45074722AA496960019D8F9 /* MyOrdersViewModel.swift in Sources */,
 				F48AD0622A833AD000F693F7 /* NotificationsViewModel.swift in Sources */,
 				F4DE9FAB2A8D0DE400AF2068 /* ProductsView.swift in Sources */,
 				F4BD17792AA1029000B83C95 /* BaseCollectionViewCell.swift in Sources */,
@@ -682,6 +749,7 @@
 				F46E5C852A83543700889BB0 /* OnboardingViewController.swift in Sources */,
 				F4A5B22F2A88873A000A8F6F /* AuthenService.swift in Sources */,
 				F44514172A8FCC26004522FA /* CategoryViewCell.swift in Sources */,
+				F45074792AA497EB0019D8F9 /* DeactivateAccountViewController.swift in Sources */,
 				F464B1182A98DAC1006EBD77 /* CartHeaderView.swift in Sources */,
 				F46E5C762A83538300889BB0 /* SignInViewModel.swift in Sources */,
 				F48AD0592A83393800F693F7 /* HomeViewModel.swift in Sources */,
@@ -696,7 +764,9 @@
 				F44DA43B2A90D708006DF337 /* SearchViewController.swift in Sources */,
 				F46E5C6E2A834EDF00889BB0 /* AuthenNavigationController.swift in Sources */,
 				F46E5C7C2A8353B100889BB0 /* ForgotPasswordViewController.swift in Sources */,
+				F45074802AA498D40019D8F9 /* UpdateSingleFieldViewModel.swift in Sources */,
 				F48AD05E2A833A1800F693F7 /* ProfileViewModel.swift in Sources */,
+				F45074702AA496880019D8F9 /* MyOrdersViewController.swift in Sources */,
 				F4DE9FAD2A8D226300AF2068 /* CategoriesService.swift in Sources */,
 				F45BD7FA2A83EB270099E22F /* Extensions.swift in Sources */,
 				F48AD0602A833AC800F693F7 /* NotificationsViewController.swift in Sources */,
@@ -709,10 +779,12 @@
 				F464B11D2A98DAFC006EBD77 /* CartFooterView.swift in Sources */,
 				F4A5B2422A88DE8E000A8F6F /* Reservation.swift in Sources */,
 				F4A5B2312A8891A1000A8F6F /* Response.swift in Sources */,
+				F45074742AA496A00019D8F9 /* MyReservationsViewController.swift in Sources */,
 				F46E5C6C2A834B2600889BB0 /* Tokens.swift in Sources */,
 				F46E5C822A8353CB00889BB0 /* ResetPasswordViewModel.swift in Sources */,
 				F4CA6BA42A92585100507EFE /* ViewControllerWithoutNavigationBar.swift in Sources */,
 				F43D84CF2AA3386300D6FD4A /* ProfileAvatarView.swift in Sources */,
+				F450747B2AA497F80019D8F9 /* DeactivateAccountViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

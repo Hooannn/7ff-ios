@@ -134,8 +134,7 @@ extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate, Pro
     
     func didTapOnProduct(withId productId: String?) {
         let productDetailVC = createProductDetailVC(withId: productId, wasPresented: false)
-        productDetailVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(productDetailVC, animated: true)
+        pushViewControllerWithoutBottomBar(productDetailVC)
     }
     
     func didEndLongPressOnProduct(withId productId: String?) {

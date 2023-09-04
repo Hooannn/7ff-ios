@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 class ProfileAvatarView: BaseView {
     var avatar: String?
     {
@@ -19,11 +20,12 @@ class ProfileAvatarView: BaseView {
             displayNameLabel.text = displayName
         }
     }
+    var didTapAvatar: (() -> Void)?
     
     private lazy var avatarImageView: AvatarView = {
         let imageView = AvatarView()
         imageView.didTapAvatar = {
-            debugPrint("Godd")
+            self.didTapAvatar?()
         }
         return imageView
     }()

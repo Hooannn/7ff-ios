@@ -12,6 +12,7 @@ target 'sevenfastfood' do
   pod 'ImageSlideshow', '~> 1.9.0'
   pod 'ImageSlideshow/Alamofire'
   pod 'Cosmos', '~> 23.0'
+  pod 'PhoneNumberKit'
   # Pods for sevenfastfood
 
 end

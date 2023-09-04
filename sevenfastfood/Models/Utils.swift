@@ -27,7 +27,7 @@ final class Utils {
     }
     
     func minLengthOf1Rule(for str: String) -> any ValidationRule {
-        ValidationRuleLength(min: 1, error: ReturnValidationError("\(str) must be at least 6 characters"))
+        ValidationRuleLength(min: 1, error: ReturnValidationError("\(str) must be at least 1 characters"))
     }
     
     func emailRule(for str: String = "Email") -> any ValidationRule {
