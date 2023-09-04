@@ -22,7 +22,7 @@ class ProfileAvatarView: BaseView {
     }
     var didTapAvatar: (() -> Void)?
     
-    private lazy var avatarImageView: AvatarView = {
+    lazy var avatarImageView: AvatarView = {
         let imageView = AvatarView()
         imageView.didTapAvatar = {
             self.didTapAvatar?()

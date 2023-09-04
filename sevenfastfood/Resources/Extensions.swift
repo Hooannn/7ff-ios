@@ -139,6 +139,32 @@ extension UIButton {
     }
 }
 
+extension UIImageView {
+    func setLoading(_ isLoading: Bool) {
+        let tag = 801404
+        if isLoading {
+            self.isUserInteractionEnabled = false
+            self.alpha = 0.8
+            let indicator = UIActivityIndicatorView()
+            let buttonHeight = self.bounds.size.height
+            let buttonWidth = self.bounds.size.width
+            indicator.center = CGPoint(x: buttonWidth/2, y: buttonHeight/2)
+            indicator.tag = tag
+            indicator.color = Tokens.shared.primaryColor
+            self.addSubview(indicator)
+            self.bringSubviewToFront(indicator)
+            indicator.startAnimating()
+        } else {
+            self.isUserInteractionEnabled = true
+            self.alpha = 1.0
+            if let indicator = self.viewWithTag(tag) as? UIActivityIndicatorView {
+                indicator.stopAnimating()
+                indicator.removeFromSuperview()
+            }
+        }
+    }
+}
+
 extension NSNotification.Name {
     static var didSaveCart: Notification.Name {
         return .init(rawValue: "Cart.updated") }

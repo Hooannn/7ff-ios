@@ -35,6 +35,10 @@ struct ProfileSectionItem {
 protocol ProfileViewModelDelegate: AnyObject {
     func profileDidUpdateSuccess(_ updatedUser: User?)
     func profileDidUpdateFailure(_ error: Error)
+    func didReceiveUserUpdate(_ user: User?)
+    func avatarUploadProgressDidUpdate(_ progress: Progress)
+    func avatarDidUploadFailure(_ error: Error)
+    func avatarDidUploadSuccess(_ file: File?)
 }
 
 final class ProfileViewModel {
@@ -93,6 +97,23 @@ final class ProfileViewModel {
         }
     }
     
+    func changeAvatar(withImageData imageData: Data) {
+        FilesService.shared.uploadAvatar(withImageData: imageData, uploadProgressHandler: {
+            progress in self.delegate?.avatarUploadProgressDidUpdate(progress)
+        }) {
+            result in switch result {
+            case .success(let data):
+                let url = data?.data?.url
+                self.delegate?.avatarDidUploadSuccess(data?.data)
+                if let url = url {
+                    self.updateProfile(params: ["avatar": url])
+                }
+            case .failure(let error):
+                self.delegate?.avatarDidUploadFailure(error)
+            }
+        }
+    }
+    
     func updateProfile(params: Parameters) {
         ProfileService.shared.update(withParams: params) {
             result in switch result {
@@ -113,5 +134,27 @@ final class ProfileViewModel {
                 self.delegate?.profileDidUpdateFailure(error)
             }
         }
+    }
+    
+    init(delegate: ProfileViewModelDelegate? = nil) {
+        self.delegate = delegate
+        setupNotifications()
+    }
+    
+    deinit {
+        removeNotifications()
+    }
+    
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveUserUpdate), name: .didSaveUser, object: nil)
+    }
+    
+    private func removeNotifications() {
+        NotificationCenter.default.removeObserver(self, name: .didSaveUser, object: nil)
+    }
+    
+    @objc private func didReceiveUserUpdate() {
+        let user = LocalData.shared.getLoggedUser()
+        self.delegate?.didReceiveUserUpdate(user)
     }
 }

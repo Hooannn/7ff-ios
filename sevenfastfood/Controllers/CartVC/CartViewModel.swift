@@ -21,21 +21,11 @@ extension CartViewModelDelegate {
 final class CartViewModel {
     weak var delegate: CartViewModelDelegate?
     
-    init(delegate: CartViewModelDelegate? = nil) {
-        self.delegate = delegate
-        setupNotificationCenter()
-        self.didReceiveCartUpdateNotification()
-    }
-    
-    deinit {
-        removeNotificationCenter()
-    }
-    
-    private func setupNotificationCenter() {
+    private func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCartUpdateNotification(_:)), name: NSNotification.Name.didSaveCart, object: nil)
     }
     
-    private func removeNotificationCenter() {
+    private func removeNotifications() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.didSaveCart, object: nil)
     }
     
@@ -43,6 +33,17 @@ final class CartViewModel {
         let cartItems = LocalData.shared.getUserCart()
         delegate?.didReceiveCartUpdate(cartItems)
     }
+    
+    init(delegate: CartViewModelDelegate? = nil) {
+        self.delegate = delegate
+        setupNotifications()
+        self.didReceiveCartUpdateNotification()
+    }
+    
+    deinit {
+        removeNotifications()
+    }
+    
     
     func deleteCartItem(for productId: String) {
         CartService.shared.removeItem(productId: productId, quantity: 999999) {

@@ -76,14 +76,15 @@ class AuthenInterceptor: RequestInterceptor {
     }
 }
 final class APIClient {
-    private let baseUrl = "https://sevenfastfood-be.onrender.com"
+    //private let baseUrl = "https://sevenfastfood-be.onrender.com"
+    private let baseUrl = "https://bbfe-14-169-54-126.ngrok-free.app"
     private var session: Session?
-
+    
     private lazy var localDataModel: LocalData = {
-        let client = LocalData()
+        let client = LocalData.shared
         return client
     }()
-
+    
     private lazy var headers: HTTPHeaders = {
         [
             "Accept": "application/json"
@@ -133,7 +134,7 @@ final class APIClient {
             }
             
             switch response.result {
-            case .success(let data):
+            case .success(_):
                 let decoder = JSONDecoder()
                 do {
                     let response = try decoder.decode(type.self, from: response.data!)
@@ -169,7 +170,7 @@ final class APIClient {
             }
             
             switch response.result {
-            case .success(let data):
+            case .success(_):
                 let decoder = JSONDecoder()
                 do {
                     let response = try decoder.decode(type.self, from: response.data!)
@@ -203,9 +204,9 @@ final class APIClient {
                 }
                 return
             }
-
+            
             switch response.result {
-            case .success(let data):
+            case .success(_):
                 let decoder = JSONDecoder()
                 do {
                     let response = try decoder.decode(type.self, from: response.data!)
@@ -239,9 +240,9 @@ final class APIClient {
                 }
                 return
             }
-
+            
             switch response.result {
-            case .success(let data):
+            case .success(_):
                 let decoder = JSONDecoder()
                 do {
                     let response = try decoder.decode(type.self, from: response.data!)
@@ -275,9 +276,53 @@ final class APIClient {
                 }
                 return
             }
-
+            
             switch response.result {
-            case .success(let data):
+            case .success(_):
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(type.self, from: response.data!)
+                    completion(.success(response))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: response.response?.statusCode ?? 100, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func performUpload<T: Codable>(withResponseType type: T.Type, withSubpath subpath: String, withImageData imageData: Data, withImageName name: String, withParams params: Parameters?, uploadProgressHandler: @escaping (Progress) -> Void, completion: @escaping (Result<T?, Error>) -> Void) {
+        guard let session = session else {
+            return
+        }
+        session.upload(multipartFormData: { formData in
+            let generatedFileName = Date.timeIntervalSinceReferenceDate.description
+            formData.append(imageData, withName: name, fileName: generatedFileName, mimeType: "image/jpeg")
+            if let params = params {
+                for (key, value) in params {
+                    formData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key)
+                }
+            }
+        }, to: "\(baseUrl)\(subpath)").validate().uploadProgress(closure: uploadProgressHandler).responseJSON {
+            response in
+            
+            guard let httpResponse = response.response,
+                  (200...299).contains(httpResponse.statusCode) else {
+                let statusCode = response.response?.statusCode ?? -1
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(ResponseError.self, from: response.data!)
+                    let errorMessage = response.message ?? "API request failed with status code \(statusCode)"
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: errorMessage])))
+                } catch {
+                    completion(.failure(NSError(domain: "APIHandler", code: statusCode, userInfo: [NSLocalizedDescriptionKey: error.localizedDescription])))
+                }
+                return
+            }
+            
+            switch response.result {
+            case .success(_):
                 let decoder = JSONDecoder()
                 do {
                     let response = try decoder.decode(type.self, from: response.data!)

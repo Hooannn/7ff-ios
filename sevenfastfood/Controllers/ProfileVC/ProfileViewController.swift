@@ -10,9 +10,7 @@ import UIKit
 final class ProfileViewController: UIViewController {
     private let widgets = Widgets.shared
     private lazy var viewModel: ProfileViewModel = {
-        let viewModel = ProfileViewModel()
-        viewModel.delegate = self
-        return viewModel
+        ProfileViewModel(delegate: self)
     }()
     
     private var user: User?
@@ -24,6 +22,7 @@ final class ProfileViewController: UIViewController {
             if let firstName = user?.firstName, let lastName = user?.lastName {
                 avatarView.displayName = "\(firstName) \(lastName)"
             }
+            tableView.reloadTable()
         }
     }
     
@@ -84,25 +83,12 @@ final class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUser()
         setupViews()
         setupConstraints()
-        setupNotifications()
+        setupInitUser()
     }
     
-    deinit {
-        removeNotifications()
-    }
-    
-    private func setupNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveUserUpdate), name: .didSaveUser, object: nil)
-    }
-    
-    private func removeNotifications() {
-        NotificationCenter.default.removeObserver(self, name: .didSaveUser, object: nil)
-    }
-    
-    private func setupUser() {
+    private func setupInitUser() {
         viewModel.getUser {
             user in self.user = user
         }
@@ -176,17 +162,13 @@ final class ProfileViewController: UIViewController {
             self.changeScene(to: .auth)
         }
     }
-    
-    @objc private func didReceiveUserUpdate() {
-        tableView.reloadTable()
-    }
-    
-    @objc private func didTapDoneInImagePicker(_ sender: UIBarButtonItem) {
-        debugPrint("Done")
-    }
 }
 
 extension ProfileViewController: UpdateSingleFieldViewControllerDelegate, ProfileViewModelDelegate {
+    func didReceiveUserUpdate(_ user: User?) {
+        self.user = user
+    }
+    
     func fieldDidSave(_ newValue: String, _ identifier: ProfileSectionItemIdentitier) {
         navigationController?.popViewController(animated: true)
         if identifier != .password {
@@ -206,13 +188,27 @@ extension ProfileViewController: UpdateSingleFieldViewControllerDelegate, Profil
     func profileDidUpdateFailure(_ error: Error) {
         Toast.shared.display(with: "Updated profile error due to \(error.localizedDescription)")
     }
+    
+    func avatarDidUploadFailure(_ error: Error) {
+        Toast.shared.display(with: "Upload error due to \(error.localizedDescription)")
+    }
+    
+    func avatarUploadProgressDidUpdate(_ progress: Progress) {
+        debugPrint("Avatar upload progress -> \(progress.fractionCompleted)")
+    }
+    
+    func avatarDidUploadSuccess(_ file: File?) {
+        avatarView.avatarImageView.imageView.setLoading(false)
+    }
 }
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[UIImagePickerController.InfoKey.editedImage]
-        // upload
-        debugPrint(image)
+        let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
+        if let imageData = image?.jpegData(compressionQuality: 0.2) {
+            avatarView.avatarImageView.imageView.setLoading(true)
+            viewModel.changeAvatar(withImageData: imageData)
+        }
         picker.dismiss(animated: true)
     }
     

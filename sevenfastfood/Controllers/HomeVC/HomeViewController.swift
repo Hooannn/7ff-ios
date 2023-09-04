@@ -26,7 +26,7 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
     
     private lazy var headerView: HomeHeaderView = {
         let user = localDataClient.getLoggedUser()
-        let view = HomeHeaderView(displayName: "\(user!.lastName) \(user!.firstName)", avatar: user?.avatar)
+        let view = HomeHeaderView()
         view.didTapAvatar = {
             self.tabBarController?.selectedIndex = 3
         }
@@ -62,6 +62,16 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
         setupViews()
         setupConstraints()
         setupCategories()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupUser()
+    }
+    
+    private func setupUser() {
+        let user = LocalData.shared.getLoggedUser()
+        headerView.user = user
     }
     
     private func setupCategories() {
@@ -157,8 +167,7 @@ extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate, Pro
 extension HomeViewController: SearchBarViewDelegate {
     func didTapSearchBar(_ sender: UIGestureRecognizer) {
         let searchVC = SearchViewController()
-        let navigation = UINavigationController(rootViewController: searchVC)
-        navigation.modalPresentationStyle = .fullScreen
-        navigationController?.present(navigation, animated: true)
+        searchVC.modalPresentationStyle = .fullScreen
+        navigationController?.present(searchVC, animated: true)
     }
 }

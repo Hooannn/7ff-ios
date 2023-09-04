@@ -8,8 +8,6 @@
 import UIKit
 
 final class CartViewController: ViewControllerWithoutNavigationBar {
-    private var viewModel: CartViewModel?
-
     private lazy var safeAreaInsets = Tokens.shared.safeAreaInsets
     private lazy var headerView: CartHeaderView = {
         let view = CartHeaderView()
@@ -21,6 +19,8 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
         return view
     }()
     
+    private var viewModel: CartViewModel?
+
     private lazy var cartItemsView: CartItemsView = {
         let view = CartItemsView()
         view.cartItemCellDelegate = self

@@ -11,7 +11,7 @@ fileprivate struct SectionItem {
 
 import UIKit
 class ProfileTableView: UITableView {
-    var viewModel: ProfileViewModel?
+    weak var viewModel: ProfileViewModel?
     private var identifier = "ProfileTable"
     private var sections: [ProfileSection]?
     private var sectionItems: [SectionItem]?
