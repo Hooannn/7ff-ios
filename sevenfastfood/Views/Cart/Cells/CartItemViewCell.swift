@@ -153,7 +153,7 @@ class CartItemViewCell: BaseCollectionViewCell {
         return label
     }()
     
-    private lazy var titleAndUnitPriceView: UIStackView = {
+    private lazy var titleAndCategoryView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [nameLabel, categoryLabel])
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
@@ -177,7 +177,7 @@ class CartItemViewCell: BaseCollectionViewCell {
     }()
     
     private lazy var descriptionStackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [titleAndUnitPriceView, totalPriceAndQuantityView])
+        let view = UIStackView(arrangedSubviews: [titleAndCategoryView, totalPriceAndQuantityView])
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
         return view

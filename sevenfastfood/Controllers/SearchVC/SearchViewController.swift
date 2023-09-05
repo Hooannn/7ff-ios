@@ -7,17 +7,6 @@ class SearchViewController: UIViewController {
         SearchViewModel(delegate: self)
     }()
     
-    private var isTyping: Bool = false
-    {
-        didSet {
-            if isTyping {
-                debugPrint("Typing")
-            } else {
-                debugPrint("End Typing")
-            }
-        }
-    }
-    
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -29,15 +18,21 @@ class SearchViewController: UIViewController {
         return searchBar
     }()
     
+    private lazy var searchResultsView: SearchResultsView = {
+        let view = SearchResultsView()
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchResultsView.searchTextField = searchBarView.searchTextField
         setupViews()
         setupConstraints()
     }
     
     private func setupViews() {
         view.backgroundColor = Tokens.shared.lightBackgroundColor
-        containerView.addSubviews(searchBarView)
+        containerView.addSubviews(searchBarView, searchResultsView)
         view.addSubview(containerView)
     }
     
@@ -52,6 +47,11 @@ class SearchViewController: UIViewController {
             searchBarView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             searchBarView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             searchBarView.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight),
+
+            searchResultsView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 12),
+            searchResultsView.leadingAnchor.constraint(equalTo: searchBarView.leadingAnchor),
+            searchResultsView.trailingAnchor.constraint(equalTo: searchBarView.trailingAnchor),
+            searchResultsView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
         ])
     }
 }
@@ -62,21 +62,25 @@ extension SearchViewController: SearchViewModelDelegate, SearchSearchBarViewDele
     }
     
     func searchTextFieldDidChange(_ sender: UITextField) {
-        self.isTyping = true
+        self.searchResultsView.isLoadingOrTyping = true
         self.debouncer.debounce {
             if let text = sender.text, sender.hasText {
-                debugPrint("Text -> \(text)")
+                self.searchResultsView.isLoadingOrTyping = true
                 self.viewModel.searchProducts(withText: text)
+            } else {
+                self.searchResultsView.items = []
+                self.searchResultsView.isLoadingOrTyping = false
             }
-            self.isTyping = false
         }
     }
     
     func didSearchProductsSuccess(_ products: [Product]?) {
-        debugPrint("Search success -> \(products)")
+        searchResultsView.items = products
+        self.searchResultsView.isLoadingOrTyping = false
     }
     
     func didSearchProductsFailure(_ error: Error) {
+        self.searchResultsView.isLoadingOrTyping = false
         Toast.shared.display(with: "Search error due to \(error.localizedDescription)")
     }
 }
