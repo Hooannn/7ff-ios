@@ -17,5 +17,11 @@ struct Product: Codable {
     let isAvailable: Bool
     let rating: Double?
     let ratingCount: Int?
+    let monthlyViewCount: ViewCount?
     let featuredImages: [String]?
+}
+
+struct ViewCount: Codable {
+    let count: Int
+    let time: Int
 }

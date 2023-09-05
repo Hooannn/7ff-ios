@@ -1,21 +1,14 @@
 //
-//  SearchEmpty.swift
+//  SearchOnboardingView.swift
 //  sevenfastfood
 //
-//  Created by Nguyen Duc Khai Hoan on 04/09/2023.
+//  Created by Nguyen Duc Khai Hoan on 05/09/2023.
 //
 
 import UIKit
-class SearchEmptyView: BaseView {
-    var searchString: String?
-    {
-        didSet {
-            label.text = "We don't have any products related to '\(searchString ?? "")'"
-        }
-    }
-    
+class SearchOnboardingView: BaseView {
     private lazy var imageView: UIImageView = {
-        let image = UIImage(named: "Not_Found")
+        let image = UIImage(named: "Searching")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -26,6 +19,7 @@ class SearchEmptyView: BaseView {
         let label = Widgets.shared.createLabel()
         label.font = UIFont.systemFont(ofSize: Tokens.shared.descriptionFontSize, weight: .light)
         label.textAlignment = .center
+        label.text = "Start typing for something you need..."
         return label
     }()
     

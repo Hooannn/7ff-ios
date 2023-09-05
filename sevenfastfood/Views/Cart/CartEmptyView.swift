@@ -10,7 +10,7 @@ class CartEmptyView: BaseView {
     var didTapShoppingButton: (() -> Void)?
     
     private lazy var imageView: UIImageView = {
-        let image = UIImage(named: "Empty_Cart")
+        let image = UIImage(named: "Empty_Cart_2")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false

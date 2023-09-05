@@ -76,8 +76,8 @@ class AuthenInterceptor: RequestInterceptor {
     }
 }
 final class APIClient {
-    //private let baseUrl = "https://sevenfastfood-be.onrender.com"
-    private let baseUrl = "https://bbfe-14-169-54-126.ngrok-free.app"
+    private let baseUrl = "https://sevenfastfood-be.onrender.com"
+    //private let baseUrl = "https://bbfe-14-169-54-126.ngrok-free.app"
     private var session: Session?
     
     private lazy var localDataModel: LocalData = {

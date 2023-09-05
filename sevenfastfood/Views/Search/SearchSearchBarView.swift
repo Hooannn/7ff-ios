@@ -23,7 +23,7 @@ final class SearchSearchBarView: UIView, UITextFieldDelegate {
         return button
     }()
     
-    private lazy var searchTextField: UITextField = {
+    lazy var searchTextField: UITextField = {
         let textField = widgets.createTextField(placeholder: "Search...", delegate: self, keyboardType: .default)
         textField.clearButtonMode = .whileEditing
         textField.borderStyle = .none
