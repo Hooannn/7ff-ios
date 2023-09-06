@@ -7,7 +7,8 @@
 
 import UIKit
 class CartDiscountProgressView: BaseView {
-    private static let MINIMUM_VALUE_FOR_FREE_SHIPPING: Double = 300000
+    static let MINIMUM_VALUE_FOR_FREE_SHIPPING: Double = 300000
+    static let DEFAULT_SHIPPING_FEE: Double = 20000
     var totalPrice: Double = 0
     {
         didSet {
@@ -62,7 +63,7 @@ class CartDiscountProgressView: BaseView {
     private func animateProgressBar() {
         let progress = totalPrice / CartDiscountProgressView.MINIMUM_VALUE_FOR_FREE_SHIPPING >= 1 ? 1 : totalPrice / CartDiscountProgressView.MINIMUM_VALUE_FOR_FREE_SHIPPING
         let progressBarInnerConstraint = totalPrice > 0 ? progressBarInnerView.widthAnchor.constraint(equalTo: progressBarContainerView.widthAnchor, multiplier: progress) : progressBarInnerView.widthAnchor.constraint(equalToConstant: 0)
-
+        
         let constraints: [NSLayoutConstraint] = [progressBarInnerConstraint]
         
         UIView.animate(withDuration: 0.3, animations: {

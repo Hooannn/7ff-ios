@@ -1,19 +1,12 @@
 //
-//  SearchItemViewCell.swift
+//  OrderItemCell.swift
 //  sevenfastfood
 //
-//  Created by Nguyen Duc Khai Hoan on 05/09/2023.
+//  Created by Nguyen Duc Khai Hoan on 06/09/2023.
 //
 
 import UIKit
-
-protocol SearchItemCellDelegate: AnyObject {
-    func didTapOnProduct(withId productId: String?)
-}
-
-class SearchItemViewCell: ClickableCollectionViewCell {
-    weak var delegate: SearchItemCellDelegate?
-    var productId: String?
+class OrderItemViewCell: BaseCollectionViewCell {
     var name: String?
     {
         didSet {
@@ -39,20 +32,29 @@ class SearchItemViewCell: ClickableCollectionViewCell {
     var unitPrice: Double?
     {
         didSet {
-            guard let unitPrice = unitPrice else { return }
-            let formatter = NumberFormatter()
-            formatter.locale = Locale.init(identifier: "vi_VN")
-            formatter.numberStyle = .currency
-            if let formattedTotalPrice = formatter.string(from: unitPrice as NSNumber) {
-                unitPriceLabel.text = "\(formattedTotalPrice)"
-            }
+            totalPrice = Double(quantity ?? 0) * (unitPrice ?? 0)
         }
     }
     
-    var viewThisMonth: Int?
+    var quantity: Int?
     {
         didSet {
-            viewThisMonthLabel.text = "View this month: \(viewThisMonth ?? 0)"
+            totalPrice = Double(quantity ?? 0) * (unitPrice ?? 0)
+            guard let name = name else { return }
+            nameLabel.text = "\(name) x \(quantity ?? 0)"
+        }
+    }
+    
+    var totalPrice: Double?
+    {
+        didSet {
+            guard let totalPrice = totalPrice else { return }
+            let formatter = NumberFormatter()
+            formatter.locale = Locale.init(identifier: "vi_VN")
+            formatter.numberStyle = .currency
+            if let formattedTotalPrice = formatter.string(from: totalPrice as NSNumber) {
+                totalPriceLabel.text = "\(formattedTotalPrice)"
+            }
         }
     }
     
@@ -88,13 +90,14 @@ class SearchItemViewCell: ClickableCollectionViewCell {
         return view
     }()
     
-    private lazy var unitPriceLabel: UILabel = {
+    private lazy var totalPriceLabel: UILabel = {
         let label = Widgets.shared.createLabel()
         label.font = UIFont.boldSystemFont(ofSize: Tokens.shared.systemFontSize)
+        label.textColor = .alizarin
         return label
     }()
     
-    private lazy var viewThisMonthLabel: UILabel = {
+    private lazy var quantityLabel: UILabel = {
         let label = Widgets.shared.createLabel()
         label.textAlignment = .left
         label.textColor = .systemGray
@@ -103,7 +106,7 @@ class SearchItemViewCell: ClickableCollectionViewCell {
     }()
     
     private lazy var descriptionStackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [titleAndCategoryView, unitPriceLabel])
+        let view = UIStackView(arrangedSubviews: [titleAndCategoryView, totalPriceLabel])
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
         return view
@@ -137,11 +140,7 @@ class SearchItemViewCell: ClickableCollectionViewCell {
             
             featuredImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.9),
             featuredImageView.widthAnchor.constraint(equalTo: featuredImageView.heightAnchor),
-            unitPriceLabel.heightAnchor.constraint(equalToConstant: 40),
+            totalPriceLabel.heightAnchor.constraint(equalToConstant: 40),
         ])
-    }
-    
-    override func didTap(_ sender: UIGestureRecognizer) {
-        delegate?.didTapOnProduct(withId: productId)
     }
 }

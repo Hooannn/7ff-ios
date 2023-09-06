@@ -48,7 +48,7 @@ class SearchEmptyView: BaseView {
             contentStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             contentStackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
             
-            imageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.25)
+            imageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
         ])
     }
 }

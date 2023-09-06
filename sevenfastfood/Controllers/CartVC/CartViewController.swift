@@ -8,6 +8,13 @@
 import UIKit
 
 final class CartViewController: ViewControllerWithoutNavigationBar {
+    private var totalPrice: Double?
+    {
+        didSet {
+            footerView.totalPrice = totalPrice ?? 0.0
+            discountProgressView.totalPrice = totalPrice ?? 0.0
+        }
+    }
     private lazy var safeAreaInsets = Tokens.shared.safeAreaInsets
     private lazy var headerView: CartHeaderView = {
         let view = CartHeaderView()
@@ -39,6 +46,7 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
     
     private lazy var footerView: CartFooterView = {
         let view = CartFooterView()
+        view.delegate = self
         return view
     }()
     
@@ -92,8 +100,7 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
             let next = Double(cartItem.quantity) * cartItem.product.price
             return result + next
         }
-        footerView.totalPrice = totalPrice ?? 0.0
-        discountProgressView.totalPrice = totalPrice ?? 0.0
+        self.totalPrice = totalPrice ?? 0.0
     }
     
     private func displayEmptyView() {
@@ -107,7 +114,12 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
     }
 }
 
-extension CartViewController: CartViewModelDelegate, CartItemCellDelegate {
+extension CartViewController: CartViewModelDelegate, CartItemCellDelegate, CartFooterDelegate {
+    func didTapCheckoutButton(_ sender: UIButton) {
+        let cartItems = viewModel?.getCartItems()
+        let checkoutVC = CheckoutViewController(cartItems: cartItems ?? [], subtotal: totalPrice ?? 0)
+        pushViewControllerWithoutBottomBar(checkoutVC)
+    }
     func didReceiveCartUpdate(_ cartItems: [CartItem]?) {
         let cartItemsCount = cartItems?.count ?? 0
         headerView.itemsCount = cartItemsCount
