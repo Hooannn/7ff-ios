@@ -53,6 +53,7 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let view = ProductsView(frame: .zero, collectionViewLayout: layout)
+        view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 0)
         view.productCellDelegate = self
         return view
     }()
@@ -167,7 +168,8 @@ extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate, Pro
 extension HomeViewController: SearchBarViewDelegate {
     func didTapSearchBar(_ sender: UIGestureRecognizer) {
         let searchVC = SearchViewController()
-        searchVC.modalPresentationStyle = .fullScreen
-        navigationController?.present(searchVC, animated: true)
+        let navigationVC = UINavigationController(rootViewController: searchVC)
+        navigationVC.modalPresentationStyle = .fullScreen
+        navigationController?.present(navigationVC, animated: true)
     }
 }

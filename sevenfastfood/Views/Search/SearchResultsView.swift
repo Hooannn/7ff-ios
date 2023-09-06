@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SkeletonView
 fileprivate class SearchResultsCollectionHeaderView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,6 +23,7 @@ fileprivate class SearchResultsCollectionHeaderView: UICollectionReusableView {
 
 class SearchResultsView: BaseView {
     private let identifier = "SearchResults"
+    weak var searchItemCellDelegate: SearchItemCellDelegate?
     private lazy var searchResultsCollectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
@@ -45,8 +46,10 @@ class SearchResultsView: BaseView {
         return view
     }()
     
-    private lazy var searchLoadingView: SearchLoadingView = {
-        let view = SearchLoadingView()
+    private lazy var searchLoadingView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.startAnimating()
         return view
     }()
     
@@ -159,6 +162,7 @@ extension SearchResultsView: UICollectionViewDelegate, UICollectionViewDataSourc
         cell.unitPrice = item?.price
         cell.category = item?.category?.name.en
         cell.viewThisMonth = item?.monthlyViewCount?.count ?? 0
+        cell.delegate = searchItemCellDelegate
         return cell
     }
     

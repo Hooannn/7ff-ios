@@ -7,7 +7,12 @@
 
 import UIKit
 
+protocol CartFooterDelegate: AnyObject {
+    func didTapCheckoutButton(_ sender: UIButton)
+}
+
 class CartFooterView: BaseView {
+    weak var delegate: CartFooterDelegate?
     var totalPrice: Double = 0
     {
         didSet {
@@ -65,6 +70,6 @@ class CartFooterView: BaseView {
     }
     
     @objc func didTapCheckoutButton(_ sender: UIButton) {
-        debugPrint("Tapped checkout")
+        delegate?.didTapCheckoutButton(sender)
     }
 }

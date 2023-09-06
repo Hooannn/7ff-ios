@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import IQKeyboardManagerSwift
 extension UIImageView {
     func loadRemoteUrl(from url: String?) {
         guard let url, let parsedUrl = URL(string: url) else {
@@ -62,6 +62,8 @@ extension UIWindow {
     func displayToast(with message: String) {
         let containerView = UIView()
         let label = UILabel()
+        let isKeyboardShowing = IQKeyboardManager.shared.keyboardShowing
+        let keyboardFrame = IQKeyboardManager.shared.keyboardFrame
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(label)
         containerView.clipsToBounds = true
@@ -84,28 +86,27 @@ extension UIWindow {
             label.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8)
         ])
         
+        let toastHideBottomAnchor: NSLayoutConstraint = containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 50)
+        let bottomConstant = isKeyboardShowing ? keyboardFrame.height : 24
+        let toastShowBottomAnchor: NSLayoutConstraint = containerView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -CGFloat(bottomConstant))
+        
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 24),
             containerView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 50),
             containerView.heightAnchor.constraint(equalToConstant: 50)
         ])
+        toastHideBottomAnchor.isActive = true
         self.layoutIfNeeded()
         
         UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseIn, animations: {
-            NSLayoutConstraint.activate([
-                containerView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -24),
-                containerView.heightAnchor.constraint(equalToConstant: 50)
-            ])
+            toastShowBottomAnchor.isActive = true
             self.layoutIfNeeded()
         }, completion: { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: { [weak self] in
                 guard let self = self else { return }
                 UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseOut, animations: {
-                    NSLayoutConstraint.activate([
-                        containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 50),
-                        containerView.heightAnchor.constraint(equalToConstant: 50)
-                    ])
+                    toastShowBottomAnchor.isActive = false
+                    toastHideBottomAnchor.isActive = true
                     self.layoutIfNeeded()
                 }, completion: { _ in
                     containerView.removeFromSuperview()

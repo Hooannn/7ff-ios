@@ -87,6 +87,11 @@ final class CartViewModel {
         }
     }
     
+    func getCartItems() -> [CartItem]? {
+        let cartItems = LocalData.shared.getUserCart()
+        return cartItems
+    }
+    
     @objc func didReceiveCartUpdateNotification(_ notification: NSNotification) {
         let cartItems = LocalData.shared.getUserCart()
         delegate?.didReceiveCartUpdate(cartItems)
