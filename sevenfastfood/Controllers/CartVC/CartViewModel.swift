@@ -36,12 +36,16 @@ final class CartViewModel {
     
     init(delegate: CartViewModelDelegate? = nil) {
         self.delegate = delegate
-        setupNotifications()
+        if delegate != nil {
+            setupNotifications()
+        }
         self.didReceiveCartUpdateNotification()
     }
     
     deinit {
-        removeNotifications()
+        if delegate != nil {
+            removeNotifications()
+        }
     }
     
     
@@ -90,6 +94,10 @@ final class CartViewModel {
     func getCartItems() -> [CartItem]? {
         let cartItems = LocalData.shared.getUserCart()
         return cartItems
+    }
+    
+    func fetchCartItems() {
+        CartService.shared.fetchItems()
     }
     
     @objc func didReceiveCartUpdateNotification(_ notification: NSNotification) {

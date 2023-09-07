@@ -43,13 +43,15 @@
 		F450746C2AA431EF0019D8F9 /* ProfileTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450746B2AA431EF0019D8F9 /* ProfileTableCell.swift */; };
 		F45074702AA496880019D8F9 /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450746F2AA496880019D8F9 /* MyOrdersViewController.swift */; };
 		F45074722AA496960019D8F9 /* MyOrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074712AA496960019D8F9 /* MyOrdersViewModel.swift */; };
-		F45074742AA496A00019D8F9 /* MyReservationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074732AA496A00019D8F9 /* MyReservationsViewController.swift */; };
-		F45074762AA496B00019D8F9 /* MyReservationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074752AA496B00019D8F9 /* MyReservationsViewModel.swift */; };
 		F45074792AA497EB0019D8F9 /* DeactivateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074782AA497EB0019D8F9 /* DeactivateAccountViewController.swift */; };
 		F450747B2AA497F80019D8F9 /* DeactivateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450747A2AA497F80019D8F9 /* DeactivateAccountViewModel.swift */; };
 		F450747E2AA498C80019D8F9 /* UpdateSingleFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450747D2AA498C80019D8F9 /* UpdateSingleFieldViewController.swift */; };
 		F45074802AA498D40019D8F9 /* UpdateSingleFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450747F2AA498D40019D8F9 /* UpdateSingleFieldViewModel.swift */; };
 		F45074822AA4CF1C0019D8F9 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074812AA4CF1C0019D8F9 /* ProfileService.swift */; };
+		F457AF9F2AA95F8400BFF407 /* VouchersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F457AF9E2AA95F8400BFF407 /* VouchersService.swift */; };
+		F457AFA12AA961D000BFF407 /* CheckoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F457AFA02AA961D000BFF407 /* CheckoutService.swift */; };
+		F457AFA32AA9710C00BFF407 /* EditOrderInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F457AFA22AA9710C00BFF407 /* EditOrderInformationViewController.swift */; };
+		F457AFA52AA9814200BFF407 /* CheckoutSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F457AFA42AA9814200BFF407 /* CheckoutSuccessViewController.swift */; };
 		F45A2F182AA75B9B0059D3E8 /* SearchItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A2F172AA75B9B0059D3E8 /* SearchItemViewCell.swift */; };
 		F45A2F1A2AA76DA00059D3E8 /* SearchOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A2F192AA76DA00059D3E8 /* SearchOnboardingView.swift */; };
 		F45BD7F82A83E80C0099E22F /* Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45BD7F72A83E80C0099E22F /* Widgets.swift */; };
@@ -83,8 +85,6 @@
 		F48AD0592A83393800F693F7 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0582A83393800F693F7 /* HomeViewModel.swift */; };
 		F48AD05C2A8339FF00F693F7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD05B2A8339FF00F693F7 /* ProfileViewController.swift */; };
 		F48AD05E2A833A1800F693F7 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD05D2A833A1800F693F7 /* ProfileViewModel.swift */; };
-		F48AD0602A833AC800F693F7 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD05F2A833AC800F693F7 /* NotificationsViewController.swift */; };
-		F48AD0622A833AD000F693F7 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0612A833AD000F693F7 /* NotificationsViewModel.swift */; };
 		F48AD0652A833AFA00F693F7 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0642A833AFA00F693F7 /* CartViewController.swift */; };
 		F48AD0672A833B0300F693F7 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48AD0662A833B0300F693F7 /* CartViewModel.swift */; };
 		F494B0B82A868E4C002B8F07 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F494B0B72A868E4C002B8F07 /* SignUpFormView.swift */; };
@@ -153,13 +153,15 @@
 		F450746B2AA431EF0019D8F9 /* ProfileTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableCell.swift; sourceTree = "<group>"; };
 		F450746F2AA496880019D8F9 /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
 		F45074712AA496960019D8F9 /* MyOrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewModel.swift; sourceTree = "<group>"; };
-		F45074732AA496A00019D8F9 /* MyReservationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReservationsViewController.swift; sourceTree = "<group>"; };
-		F45074752AA496B00019D8F9 /* MyReservationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReservationsViewModel.swift; sourceTree = "<group>"; };
 		F45074782AA497EB0019D8F9 /* DeactivateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivateAccountViewController.swift; sourceTree = "<group>"; };
 		F450747A2AA497F80019D8F9 /* DeactivateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivateAccountViewModel.swift; sourceTree = "<group>"; };
 		F450747D2AA498C80019D8F9 /* UpdateSingleFieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSingleFieldViewController.swift; sourceTree = "<group>"; };
 		F450747F2AA498D40019D8F9 /* UpdateSingleFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSingleFieldViewModel.swift; sourceTree = "<group>"; };
 		F45074812AA4CF1C0019D8F9 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		F457AF9E2AA95F8400BFF407 /* VouchersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VouchersService.swift; sourceTree = "<group>"; };
+		F457AFA02AA961D000BFF407 /* CheckoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutService.swift; sourceTree = "<group>"; };
+		F457AFA22AA9710C00BFF407 /* EditOrderInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditOrderInformationViewController.swift; sourceTree = "<group>"; };
+		F457AFA42AA9814200BFF407 /* CheckoutSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutSuccessViewController.swift; sourceTree = "<group>"; };
 		F45A2F172AA75B9B0059D3E8 /* SearchItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemViewCell.swift; sourceTree = "<group>"; };
 		F45A2F192AA76DA00059D3E8 /* SearchOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOnboardingView.swift; sourceTree = "<group>"; };
 		F45BD7F72A83E80C0099E22F /* Widgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widgets.swift; sourceTree = "<group>"; };
@@ -195,8 +197,6 @@
 		F48AD0582A83393800F693F7 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		F48AD05B2A8339FF00F693F7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = sevenfastfood/Controllers/ProfileVC/ProfileViewController.swift; sourceTree = SOURCE_ROOT; };
 		F48AD05D2A833A1800F693F7 /* ProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewModel.swift; path = sevenfastfood/Controllers/ProfileVC/ProfileViewModel.swift; sourceTree = SOURCE_ROOT; };
-		F48AD05F2A833AC800F693F7 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
-		F48AD0612A833AD000F693F7 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		F48AD0642A833AFA00F693F7 /* CartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		F48AD0662A833B0300F693F7 /* CartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		F494B0B72A868E4C002B8F07 /* SignUpFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
@@ -319,8 +319,10 @@
 		F44759552AA86C73006C4D9F /* CheckoutVC */ = {
 			isa = PBXGroup;
 			children = (
+				F457AFA22AA9710C00BFF407 /* EditOrderInformationViewController.swift */,
 				F44759562AA86C80006C4D9F /* CheckoutViewController.swift */,
 				F44759582AA86C8C006C4D9F /* CheckoutViewModel.swift */,
+				F457AFA42AA9814200BFF407 /* CheckoutSuccessViewController.swift */,
 			);
 			path = CheckoutVC;
 			sourceTree = "<group>";
@@ -380,15 +382,6 @@
 			path = MyOrdersVC;
 			sourceTree = "<group>";
 		};
-		F450746E2AA4964B0019D8F9 /* MyReservationsVC */ = {
-			isa = PBXGroup;
-			children = (
-				F45074732AA496A00019D8F9 /* MyReservationsViewController.swift */,
-				F45074752AA496B00019D8F9 /* MyReservationsViewModel.swift */,
-			);
-			path = MyReservationsVC;
-			sourceTree = "<group>";
-		};
 		F45074772AA497C90019D8F9 /* DeactivateAccountVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -405,6 +398,13 @@
 				F450747F2AA498D40019D8F9 /* UpdateSingleFieldViewModel.swift */,
 			);
 			path = UpdateSingleFieldVC;
+			sourceTree = "<group>";
+		};
+		F457AFA62AAA149900BFF407 /* Orders */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Orders;
 			sourceTree = "<group>";
 		};
 		F45A2F162AA75B690059D3E8 /* Cells */ = {
@@ -542,7 +542,6 @@
 				F44759552AA86C73006C4D9F /* CheckoutVC */,
 				F450747C2AA498960019D8F9 /* UpdateSingleFieldVC */,
 				F45074772AA497C90019D8F9 /* DeactivateAccountVC */,
-				F450746E2AA4964B0019D8F9 /* MyReservationsVC */,
 				F450746D2AA4963E0019D8F9 /* MyOrdersVC */,
 				F435CEF62A92199000F452FC /* ProductDetailVC */,
 				F44DA4392A90D6F9006DF337 /* SearchVC */,
@@ -552,7 +551,6 @@
 				F46E5C702A834F0600889BB0 /* SignUpVC */,
 				F46E5C6F2A834EFA00889BB0 /* SignInVC */,
 				F48AD0682A833B0800F693F7 /* CartVC */,
-				F48AD0632A833AE300F693F7 /* NotificationsVC */,
 				F48AD05A2A8339D900F693F7 /* ProfileVC */,
 				F48AD0552A83390A00F693F7 /* HomeVC */,
 				F48AD0502A8337EC00F693F7 /* Screens */,
@@ -577,6 +575,7 @@
 		F48AD04F2A8333E400F693F7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F457AFA62AAA149900BFF407 /* Orders */,
 				F447595A2AA8700A006C4D9F /* Checkout */,
 				F43140142AA61EC400C83D01 /* Search */,
 				F43D84CD2AA3385400D6FD4A /* Profile */,
@@ -617,15 +616,6 @@
 			path = ProfileVC;
 			sourceTree = "<group>";
 		};
-		F48AD0632A833AE300F693F7 /* NotificationsVC */ = {
-			isa = PBXGroup;
-			children = (
-				F48AD05F2A833AC800F693F7 /* NotificationsViewController.swift */,
-				F48AD0612A833AD000F693F7 /* NotificationsViewModel.swift */,
-			);
-			path = NotificationsVC;
-			sourceTree = "<group>";
-		};
 		F48AD0682A833B0800F693F7 /* CartVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -644,6 +634,8 @@
 				F444F4632A94F8A4007AF140 /* CartService.swift */,
 				F45074812AA4CF1C0019D8F9 /* ProfileService.swift */,
 				F43140102AA5E3D000C83D01 /* FilesService.swift */,
+				F457AF9E2AA95F8400BFF407 /* VouchersService.swift */,
+				F457AFA02AA961D000BFF407 /* CheckoutService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -795,13 +787,16 @@
 				F4C931132A87BA1300EAC7DF /* Utils.swift in Sources */,
 				F431401A2AA6277500C83D01 /* SearchEmptyView.swift in Sources */,
 				F44759662AA889DE006C4D9F /* CheckoutVoucherView.swift in Sources */,
+				F457AFA52AA9814200BFF407 /* CheckoutSuccessViewController.swift in Sources */,
 				F4A5B2342A88D957000A8F6F /* User.swift in Sources */,
+				F457AFA32AA9710C00BFF407 /* EditOrderInformationViewController.swift in Sources */,
 				F45032192A9B928D0033C5F9 /* QuantityInputView.swift in Sources */,
 				F44514122A8FC756004522FA /* ProductsService.swift in Sources */,
 				F4EBA2232A9AEDF900C33CC4 /* BadgeButton.swift in Sources */,
 				F4A5B2362A88DC04000A8F6F /* Product.swift in Sources */,
 				F44759622AA8785A006C4D9F /* OrderItemViewCell.swift in Sources */,
 				F4A5B2402A88DD82000A8F6F /* Voucher.swift in Sources */,
+				F457AFA12AA961D000BFF407 /* CheckoutService.swift in Sources */,
 				F4DE9FA52A8D0DA100AF2068 /* SearchBarView.swift in Sources */,
 				F43A6D2D2AA22E0100DA625B /* CartDiscountProgressView.swift in Sources */,
 				F4DE9FA72A8D0DB300AF2068 /* CategoriesView.swift in Sources */,
@@ -828,10 +823,8 @@
 				F46E5C892A83AB1F00889BB0 /* LocalData.swift in Sources */,
 				F4BD17772AA0ECB000B83C95 /* PanDirectionGestureRecognizer.swift in Sources */,
 				F4DE9FA92A8D0DD900AF2068 /* PromotionsView.swift in Sources */,
-				F45074762AA496B00019D8F9 /* MyReservationsViewModel.swift in Sources */,
 				F4A5B23A2A88DC14000A8F6F /* CartItem.swift in Sources */,
 				F45074722AA496960019D8F9 /* MyOrdersViewModel.swift in Sources */,
-				F48AD0622A833AD000F693F7 /* NotificationsViewModel.swift in Sources */,
 				F4DE9FAB2A8D0DE400AF2068 /* ProductsView.swift in Sources */,
 				F4BD17792AA1029000B83C95 /* BaseCollectionViewCell.swift in Sources */,
 				F43140112AA5E3D000C83D01 /* FilesService.swift in Sources */,
@@ -870,7 +863,7 @@
 				F45074702AA496880019D8F9 /* MyOrdersViewController.swift in Sources */,
 				F4DE9FAD2A8D226300AF2068 /* CategoriesService.swift in Sources */,
 				F45BD7FA2A83EB270099E22F /* Extensions.swift in Sources */,
-				F48AD0602A833AC800F693F7 /* NotificationsViewController.swift in Sources */,
+				F457AF9F2AA95F8400BFF407 /* VouchersService.swift in Sources */,
 				F46E5C7E2A8353B900889BB0 /* ForgotPasswordViewModel.swift in Sources */,
 				F494B0B82A868E4C002B8F07 /* SignUpFormView.swift in Sources */,
 				F43D84D72AA379C200D6FD4A /* AvatarView.swift in Sources */,
@@ -881,7 +874,6 @@
 				F464B11D2A98DAFC006EBD77 /* CartFooterView.swift in Sources */,
 				F4A5B2422A88DE8E000A8F6F /* Reservation.swift in Sources */,
 				F4A5B2312A8891A1000A8F6F /* Response.swift in Sources */,
-				F45074742AA496A00019D8F9 /* MyReservationsViewController.swift in Sources */,
 				F447595E2AA8703B006C4D9F /* CheckoutFooterView.swift in Sources */,
 				F44759602AA8706C006C4D9F /* CheckoutContentView.swift in Sources */,
 				F46E5C6C2A834B2600889BB0 /* Tokens.swift in Sources */,

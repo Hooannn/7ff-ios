@@ -8,12 +8,37 @@
 import UIKit
 final class CheckoutViewController: UIViewController {
     private lazy var safeAreaInsets = Tokens.shared.safeAreaInsets
-    
     private lazy var profileViewModel: ProfileViewModel = {
        ProfileViewModel()
     }()
     
+    private lazy var cartViewModel: CartViewModel = {
+        CartViewModel()
+    }()
+    
+    private var user: User?
+    private lazy var viewModel: CheckoutViewModel = {
+        CheckoutViewModel(delegate: self)
+    }()
+
+    private var deliveryPhone: String?
+    {
+        didSet {
+            guard let deliveryPhone = deliveryPhone else { return }
+            self.checkoutContentView.informationView.phoneNumber = deliveryPhone
+        }
+    }
+    
+    private var deliveryAddress: String?
+    {
+        didSet {
+            guard let deliveryAddress = deliveryAddress else { return }
+            self.checkoutContentView.informationView.address = deliveryAddress
+        }
+    }
+    
     private var cartItems: [CartItem] = []
+    private var voucher: String?
     private var subtotal: Double?
     {
         didSet {
@@ -57,14 +82,17 @@ final class CheckoutViewController: UIViewController {
         
         profileViewModel.getUser {
             user in
+            self.user = user
             self.checkoutContentView.informationView.name = "\(user?.firstName ?? "") \(user?.lastName ?? "")"
             self.checkoutContentView.informationView.address = "\(user?.address ?? "Not updated yet")"
             self.checkoutContentView.informationView.phoneNumber = "\(user?.phoneNumber ?? "Not updated yet")"
+            self.deliveryAddress = user?.address
+            self.deliveryPhone = user?.phoneNumber
         }
     }
     
     private lazy var checkoutContentView: CheckoutContentView = {
-        let view = CheckoutContentView(items: cartItems)
+        let view = CheckoutContentView(items: cartItems, delegate: self)
         return view
     }()
     
@@ -123,8 +151,87 @@ final class CheckoutViewController: UIViewController {
     }
 }
 
-extension CheckoutViewController: CheckoutFooterDelegate {
+extension CheckoutViewController: EditOrderInformationViewControllerDelegate {
+    func didSave(_ sender: UIBarButtonItem, _ address: String, _ phone: String) {
+        deliveryAddress = address
+        deliveryPhone = phone
+    }
+}
+
+extension CheckoutViewController: CheckoutFooterViewDelegate, CheckoutVoucherViewDelegate, CheckoutInformationViewDelegate {
     func didTapSubmitButton(_ sender: UIButton) {
-        debugPrint("submit")
+        if deliveryPhone == nil || deliveryAddress == nil {
+            didTapEditButton(sender)
+            return
+        }
+        guard let customerId = user?._id else { return }
+        let checkoutItems = cartItems.compactMap {
+            cartItem in
+            CheckoutItem(product: cartItem.product._id!, quantity: cartItem.quantity)
+        }
+        let form = CheckoutForm(customerId: customerId, isDelivery: true, items: checkoutItems, deliveryPhone: "\(deliveryPhone ?? "")", deliveryAddress: deliveryAddress, voucher: voucher, note: nil)
+        checkoutFooterView.setLoading(isLoading: true)
+        viewModel.doCheckout(with: form)
+    }
+    
+    func didTapEditButton(_ sender: UIButton) {
+        let editVC = EditOrderInformationViewController(address: deliveryAddress, phone: deliveryPhone)
+        editVC.delegate = self
+        let navigation = UINavigationController(rootViewController: editVC)
+        navigation.modalPresentationStyle = .automatic
+        present(navigation, animated: true)
+    }
+    
+    func didTapCancelButton(_ sender: UIButton, _ voucherTextField: UITextField) {
+        checkoutContentView.voucherView.setState(state: .empty)
+        self.discount = 0
+        self.voucher = nil
+    }
+    
+    func didTapApplyButton(_ sender: UIButton,_ voucherTextField: UITextField) {
+        if voucherTextField.hasText, let code = voucherTextField.text {
+            checkoutContentView.voucherView.setLoading(isLoading: true)
+            viewModel.verifyVoucherByCode(code: code)
+        } else {
+            Toast.shared.display(with: "Voucher must not be empty")
+        }
+    }
+}
+
+extension CheckoutViewController: CheckoutViewModelDelegate {
+    func didVerifyVoucherSuccess(_ voucher: Voucher?) {
+        Toast.shared.display(with: "Applied voucher")
+        checkoutContentView.voucherView.setLoading(isLoading: false)
+        checkoutContentView.voucherView.setState(state: .applying)
+        let discountType = voucher?.discountType
+        let discountAmount = voucher?.discountAmount
+        self.voucher = voucher?._id
+        switch discountType {
+        case .amount:
+            self.discount = discountAmount
+        case .percent:
+            self.discount = (self.subtotal ?? 0) * (discountAmount ?? 0)
+        default:
+            break
+        }
+    }
+    
+    func didVerifyVoucherFailure(_ error: Error) {
+        checkoutContentView.voucherView.setLoading(isLoading: false)
+        checkoutContentView.voucherView.setState(state: .empty)
+        Toast.shared.display(with: "Verify voucher error: \(error.localizedDescription)")
+    }
+    
+    func didCheckoutSuccess(_ order: CreatedOrder?) {
+        cartViewModel.fetchCartItems()
+        checkoutFooterView.setLoading(isLoading: false)
+        let orderId = order?._id ?? "None"
+        let successVC = CheckoutSuccessViewController(orderId: orderId)
+        self.pushViewControllerWithoutBottomBar(successVC)
+    }
+    
+    func didCheckoutFailure(_ error: Error) {
+        checkoutFooterView.setLoading(isLoading: false)
+        Toast.shared.display(with: "Submit error due to \(error.localizedDescription)")
     }
 }

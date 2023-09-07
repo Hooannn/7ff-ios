@@ -49,12 +49,6 @@ final class ProfileViewController: UIViewController {
                 viewController.title = title
                 viewController.delegate = self
                 self.pushViewControllerWithoutBottomBar(viewController)
-            case .orders:
-                let viewController = MyOrdersViewController()
-                self.pushViewControllerWithoutBottomBar(viewController)
-            case .reservations:
-                let viewController = MyReservationsViewController()
-                self.pushViewControllerWithoutBottomBar(viewController)
             case .deactivateAccount:
                 let viewController = DeactivateAccountViewController()
                 self.pushViewControllerWithoutBottomBar(viewController)
@@ -115,7 +109,7 @@ final class ProfileViewController: UIViewController {
             contentStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16),
             
             avatarView.heightAnchor.constraint(equalToConstant: 140),
-            tableView.heightAnchor.constraint(equalToConstant: 700)
+            tableView.heightAnchor.constraint(equalToConstant: 550)
         ])
     }
     

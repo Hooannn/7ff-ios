@@ -98,6 +98,18 @@ final class Widgets {
         return textField
     }
     
+    func createTextView(placeholder: String, delegate: UITextViewDelegate, keyboardType: UIKeyboardType) -> UITextView {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.delegate = delegate
+        textView.autocapitalizationType = .none
+        textView.font = UIFont.systemFont(ofSize: tokens.textFieldFontSize)
+        textView.layer.cornerRadius = 4
+        textView.keyboardType = keyboardType
+        
+        return textView
+    }
+    
     func createLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

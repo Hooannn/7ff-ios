@@ -90,7 +90,7 @@ class CheckoutPaymentDetailsView: BaseView {
     private lazy var totalLabel: UILabel = {
         let label = Widgets.shared.createLabel()
         label.textAlignment = .right
-        label.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize + 2)
+        label.font = UIFont.boldSystemFont(ofSize: Tokens.shared.systemFontSize)
         label.textColor = .alizarin
         return label
     }()
