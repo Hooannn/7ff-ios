@@ -9,11 +9,11 @@ import UIKit
 import Alamofire
 
 enum ProfileSectionIdentifier {
-    case accountDetails, others, danger
+    case accountDetails, danger
 }
 
 enum ProfileSectionItemIdentitier: String {
-    case firstName, lastName, email, phoneNumber, password, address, orders, reservations, deactivateAccount, signOut
+    case firstName, lastName, email, phoneNumber, password, address, deactivateAccount, signOut
 }
 
 struct ProfileSection {
@@ -57,7 +57,6 @@ final class ProfileViewModel {
     func getProfileSections() -> [ProfileSection] {
         [
             ProfileSection(title: "Account Details", identifier: .accountDetails),
-            ProfileSection(title: "Others", identifier: .others),
             ProfileSection(title: "Danger", identifier: .danger)
         ]
     }
@@ -82,13 +81,6 @@ final class ProfileViewModel {
                 ProfileSectionItem(title: "Password", subtitle: nil, image: nil, identifier: .password, hasValue: true, defaultValue: "******", isEmpty: false, readonly: false),
                 ProfileSectionItem(title: "Email", subtitle: nil, image: nil, identifier: .email, hasValue: true, defaultValue: email, isEmpty: false, readonly: true)
             ]
-        
-        case .others:
-            return [
-                ProfileSectionItem(title: "Orders", subtitle: nil, image: nil, identifier: .orders, hasValue: false, defaultValue: nil, isEmpty: false, readonly: false),
-                ProfileSectionItem(title: "Reservations", subtitle: nil, image: nil, identifier: .reservations, hasValue: false, defaultValue: nil, isEmpty: false, readonly: false)
-            ]
-
         case .danger:
             return [
                 ProfileSectionItem(title: "Deactivate account", subtitle: nil, image: nil, identifier: .deactivateAccount, hasValue: false, defaultValue: nil, isEmpty: false, readonly: false),
@@ -138,11 +130,15 @@ final class ProfileViewModel {
     
     init(delegate: ProfileViewModelDelegate? = nil) {
         self.delegate = delegate
-        setupNotifications()
+        if delegate != nil {
+            setupNotifications()
+        }
     }
     
     deinit {
-        removeNotifications()
+        if delegate != nil {
+            removeNotifications()
+        }
     }
     
     private func setupNotifications() {

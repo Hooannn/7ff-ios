@@ -70,21 +70,21 @@ final class MainTabBarController: UITabBarController {
         let cartItems = LocalData.shared.getUserCart()
         let badgeValue = cartItems?.count
         let cartTab = tabBar.items?.first(where: { tab in tab.tag == 2 })
-        cartTab?.badgeValue = String(badgeValue!)
+        cartTab?.badgeValue = String(badgeValue ?? 0)
     }
 
     private func setupNavigations() {
         let homeVC = HomeViewController()
-        let notificationsVC = NotificationsViewController()
+        let ordersVC = MyOrdersViewController()
         let cartVC = CartViewController()
         let profileVC = ProfileViewController()
         
         let homeTab = Tab(viewController: homeVC, tag: 1, image: UIImage(named: "Home"), title: "Home")
         let cartTab = Tab(viewController: cartVC, tag: 2, image: UIImage(named: "Cart"), title: "Cart")
-        let notificationsTab = Tab(viewController: notificationsVC, tag: 3, image: UIImage(named: "Notifications"), title: "Messages")
+        let ordersTab = Tab(viewController: ordersVC, tag: 3, image: UIImage(named: "Orders"), title: "Orders")
         let profileTab = Tab(viewController: profileVC, tag: 4, image: UIImage(named: "Profile"), title: "Profile")
         
-        let navigations = [homeTab, cartTab, notificationsTab, profileTab].map { tab -> UINavigationController in tab.buildNavigation()
+        let navigations = [homeTab, cartTab, ordersTab, profileTab].map { tab -> UINavigationController in tab.buildNavigation()
         }
         
         tabBar.backgroundColor = .white

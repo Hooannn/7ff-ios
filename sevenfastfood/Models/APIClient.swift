@@ -11,6 +11,8 @@ import Alamofire
 struct ResponseError: Decodable {
     let message: String?
 }
+
+
 class AuthenInterceptor: RequestInterceptor {
     private var headers: HTTPHeaders = [
         "Accept": "application/json"
@@ -77,7 +79,7 @@ class AuthenInterceptor: RequestInterceptor {
 }
 final class APIClient {
     private let baseUrl = "https://sevenfastfood-be.onrender.com"
-    //private let baseUrl = "https://bbfe-14-169-54-126.ngrok-free.app"
+    //private let baseUrl = "https://f774-14-169-54-126.ngrok-free.app"
     private var session: Session?
     
     private lazy var localDataModel: LocalData = {
@@ -152,7 +154,7 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .post, parameters: params, headers: headers).validate().responseJSON {
+        session.request("\(baseUrl)\(subpath)", method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseJSON {
             response in
             
             guard let httpResponse = response.response,
@@ -188,7 +190,7 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .put, parameters: params, headers: headers).validate().responseJSON {
+        session.request("\(baseUrl)\(subpath)", method: .put, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseJSON {
             response in
             
             guard let httpResponse = response.response,
@@ -224,7 +226,7 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .patch, parameters: params, headers: headers).validate().responseJSON {
+        session.request("\(baseUrl)\(subpath)", method: .patch, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseJSON {
             response in
             
             guard let httpResponse = response.response,
@@ -260,7 +262,7 @@ final class APIClient {
         guard let session = session else {
             return
         }
-        session.request("\(baseUrl)\(subpath)", method: .delete, parameters: params, headers: headers).validate().responseJSON {
+        session.request("\(baseUrl)\(subpath)", method: .delete, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseJSON {
             response in
             
             guard let httpResponse = response.response,

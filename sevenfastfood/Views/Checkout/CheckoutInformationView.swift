@@ -7,7 +7,12 @@
 
 import UIKit
 
+protocol CheckoutInformationViewDelegate: AnyObject {
+    func didTapEditButton(_ sender: UIButton)
+}
+
 class CheckoutInformationView: BaseView {
+    weak var delegate: CheckoutInformationViewDelegate?
     var name: String?
     {
         didSet {
@@ -37,6 +42,7 @@ class CheckoutInformationView: BaseView {
         editButton.setTitle("Edit", for: .normal)
         editButton.tintColor = Tokens.shared.primaryColor
         editButton.translatesAutoresizingMaskIntoConstraints = false
+        editButton.addTarget(self, action: #selector(didTapEditButton(_:)), for: .touchUpInside)
         editButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
         
         let view = UIStackView(arrangedSubviews: [titleLabel, editButton])
@@ -120,5 +126,9 @@ class CheckoutInformationView: BaseView {
             contentView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
         ])
+    }
+    
+    @objc private func didTapEditButton(_ sender: UIButton) {
+        delegate?.didTapEditButton(sender)
     }
 }

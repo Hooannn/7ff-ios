@@ -6,12 +6,12 @@
 //
 
 import UIKit
-protocol CheckoutFooterDelegate: AnyObject {
+protocol CheckoutFooterViewDelegate: AnyObject {
     func didTapSubmitButton(_ sender: UIButton)
 }
 
 class CheckoutFooterView: BaseView {
-    weak var delegate: CheckoutFooterDelegate?
+    weak var delegate: CheckoutFooterViewDelegate?
     var totalPrice: Double?
     {
         didSet {
@@ -41,6 +41,10 @@ class CheckoutFooterView: BaseView {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
+    
+    func setLoading(isLoading: Bool) {
+        submitButton.setLoading(isLoading)
+    }
     
     private lazy var submitButton: UIButton = {
         let primaryButton = Widgets.shared.createSecondaryButton(title: "Place order", target: self, action: #selector(didTapSubmitButton(_:)))

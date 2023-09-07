@@ -10,6 +10,7 @@ enum DiscountType: String, Codable {
     case percent, amount
 }
 struct Voucher: Codable {
+    let _id: String
     let code: String
     let discountType: DiscountType
     let discountAmount: Double

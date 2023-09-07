@@ -11,9 +11,11 @@ class CheckoutContentView: BaseView {
     private var orderItemsCollectionViewHeightConstraint: NSLayoutConstraint?
     var items: [CartItem]?
     
-    convenience init(items: [CartItem]? = nil) {
+    convenience init(items: [CartItem]? = nil, delegate: (CheckoutVoucherViewDelegate & CheckoutInformationViewDelegate)? = nil) {
         self.init(frame: .zero)
         self.items = items
+        voucherView.delegate = delegate
+        informationView.delegate = delegate
     }
     
     private lazy var orderItemsCollectionView: UICollectionView = {
@@ -28,8 +30,12 @@ class CheckoutContentView: BaseView {
         return view
     }()
     
-    lazy var informationView: CheckoutInformationView = {
-        let view = CheckoutInformationView()
+    private lazy var dividerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = Tokens.shared.secondaryColor
+        view.layer.cornerRadius = 4
+        view.clipsToBounds = true
         return view
     }()
     
@@ -37,20 +43,25 @@ class CheckoutContentView: BaseView {
         let view = CheckoutVoucherView()
         return view
     }()
-
+    
+    lazy var informationView: CheckoutInformationView = {
+        let view = CheckoutInformationView()
+        return view
+    }()
+    
     lazy var paymentDetailsView: CheckoutPaymentDetailsView = {
         let view = CheckoutPaymentDetailsView()
         return view
     }()
     
     private lazy var contentStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [orderItemsCollectionView, voucherView, informationView, paymentDetailsView])
+        let stack = UIStackView(arrangedSubviews: [orderItemsCollectionView, dividerView, voucherView, informationView, paymentDetailsView])
         stack.axis = .vertical
         stack.spacing = 12
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-
+    
     private func reloadCollectionView() {
         orderItemsCollectionView.reloadData()
         Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: { _ in
@@ -79,6 +90,9 @@ class CheckoutContentView: BaseView {
             contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             contentStackView.widthAnchor.constraint(equalTo: widthAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            dividerView.heightAnchor.constraint(equalToConstant: 1),
+            dividerView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor)
         ])
         orderItemsCollectionViewHeightConstraint = orderItemsCollectionView.heightAnchor.constraint(equalToConstant: orderItemsCollectionView.collectionViewLayout.collectionViewContentSize.height)
         orderItemsCollectionViewHeightConstraint?.isActive = true

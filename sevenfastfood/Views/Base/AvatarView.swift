@@ -17,6 +17,7 @@ final class AvatarView: ClickableView {
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.isSkeletonable = true
+        imageView.backgroundColor = .clear
         return imageView
     }()
     
@@ -25,6 +26,7 @@ final class AvatarView: ClickableView {
     }
     
     override func setupViews() {
+        backgroundColor = .clear
         addSubview(imageView)
     }
     
