@@ -16,6 +16,7 @@ class CartItemsView: BaseView {
         let view = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         view.delegate = self
         view.dataSource = self
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
@@ -38,7 +39,6 @@ class CartItemsView: BaseView {
 
     override func setupViews() {
         addSubviews(cartItemsCollectionView)
-        cartItemsCollectionView.backgroundColor = .clear
         cartItemsCollectionView.register(CartItemViewCell.self, forCellWithReuseIdentifier: identifier)
     }
     

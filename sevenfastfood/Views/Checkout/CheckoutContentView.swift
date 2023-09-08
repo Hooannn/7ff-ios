@@ -26,7 +26,7 @@ class CheckoutContentView: BaseView {
         view.delegate = self
         view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.register(OrderItemViewCell.self, forCellWithReuseIdentifier: identifier)
+        view.register(CheckoutItemViewCell.self, forCellWithReuseIdentifier: identifier)
         return view
     }()
     
@@ -113,7 +113,7 @@ extension CheckoutContentView: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! OrderItemViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! CheckoutItemViewCell
         let item = items?[indexPath.item]
         cell.featuredImage = item?.product.featuredImages?.first
         cell.name = item?.product.name.en

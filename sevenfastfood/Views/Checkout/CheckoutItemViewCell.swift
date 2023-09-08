@@ -6,7 +6,7 @@
 //
 
 import UIKit
-class OrderItemViewCell: BaseCollectionViewCell {
+class CheckoutItemViewCell: BaseCollectionViewCell {
     var name: String?
     {
         didSet {

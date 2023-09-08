@@ -80,7 +80,7 @@ class ProductDetailView: UIView {
         titleLabel.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize, weight: .medium)
         
         let descriptionLabel = Widgets.shared.createLabel()
-        if let description = product?.description.en {
+        if let description = product?.description?.en {
             descriptionLabel.text = description
         }
         descriptionLabel.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize)

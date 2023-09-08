@@ -172,4 +172,7 @@ extension NSNotification.Name {
     static var didSaveUser: Notification.Name {
         return .init(rawValue: "User.updated")
     }
+    static var didSaveOrders: Notification.Name {
+        return .init(rawValue: "Orders.updated")
+    }
 }

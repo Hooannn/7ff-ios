@@ -16,6 +16,10 @@ final class CheckoutViewController: UIViewController {
         CartViewModel()
     }()
     
+    private lazy var myOrdersViewModel: MyOrdersViewModel = {
+        MyOrdersViewModel()
+    }()
+    
     private var user: User?
     private lazy var viewModel: CheckoutViewModel = {
         CheckoutViewModel(delegate: self)
@@ -224,6 +228,7 @@ extension CheckoutViewController: CheckoutViewModelDelegate {
     
     func didCheckoutSuccess(_ order: CreatedOrder?) {
         cartViewModel.fetchCartItems()
+        myOrdersViewModel.fetchOrders()
         checkoutFooterView.setLoading(isLoading: false)
         let orderId = order?._id ?? "None"
         let successVC = CheckoutSuccessViewController(orderId: orderId)

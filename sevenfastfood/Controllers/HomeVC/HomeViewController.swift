@@ -92,8 +92,8 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
             containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -Tokens.shared.containerXPadding),
             containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
-            headerView.heightAnchor.constraint(equalToConstant: 54),
-            searchBarView.heightAnchor.constraint(equalToConstant: 54),
+            headerView.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight),
+            searchBarView.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight),
             categoriesView.heightAnchor.constraint(equalToConstant: 36)
         ])
         

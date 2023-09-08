@@ -11,6 +11,7 @@ import SkeletonView
 protocol CategoriesViewDelegate: AnyObject {
     func didSelectCategory(_ category: Category?)
 }
+
 final class CategoriesView: BaseCollectionView {
     weak var categoryViewDelegate: CategoriesViewDelegate!
     private let cellIdentifier = "Category"
@@ -41,7 +42,6 @@ final class CategoriesView: BaseCollectionView {
     }
     
     override func setupViews() {
-        translatesAutoresizingMaskIntoConstraints = false
         dataSource = self
         delegate = self
         isSkeletonable = true
