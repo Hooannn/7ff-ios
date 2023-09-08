@@ -42,9 +42,9 @@ final class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigations()
-        self.didReceiveCartUpdateNotification()
-        CartService.shared.fetchItems()
+        setupData()
     }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setupNotificationCenter()
@@ -58,12 +58,21 @@ final class MainTabBarController: UITabBarController {
         removeNotificationCenter()
     }
     
+    private func setupData() {
+        self.didReceiveCartUpdateNotification()
+        self.didReceiveOrdersUpdateNotification()
+        CartService.shared.fetchItems()
+        OrdersService.shared.fetch()
+    }
+    
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCartUpdateNotification(_:)), name: NSNotification.Name.didSaveCart, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveOrdersUpdateNotification(_:)), name: NSNotification.Name.didSaveOrders, object: nil)
     }
     
     private func removeNotificationCenter() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.didSaveCart, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.didSaveOrders, object: nil)
     }
     
     @objc func didReceiveCartUpdateNotification(_ notification: NSNotification? = nil) {
@@ -71,6 +80,16 @@ final class MainTabBarController: UITabBarController {
         let badgeValue = cartItems?.count
         let cartTab = tabBar.items?.first(where: { tab in tab.tag == 2 })
         cartTab?.badgeValue = String(badgeValue ?? 0)
+    }
+    
+    @objc func didReceiveOrdersUpdateNotification(_ notification: NSNotification? = nil) {
+        let orders = LocalData.shared.getOrders()
+        let badgeValue = orders?.filter {
+            order in
+            order.status != .Done && order.status != .Cancelled
+        }.count
+        let ordersTab = tabBar.items?.first(where: { tab in tab.tag == 3 })
+        ordersTab?.badgeValue = String(badgeValue ?? 0)
     }
 
     private func setupNavigations() {

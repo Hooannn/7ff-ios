@@ -87,4 +87,23 @@ final class LocalData {
             }
         }
     }
+    
+    public func getOrders() -> [Order]? {
+        if let orders = client.object(forKey: "orders") as? Data {
+            let decoder = JSONDecoder()
+            let decoded = try? decoder.decode([Order].self, from: orders)
+            return decoded
+        }
+        return nil
+    }
+    
+    public func saveOrders(orders: [Order]?) {
+        let encoder = JSONEncoder()
+        if let orders = orders {
+            if let encoded = try? encoder.encode(orders) {
+                client.set(encoded, forKey: "orders")
+                NotificationCenter.default.post(name: NSNotification.Name.didSaveOrders, object: nil)
+            }
+        }
+    }
 }

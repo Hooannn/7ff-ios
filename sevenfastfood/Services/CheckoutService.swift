@@ -33,7 +33,7 @@ final class CheckoutService {
                 return [
                     "product": item.product,
                     "quantity": item.quantity
-                ]
+                ] as [String : Any]
             }
         ] as [String : Any]
         

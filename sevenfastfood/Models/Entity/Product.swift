@@ -10,7 +10,7 @@ import Foundation
 struct Product: Codable {
     let _id: String?
     let name: Content
-    let description: Content
+    let description: Content?
     let price: Double
     let stocks: Int?
     let category: Category?

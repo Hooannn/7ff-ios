@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class CategoryViewCell: ClickableCollectionViewCell {
+final class CategoryViewCell: BaseCollectionViewCell {
     override var isSelected: Bool
     {
         didSet {
@@ -39,11 +39,8 @@ final class CategoryViewCell: ClickableCollectionViewCell {
     
     override func setupViews() {
         isSkeletonable = true
+        clipsToBounds = false
         contentView.addSubviews(label, dotView)
-    }
-    
-    override func setupGestureRecognizer() {
-        
     }
 
     override func setupConstraints() {

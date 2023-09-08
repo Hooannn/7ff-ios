@@ -8,7 +8,7 @@
 import Foundation
 
 enum OrderStatus: String, Codable {
-    case Processing, Delivering, Done, Cancelled
+    case Processing, Delivering, Done, Cancelled, All
 }
 
 struct OrderItem: Codable {
@@ -27,6 +27,7 @@ struct Order: Codable {
     let deliveryAddress: String?
     let deliveryPhone: String?
     let rating: Double?
+    let ratingCount: Double?
     let status: OrderStatus
 }
 
@@ -41,5 +42,6 @@ struct CreatedOrder: Codable {
     let deliveryAddress: String?
     let deliveryPhone: String?
     let rating: Double?
+    let ratingCount: Double?
     let status: OrderStatus
 }
