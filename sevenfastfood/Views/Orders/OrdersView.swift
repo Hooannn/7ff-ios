@@ -10,7 +10,6 @@ final class OrdersView: BaseView {
     var orders: [Order]? = []
     {
         didSet {
-            //ordersCollectionView.reloadData()
             ordersTableView.reloadData()
         }
     }
@@ -23,21 +22,6 @@ final class OrdersView: BaseView {
         return indicator
     }()
     
-    /*
-    private lazy var ordersCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.delegate = self
-        view.backgroundColor = .clear
-        view.dataSource = self
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.showsVerticalScrollIndicator = false
-        view.showsHorizontalScrollIndicator = false
-        return view
-    }()
-    */
-    
     private lazy var ordersTableView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
         view.delegate = self
@@ -49,29 +33,18 @@ final class OrdersView: BaseView {
         view.rowHeight = UITableView.automaticDimension;
         view.estimatedRowHeight = 200;
         view.alwaysBounceVertical = false
+        view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
         return view
     }()
     
     override func setupViews() {
-        /*
-        addSubviews(ordersCollectionView)
-        ordersCollectionView.register(OrderViewCell.self, forCellWithReuseIdentifier: identifier)
-        */
         addSubviews(ordersTableView)
         ordersTableView.register(OrderViewCell.self, forCellReuseIdentifier: identifier)
     }
     
     override func setupConstraints() {
-        /*
         NSLayoutConstraint.activate([
-            ordersCollectionView.topAnchor.constraint(equalTo: topAnchor),
-            ordersCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            ordersCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            ordersCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-        */
-        NSLayoutConstraint.activate([
-            ordersTableView.topAnchor.constraint(equalTo: topAnchor),
+            ordersTableView.topAnchor.constraint(equalTo: topAnchor, constant: -6),
             ordersTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             ordersTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             ordersTableView.bottomAnchor.constraint(equalTo: bottomAnchor)
@@ -79,44 +52,37 @@ final class OrdersView: BaseView {
     }
 }
 
-/*
-extension OrdersView: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        orders?.count ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! OrderViewCell
-        let order = orders?[indexPath.item]
-        cell.id = order?._id
-        cell.items = order?.items
-        cell.status = order?.status
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! OrderViewCell
-        return CGSize(width: bounds.width, height: 100)
-    }
-}
-*/
-
 extension OrdersView: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         orders?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? OrderViewCell
-        let cell = OrderViewCell(style: .default, reuseIdentifier: identifier)
+        var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? OrderViewCell
+        if cell == nil {
+            cell = OrderViewCell(style: .default, reuseIdentifier: identifier)
+        }
         let order = orders?[indexPath.item]
-        cell.id = order?._id
-        cell.items = order?.items
-        cell.status = order?.status
-        return cell
+        cell?.id = order?._id
+        cell?.items = order?.items
+        cell?.status = order?.status
+        return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Do stuff
+        
+        //
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let verticalPadding: CGFloat = 12
+        
+        let maskLayer = CALayer()
+        maskLayer.cornerRadius = 12
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.frame = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.width, height: cell.bounds.height).insetBy(dx: 0, dy: verticalPadding/2)
+        cell.layer.mask = maskLayer
     }
 }

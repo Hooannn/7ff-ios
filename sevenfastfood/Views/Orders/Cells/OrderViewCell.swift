@@ -41,7 +41,7 @@ fileprivate class OrderStatusView: BaseView {
     
     private lazy var label: UILabel = {
         let label = Widgets.shared.createLabel()
-        label.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: Tokens.shared.descriptionFontSize, weight: .medium)
         return label
     }()
     
@@ -80,19 +80,12 @@ final class OrderViewCell: BaseTableViewCell {
     {
         didSet {
             orderItemsCollectionView.reloadData()
-            Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: {
-                _ in
-                if self.ordersCollectionViewHeightConstraint == nil {
-                    self.ordersCollectionViewHeightConstraint = self.orderItemsCollectionView.heightAnchor.constraint(equalToConstant: self.orderItemsCollectionView.collectionViewLayout.collectionViewContentSize.height)
-                    self.ordersCollectionViewHeightConstraint?.isActive = true
-                }
-                self.ordersCollectionViewHeightConstraint?.constant = self.orderItemsCollectionView.collectionViewLayout.collectionViewContentSize.height
-                self.layoutIfNeeded()
-            })
+            ordersCollectionViewHeightConstraint?.constant = orderItemsCollectionView.collectionViewLayout.collectionViewContentSize.height
+            layoutIfNeeded()
         }
     }
     
-    private var ordersCollectionViewHeightConstraint: NSLayoutConstraint?
+    var ordersCollectionViewHeightConstraint: NSLayoutConstraint?
     private lazy var orderIdLabel: UILabel = {
         let label = Widgets.shared.createLabel()
         label.font = UIFont.boldSystemFont(ofSize: Tokens.shared.systemFontSize)
@@ -127,6 +120,7 @@ final class OrderViewCell: BaseTableViewCell {
     lazy var orderItemsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 0
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.backgroundColor = .clear
@@ -134,6 +128,7 @@ final class OrderViewCell: BaseTableViewCell {
         collection.dataSource = self
         collection.showsVerticalScrollIndicator = false
         collection.showsHorizontalScrollIndicator = false
+        collection.scrollIndicatorInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         return collection
     }()
     
@@ -159,6 +154,9 @@ final class OrderViewCell: BaseTableViewCell {
             orderItemsCollectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 12),
             orderItemsCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ])
+        ordersCollectionViewHeightConstraint = orderItemsCollectionView.heightAnchor.constraint(equalToConstant: 1)
+        ordersCollectionViewHeightConstraint?.isActive = true
+        layoutIfNeeded()
     }
     
     @objc private func didTapDetailButton(_ sender: UIButton) {
@@ -173,11 +171,15 @@ extension OrderViewCell: UICollectionViewDelegate, UICollectionViewDataSource, U
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! OrderItemViewCell
-        cell.backgroundColor = .systemGray
+        let item = items?[indexPath.item]
+        cell.featuredImage = item?.product.featuredImages?.first
+        cell.title = item?.product.name.en
+        cell.unitPrice = item?.product.price
+        cell.quantity = item?.quantity
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: bounds.width, height: 80)
+        return CGSize(width: bounds.width, height: 70)
     }
 }
