@@ -34,7 +34,7 @@ class CartEmptyView: BaseView {
     private lazy var contentStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [imageView, label, shoppingButton])
         view.axis = .vertical
-        view.spacing = 12
+        view.spacing = 24
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

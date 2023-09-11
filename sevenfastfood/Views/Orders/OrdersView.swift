@@ -7,10 +7,33 @@
 
 import UIKit
 final class OrdersView: BaseView {
+    weak var orderViewCellDelegate: OrderViewCellDelegate?
     var orders: [Order]? = []
+    private var shouldShowOrders: [Order]? = []
     {
         didSet {
             ordersTableView.reloadData()
+            if shouldShowOrders?.count ?? 0 > 0 {
+                hideEmptyView()
+            } else {
+                displayEmptyView(with: shouldShowOrdersWithStatus)
+            }
+        }
+    }
+
+    var shouldShowOrdersWithStatus: OrderStatus?
+    {
+        didSet {
+            if orders?.count ?? 0 < 0 { return }
+            guard let shouldShowOrdersWithStatus = shouldShowOrdersWithStatus else { return }
+            if shouldShowOrdersWithStatus == .All {
+                shouldShowOrders = orders
+            } else {
+                shouldShowOrders = orders?.filter {
+                    order in
+                    order.status == shouldShowOrdersWithStatus
+                }
+            }
         }
     }
     
@@ -37,24 +60,56 @@ final class OrdersView: BaseView {
         return view
     }()
     
+    private lazy var emptyView: OrdersEmptyView = {
+        let view = OrdersEmptyView()
+        view.isHidden = true
+        view.backgroundColor = .clear
+        return view
+    }()
+    
+    convenience init(orderViewCellDelegate: OrderViewCellDelegate? = nil) {
+        self.init(frame: .zero)
+        self.orderViewCellDelegate = orderViewCellDelegate
+    }
+    
     override func setupViews() {
-        addSubviews(ordersTableView)
+        addSubviews(ordersTableView, emptyView)
         ordersTableView.register(OrderViewCell.self, forCellReuseIdentifier: identifier)
     }
     
+    private func displayEmptyView(with status: OrderStatus?) {
+        ordersTableView.isHidden = true
+        emptyView.isHidden = false
+        if status != .All {
+            if let status = status?.rawValue {
+                emptyView.title = "You don't have any orders with status '\(status)'"
+            }
+        } else {
+            emptyView.title = "You don't have any orders"
+        }
+    }
+    
+    private func hideEmptyView() {
+        ordersTableView.isHidden = false
+        emptyView.isHidden = true
+    }
+    
     override func setupConstraints() {
-        NSLayoutConstraint.activate([
-            ordersTableView.topAnchor.constraint(equalTo: topAnchor, constant: -6),
-            ordersTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            ordersTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            ordersTableView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        [emptyView, ordersTableView].forEach {
+            view in
+            NSLayoutConstraint.activate([
+                view.topAnchor.constraint(equalTo: topAnchor, constant: -6),
+                view.trailingAnchor.constraint(equalTo: trailingAnchor),
+                view.leadingAnchor.constraint(equalTo: leadingAnchor),
+                view.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+        }
     }
 }
 
 extension OrdersView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        orders?.count ?? 0
+        shouldShowOrders?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,17 +117,19 @@ extension OrdersView: UITableViewDelegate, UITableViewDataSource {
         if cell == nil {
             cell = OrderViewCell(style: .default, reuseIdentifier: identifier)
         }
-        let order = orders?[indexPath.item]
+        let order = shouldShowOrders?[indexPath.item]
         cell?.id = order?._id
         cell?.items = order?.items
         cell?.status = order?.status
+        cell?.delegate = orderViewCellDelegate
         return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Do stuff
-        
-        //
+        let order = shouldShowOrders?[indexPath.item]
+        if let id = order?._id {
+            orderViewCellDelegate?.didTapDetailsButton(UIButton(), id)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

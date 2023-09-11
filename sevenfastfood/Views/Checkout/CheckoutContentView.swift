@@ -65,7 +65,6 @@ class CheckoutContentView: BaseView {
     private func reloadCollectionView() {
         orderItemsCollectionView.reloadData()
         Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: { _ in
-            debugPrint(self.orderItemsCollectionView.collectionViewLayout.collectionViewContentSize.height)
             self.orderItemsCollectionViewHeightConstraint?.constant = self.orderItemsCollectionView.collectionViewLayout.collectionViewContentSize.height
             self.layoutIfNeeded()
         })

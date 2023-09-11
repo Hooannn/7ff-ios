@@ -44,5 +44,12 @@ final class OrdersService {
             }
         }
     }
+    
+    public func rating(withId id: String, value: Int, completion: @escaping (Result<Response<CreatedOrder>?, Error>) -> Void) {
+        let params = [
+            "value": value
+        ]
+        apiClient.performPut(withResponseType: Response<CreatedOrder>.self, withSubpath: "/rating/\(id)?locale=en", withParams: params, completion: completion)
+    }
 }
 

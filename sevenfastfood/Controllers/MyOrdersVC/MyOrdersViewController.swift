@@ -20,22 +20,12 @@ final class MyOrdersViewController: ViewControllerWithoutNavigationBar {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 12
-        let view = OrdersStatusFilterView(frame: .zero, collectionViewLayout: layout)
+        let view = OrdersStatusFilterView(frame: .zero, collectionViewLayout: layout, delegate: self)
         return view
     }()
     
     private lazy var orderViews: OrdersView = {
-        let view = OrdersView()
-        return view
-    }()
-    
-    private lazy var emptyView: OrdersEmptyView = {
-        let view = OrdersEmptyView()
-        view.isHidden = true
-        view.backgroundColor = .clear
-        view.didTapShoppingButton = {
-            self.tabBarController?.selectedIndex = 0
-        }
+        let view = OrdersView(orderViewCellDelegate: self)
         return view
     }()
     
@@ -54,13 +44,19 @@ final class MyOrdersViewController: ViewControllerWithoutNavigationBar {
         setupConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if let existedStatus = self.statusFilterView.selectedStatus {
+            self.didSelectStatus(existedStatus)
+        }
+    }
+    
     private func setupViewModel() {
         self.viewModel = MyOrdersViewModel(delegate: self)
     }
     
     private func setupViews() {
         view.backgroundColor = Tokens.shared.lightBackgroundColor
-        view.addSubviews(containerView, emptyView)
+        view.addSubviews(containerView)
     }
     
     private func setupConstraints() {
@@ -70,11 +66,6 @@ final class MyOrdersViewController: ViewControllerWithoutNavigationBar {
             containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -Tokens.shared.containerXPadding),
             containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
-            emptyView.topAnchor.constraint(equalTo: view.topAnchor),
-            emptyView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            emptyView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            emptyView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
             headerView.heightAnchor.constraint(equalToConstant: Tokens.shared.defaultButtonHeight),
             statusFilterView.heightAnchor.constraint(equalToConstant: 36)
         ])
@@ -83,10 +74,20 @@ final class MyOrdersViewController: ViewControllerWithoutNavigationBar {
     }
 }
 
-extension MyOrdersViewController: MyOrdersViewModelDelegate {
+extension MyOrdersViewController: MyOrdersViewModelDelegate, OrdersStatusFilterViewDelegate, OrderViewCellDelegate {
     func didReceiveOrdersUpdate(_ orders: [Order]?) {
         let ordersCount = orders?.count ?? 0
         headerView.itemsCount = ordersCount
         orderViews.orders = orders
+    }
+    
+    func didSelectStatus(_ status: OrderStatus) {
+        orderViews.shouldShowOrdersWithStatus = status
+    }
+    
+    func didTapDetailsButton(_ sender: UIButton, _ orderId: String) {
+        let orderDetailVC = OrderDetailViewController(orderId: orderId)
+        orderDetailVC.title = "Order Details"
+        pushViewControllerWithoutBottomBar(orderDetailVC)
     }
 }

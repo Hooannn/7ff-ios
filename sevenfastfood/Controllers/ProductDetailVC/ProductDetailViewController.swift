@@ -186,6 +186,7 @@ final class ProductDetailViewController: ViewControllerWithoutNavigationBar {
     
     @objc func didTapCartButton(_ sender: UIButton) {
         dismiss(animated: true) {
+            //self.navigationController?.popToRootViewController(animated: true)
             self.tabBarController?.selectedIndex = 1
         }
     }
