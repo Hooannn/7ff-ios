@@ -29,6 +29,8 @@ struct Order: Codable {
     let rating: Double?
     let ratingCount: Double?
     let status: OrderStatus
+    let createdAt: String?
+    let updatedAt: String?
 }
 
 struct CreatedOrder: Codable {
@@ -44,4 +46,6 @@ struct CreatedOrder: Codable {
     let rating: Double?
     let ratingCount: Double?
     let status: OrderStatus
+    let createdAt: String?
+    let updatedAt: String?
 }

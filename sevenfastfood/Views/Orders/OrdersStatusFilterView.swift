@@ -15,11 +15,17 @@ final class OrdersStatusFilterView: BaseCollectionView {
     weak var orderStatusFilterViewDelegate: OrdersStatusFilterViewDelegate?
     private let identifier = "OrderStatuses"
     private let statuses: [OrderStatus] = [.All, .Processing, .Delivering, .Done, .Cancelled]
-    private var selectedStatus: OrderStatus = .All
+    var selectedStatus: OrderStatus?
     {
         didSet {
+            guard let selectedStatus = selectedStatus else { return }
             orderStatusFilterViewDelegate?.didSelectStatus(selectedStatus)
         }
+    }
+    convenience init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout, delegate: OrdersStatusFilterViewDelegate) {
+        self.init(frame: frame, collectionViewLayout: layout)
+        self.orderStatusFilterViewDelegate = delegate
+        self.prepare()
     }
     
     override func setupViews() {
@@ -31,8 +37,10 @@ final class OrdersStatusFilterView: BaseCollectionView {
         register(CategoryViewCell.self, forCellWithReuseIdentifier: identifier)
     }
     
-    override func setupConstraints() {
-        
+    private func prepare() {
+        let firstIndexPath = IndexPath(row: 0, section: 0)
+        selectItem(at: firstIndexPath, animated: true, scrollPosition: .centeredHorizontally)
+        selectedStatus = .All
     }
 }
 

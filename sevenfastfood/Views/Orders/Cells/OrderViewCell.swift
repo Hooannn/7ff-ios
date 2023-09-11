@@ -61,8 +61,13 @@ fileprivate class OrderStatusView: BaseView {
     }
 }
 
+protocol OrderViewCellDelegate: AnyObject {
+    func didTapDetailsButton(_ sender: UIButton,_ orderId: String)
+}
+
 final class OrderViewCell: BaseTableViewCell {
     private let identifier = "OrderItem"
+    weak var delegate: OrderViewCellDelegate?
     var id: String?
     {
         didSet {
@@ -86,6 +91,7 @@ final class OrderViewCell: BaseTableViewCell {
     }
     
     var ordersCollectionViewHeightConstraint: NSLayoutConstraint?
+    var ordersCollectionBottomAnchorConstraint: NSLayoutConstraint?
     private lazy var orderIdLabel: UILabel = {
         let label = Widgets.shared.createLabel()
         label.font = UIFont.boldSystemFont(ofSize: Tokens.shared.systemFontSize)
@@ -97,11 +103,12 @@ final class OrderViewCell: BaseTableViewCell {
         return view
     }()
     
-    private lazy var detailButton: UIButton = {
+    private lazy var detailsButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Details", for: .normal)
-        button.addTarget(self, action: #selector(didTapDetailButton(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapDetailsButton(_:)), for: .touchUpInside)
+        button.tintColor = Tokens.shared.primaryColor
         return button
     }()
     
@@ -109,7 +116,7 @@ final class OrderViewCell: BaseTableViewCell {
         let titleAndStatus = UIStackView(arrangedSubviews: [orderIdLabel, statusView])
         titleAndStatus.axis = .vertical
         titleAndStatus.translatesAutoresizingMaskIntoConstraints = false
-        let view = UIStackView(arrangedSubviews: [titleAndStatus, detailButton])
+        let view = UIStackView(arrangedSubviews: [titleAndStatus, detailsButton])
         view.axis = .horizontal
         view.distribution = .equalCentering
         view.alignment = .center
@@ -126,6 +133,7 @@ final class OrderViewCell: BaseTableViewCell {
         collection.backgroundColor = .clear
         collection.delegate = self
         collection.dataSource = self
+        collection.isUserInteractionEnabled = false
         collection.showsVerticalScrollIndicator = false
         collection.showsHorizontalScrollIndicator = false
         collection.scrollIndicatorInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
@@ -149,18 +157,22 @@ final class OrderViewCell: BaseTableViewCell {
             headerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             statusView.heightAnchor.constraint(equalTo: headerView.heightAnchor, multiplier: 0.5),
             
-            orderItemsCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            orderItemsCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            orderItemsCollectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 12),
-            orderItemsCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
+            orderItemsCollectionView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+            orderItemsCollectionView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
+            orderItemsCollectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 12)
         ])
+        ordersCollectionBottomAnchorConstraint = orderItemsCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ordersCollectionViewHeightConstraint = orderItemsCollectionView.heightAnchor.constraint(equalToConstant: 1)
+        
+        ordersCollectionBottomAnchorConstraint?.isActive = true
         ordersCollectionViewHeightConstraint?.isActive = true
         layoutIfNeeded()
     }
     
-    @objc private func didTapDetailButton(_ sender: UIButton) {
-        debugPrint("Tapped detail")
+    @objc private func didTapDetailsButton(_ sender: UIButton) {
+        if let id = id {
+            delegate?.didTapDetailsButton(sender, id)
+        }
     }
 }
 
