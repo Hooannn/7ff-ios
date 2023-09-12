@@ -18,6 +18,7 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
     private lazy var safeAreaInsets = Tokens.shared.safeAreaInsets
     private lazy var headerView: CartHeaderView = {
         let view = CartHeaderView()
+        view.delegate = self
         return view
     }()
     
@@ -27,7 +28,7 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
     }()
     
     private var viewModel: CartViewModel?
-
+    
     private lazy var cartItemsView: CartItemsView = {
         let view = CartItemsView()
         view.cartItemCellDelegate = self
@@ -114,7 +115,11 @@ final class CartViewController: ViewControllerWithoutNavigationBar {
     }
 }
 
-extension CartViewController: CartViewModelDelegate, CartItemCellDelegate, CartFooterDelegate {
+extension CartViewController: CartViewModelDelegate, CartItemCellDelegate, CartFooterDelegate, CartHeaderViewDelegate {
+    func didTapSearchButton(_ sender: UIButton) {
+        openSearchViewController()
+    }
+    
     func didTapCheckoutButton(_ sender: UIButton) {
         let cartItems = viewModel?.getCartItems()
         let checkoutVC = CheckoutViewController(cartItems: cartItems ?? [], subtotal: totalPrice ?? 0)

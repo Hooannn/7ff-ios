@@ -48,6 +48,13 @@ extension UIViewController {
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func openSearchViewController() {
+        let searchVC = SearchViewController()
+        let navigationVC = UINavigationController(rootViewController: searchVC)
+        navigationVC.modalPresentationStyle = .fullScreen
+        navigationController?.present(navigationVC, animated: true)
+    }
 }
 
 extension UIView {

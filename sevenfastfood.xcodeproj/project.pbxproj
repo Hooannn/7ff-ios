@@ -31,6 +31,7 @@
 		F43A6D2F2AA23E0B00DA625B /* CartEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43A6D2E2AA23E0B00DA625B /* CartEmptyView.swift */; };
 		F43BE10C2AACE04B00B46505 /* OrderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BE10B2AACE04B00B46505 /* OrderDetailViewController.swift */; };
 		F43BE10E2AACE05600B46505 /* OrderDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BE10D2AACE05600B46505 /* OrderDetailViewModel.swift */; };
+		F43CE0A32AB072110038419F /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43CE0A22AB072110038419F /* SortViewController.swift */; };
 		F43D84CF2AA3386300D6FD4A /* ProfileAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D84CE2AA3386300D6FD4A /* ProfileAvatarView.swift */; };
 		F43D84D12AA3387500D6FD4A /* ProfileTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D84D02AA3387500D6FD4A /* ProfileTableView.swift */; };
 		F43D84D72AA379C200D6FD4A /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D84D62AA379C200D6FD4A /* AvatarView.swift */; };
@@ -55,8 +56,6 @@
 		F450746C2AA431EF0019D8F9 /* ProfileTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450746B2AA431EF0019D8F9 /* ProfileTableCell.swift */; };
 		F45074702AA496880019D8F9 /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450746F2AA496880019D8F9 /* MyOrdersViewController.swift */; };
 		F45074722AA496960019D8F9 /* MyOrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074712AA496960019D8F9 /* MyOrdersViewModel.swift */; };
-		F45074792AA497EB0019D8F9 /* DeactivateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074782AA497EB0019D8F9 /* DeactivateAccountViewController.swift */; };
-		F450747B2AA497F80019D8F9 /* DeactivateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450747A2AA497F80019D8F9 /* DeactivateAccountViewModel.swift */; };
 		F450747E2AA498C80019D8F9 /* UpdateSingleFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F450747D2AA498C80019D8F9 /* UpdateSingleFieldViewController.swift */; };
 		F45074822AA4CF1C0019D8F9 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45074812AA4CF1C0019D8F9 /* ProfileService.swift */; };
 		F45615D02AAF085C0096241D /* OrderDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45615CF2AAF085C0096241D /* OrderDetailsHeaderView.swift */; };
@@ -155,6 +154,7 @@
 		F43A6D2E2AA23E0B00DA625B /* CartEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartEmptyView.swift; sourceTree = "<group>"; };
 		F43BE10B2AACE04B00B46505 /* OrderDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailViewController.swift; sourceTree = "<group>"; };
 		F43BE10D2AACE05600B46505 /* OrderDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailViewModel.swift; sourceTree = "<group>"; };
+		F43CE0A22AB072110038419F /* SortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
 		F43D84CE2AA3386300D6FD4A /* ProfileAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAvatarView.swift; sourceTree = "<group>"; };
 		F43D84D02AA3387500D6FD4A /* ProfileTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableView.swift; sourceTree = "<group>"; };
 		F43D84D62AA379C200D6FD4A /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
@@ -179,8 +179,6 @@
 		F450746B2AA431EF0019D8F9 /* ProfileTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableCell.swift; sourceTree = "<group>"; };
 		F450746F2AA496880019D8F9 /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
 		F45074712AA496960019D8F9 /* MyOrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewModel.swift; sourceTree = "<group>"; };
-		F45074782AA497EB0019D8F9 /* DeactivateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivateAccountViewController.swift; sourceTree = "<group>"; };
-		F450747A2AA497F80019D8F9 /* DeactivateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivateAccountViewModel.swift; sourceTree = "<group>"; };
 		F450747D2AA498C80019D8F9 /* UpdateSingleFieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSingleFieldViewController.swift; sourceTree = "<group>"; };
 		F45074812AA4CF1C0019D8F9 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		F45615CF2AAF085C0096241D /* OrderDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsHeaderView.swift; sourceTree = "<group>"; };
@@ -429,15 +427,6 @@
 			path = MyOrdersVC;
 			sourceTree = "<group>";
 		};
-		F45074772AA497C90019D8F9 /* DeactivateAccountVC */ = {
-			isa = PBXGroup;
-			children = (
-				F45074782AA497EB0019D8F9 /* DeactivateAccountViewController.swift */,
-				F450747A2AA497F80019D8F9 /* DeactivateAccountViewModel.swift */,
-			);
-			path = DeactivateAccountVC;
-			sourceTree = "<group>";
-		};
 		F450747C2AA498960019D8F9 /* UpdateSingleFieldVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -605,7 +594,6 @@
 				F43BE10A2AACE03700B46505 /* OrderDetailVC */,
 				F44759552AA86C73006C4D9F /* CheckoutVC */,
 				F450747C2AA498960019D8F9 /* UpdateSingleFieldVC */,
-				F45074772AA497C90019D8F9 /* DeactivateAccountVC */,
 				F450746D2AA4963E0019D8F9 /* MyOrdersVC */,
 				F435CEF62A92199000F452FC /* ProductDetailVC */,
 				F44DA4392A90D6F9006DF337 /* SearchVC */,
@@ -668,6 +656,7 @@
 			children = (
 				F48AD0562A83391700F693F7 /* HomeViewController.swift */,
 				F48AD0582A83393800F693F7 /* HomeViewModel.swift */,
+				F43CE0A22AB072110038419F /* SortViewController.swift */,
 			);
 			path = HomeVC;
 			sourceTree = "<group>";
@@ -912,7 +901,6 @@
 				F4A5B22F2A88873A000A8F6F /* AuthenService.swift in Sources */,
 				F44514172A8FCC26004522FA /* CategoryViewCell.swift in Sources */,
 				F43140182AA6274F00C83D01 /* SearchResultsView.swift in Sources */,
-				F45074792AA497EB0019D8F9 /* DeactivateAccountViewController.swift in Sources */,
 				F44759642AA889BE006C4D9F /* CheckoutInformationView.swift in Sources */,
 				F464B1182A98DAC1006EBD77 /* CartHeaderView.swift in Sources */,
 				F43140132AA5E56700C83D01 /* File.swift in Sources */,
@@ -945,6 +933,7 @@
 				F464B1252A98DC24006EBD77 /* BaseView.swift in Sources */,
 				F44759592AA86C8C006C4D9F /* CheckoutViewModel.swift in Sources */,
 				F435CEFA2A9219BC00F452FC /* ProductDetailViewModel.swift in Sources */,
+				F43CE0A32AB072110038419F /* SortViewController.swift in Sources */,
 				F44DA4382A90BCCB006DF337 /* ClickableCollectionViewCell.swift in Sources */,
 				F42243C32AAF64CB0078A9E9 /* OrderDetailsRatingView.swift in Sources */,
 				F40B1D4E2AAB504A007E5079 /* OrderViewCell.swift in Sources */,
@@ -959,7 +948,6 @@
 				F40B1D462AAB283C007E5079 /* OrdersStatusFilterView.swift in Sources */,
 				F4CA6BA42A92585100507EFE /* ViewControllerWithoutNavigationBar.swift in Sources */,
 				F43D84CF2AA3386300D6FD4A /* ProfileAvatarView.swift in Sources */,
-				F450747B2AA497F80019D8F9 /* DeactivateAccountViewModel.swift in Sources */,
 				F40B1D442AAB277C007E5079 /* OrdersHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

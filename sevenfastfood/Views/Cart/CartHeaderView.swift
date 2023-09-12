@@ -7,7 +7,12 @@
 
 import UIKit
 
+protocol CartHeaderViewDelegate: AnyObject {
+    func didTapSearchButton(_ sender: UIButton)
+}
+
 class CartHeaderView: BaseView {
+    weak var delegate: CartHeaderViewDelegate?
     var itemsCount: Int = 0
     {
         didSet {
@@ -68,6 +73,6 @@ class CartHeaderView: BaseView {
     }
     
     @objc func didTapSearchButton(_ sender: UIButton) {
-        debugPrint("Tap search in cart vc")
+        delegate?.didTapSearchButton(sender)
     }
 }

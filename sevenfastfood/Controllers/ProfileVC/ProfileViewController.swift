@@ -49,9 +49,6 @@ final class ProfileViewController: UIViewController {
                 viewController.title = title
                 viewController.delegate = self
                 self.pushViewControllerWithoutBottomBar(viewController)
-            case .deactivateAccount:
-                let viewController = DeactivateAccountViewController()
-                self.pushViewControllerWithoutBottomBar(viewController)
             case .signOut:
                 self.presentSignOutAlert()
             }
@@ -109,7 +106,7 @@ final class ProfileViewController: UIViewController {
             contentStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16),
             
             avatarView.heightAnchor.constraint(equalToConstant: 140),
-            tableView.heightAnchor.constraint(equalToConstant: 550)
+            tableView.heightAnchor.constraint(equalToConstant: 500)
         ])
     }
     

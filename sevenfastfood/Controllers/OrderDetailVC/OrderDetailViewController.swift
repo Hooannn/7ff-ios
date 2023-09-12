@@ -66,7 +66,13 @@ final class OrderDetailViewController: UIViewController {
         return view
     }()
     
-    var contentStackView: UIStackView?
+    private lazy var contentStackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [headerView, detailsView, itemsView])
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .vertical
+        view.spacing = 12
+        return view
+    }()
     
     private lazy var headerView: OrderDetailsHeaderView = {
         let view = OrderDetailsHeaderView()
@@ -111,6 +117,7 @@ final class OrderDetailViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = Tokens.shared.lightBackgroundColor
+        contentScrollView.addSubview(contentStackView)
         view.addSubviews(loadingView, contentScrollView, footerView)
     }
     
@@ -131,28 +138,24 @@ final class OrderDetailViewController: UIViewController {
             contentScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -Tokens.shared.containerXPadding),
             contentScrollView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
             
+            contentStackView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            contentStackView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            contentStackView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+            contentStackView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
+            
             headerView.heightAnchor.constraint(equalToConstant: 72),
             ratingView.heightAnchor.constraint(equalToConstant: 72)
         ])
     }
     
-    private func addContentStackView(haveRated: Bool, rating: Double? = nil) {
-        contentStackView?.removeFromSuperview()
+    private func addRatingView(rating: Double? = nil) {
         ratingView.rating = rating
-        let subviews = haveRated ? [headerView, ratingView, detailsView, itemsView] : [headerView, detailsView, itemsView]
-        let view = UIStackView(arrangedSubviews: subviews)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.axis = .vertical
-        view.spacing = 12
-        self.contentStackView = view
-        contentScrollView.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
-            view.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
-            view.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
-        ])
+        contentStackView.insertArrangedSubview(ratingView, at: 1)
+    }
+    
+    private func removeRatingView() {
+        contentStackView.removeArrangedSubview(ratingView)
     }
 }
 
@@ -167,10 +170,10 @@ extension OrderDetailViewController: OrderDetailViewModelDelegate {
         contentScrollView.isHidden = false
         footerView.isHidden = false
         
-        if order?.rating == nil {
-            addContentStackView(haveRated: false)
+        if let rating = order?.rating {
+            addRatingView(rating: rating)
         } else {
-            addContentStackView(haveRated: true, rating: order?.rating)
+            removeRatingView()
         }
         
         if let status = order?.status, let orderId = order?._id {

@@ -16,6 +16,34 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
         return viewModel
     }()
     
+    private var productsSortOption: SortOption?
+    {
+        didSet {
+            if let sortOption = productsSortOption {
+                var queryDict: [String: String] = [:]
+                switch sortOption {
+                case .ascendingPrice:
+                    queryDict["price"] = "-1"
+                case .ascendingViews:
+                    queryDict["yearlyViewCount.count"] = "-1"
+                case .descendingPrice:
+                    queryDict["price"] = "1"
+                case .descendingViews:
+                    queryDict["yearlyViewCount.count"] = "1"
+                }
+                searchBarView.showSortButtonBadge()
+                currentProductsQuery["sort"] = Utils.shared.dictionaryToJson(queryDict)
+            } else {
+                searchBarView.hideSortButtonBadge()
+                currentProductsQuery.removeValue(forKey: "sort")
+            }
+            viewModel.fetchProducts(withParams: currentProductsQuery)
+            productsView.showAnimatedGradientSkeleton()
+        }
+    }
+    
+    private var currentProductsQuery: [String: String] = [:]
+    
     private lazy var containerView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [headerView, searchBarView, categoriesView, productsView])
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +66,7 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
         view.delegate = self
         return view
     }()
-
+    
     private lazy var categoriesView: CategoriesView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -48,7 +76,7 @@ final class HomeViewController: ViewControllerWithoutNavigationBar {
         view.categoryViewDelegate = self
         return view
     }()
-
+    
     private lazy var productsView: ProductsView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -127,10 +155,9 @@ extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate, Pro
                 "_id": category!._id
             ]
         }
-        let params = [
-            "filter": Utils.shared.dictionaryToJson(queryDict)!
-        ]
-        viewModel.fetchProducts(withParams: params)
+        
+        currentProductsQuery["filter"] = Utils.shared.dictionaryToJson(queryDict)!
+        viewModel.fetchProducts(withParams: currentProductsQuery)
         productsView.showAnimatedGradientSkeleton()
     }
     
@@ -151,7 +178,7 @@ extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate, Pro
     func didEndLongPressOnProduct(withId productId: String?) {
         let productDetailVC = createProductDetailVC(withId: productId, wasPresented: true)
         let nav = UINavigationController(rootViewController: productDetailVC)
-
+        
         if #available(iOS 15.0, *) {
             if let sheet = nav.sheetPresentationController {
                 sheet.detents = [.large()]
@@ -165,11 +192,29 @@ extension HomeViewController: HomeViewModelDelegate, CategoriesViewDelegate, Pro
     }
 }
 
-extension HomeViewController: SearchBarViewDelegate {
+extension HomeViewController: SearchBarViewDelegate, SortViewControllerDelegate {
+    func didSelectOption(_ option: SortOption) {
+        productsSortOption = option
+    }
+    
+    func didClearOption() {
+        productsSortOption = nil
+    }
+    
     func didTapSearchBar(_ sender: UIGestureRecognizer) {
-        let searchVC = SearchViewController()
-        let navigationVC = UINavigationController(rootViewController: searchVC)
-        navigationVC.modalPresentationStyle = .fullScreen
-        navigationController?.present(navigationVC, animated: true)
+        openSearchViewController()
+    }
+    
+    func didTapSortButton(_ sender: UIButton) {
+        let sortVC = SortViewController(delegate: self, selectedOption: productsSortOption ?? nil)
+        let nav = UINavigationController(rootViewController: sortVC)
+        nav.modalPresentationStyle = .automatic
+        if #available(iOS 15.0, *) {
+            if let sheet = nav.sheetPresentationController {
+                sheet.detents = [.medium()]
+                sheet.preferredCornerRadius = 12
+            }
+        }
+        present(nav, animated: true)
     }
 }

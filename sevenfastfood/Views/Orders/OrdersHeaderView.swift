@@ -7,7 +7,12 @@
 
 import UIKit
 
+protocol OrdersHeaderViewDelegate: AnyObject {
+    func didTapSearchButton(_ sender: UIButton)
+}
+
 final class OrdersHeaderView: BaseView {
+    weak var delegate: OrdersHeaderViewDelegate?
     var itemsCount: Int = 0
     {
         didSet {
@@ -68,6 +73,6 @@ final class OrdersHeaderView: BaseView {
     }
     
     @objc func didTapSearchButton(_ sender: UIButton) {
-        debugPrint("Tap search in orders vc")
+        delegate?.didTapSearchButton(sender)
     }
 }
