@@ -13,6 +13,7 @@ final class MyOrdersViewController: ViewControllerWithoutNavigationBar {
     
     private lazy var headerView: OrdersHeaderView = {
         let view = OrdersHeaderView()
+        view.delegate = self
         return view
     }()
     
@@ -74,7 +75,11 @@ final class MyOrdersViewController: ViewControllerWithoutNavigationBar {
     }
 }
 
-extension MyOrdersViewController: MyOrdersViewModelDelegate, OrdersStatusFilterViewDelegate, OrderViewCellDelegate {
+extension MyOrdersViewController: MyOrdersViewModelDelegate, OrdersStatusFilterViewDelegate, OrderViewCellDelegate, OrdersHeaderViewDelegate {
+    func didTapSearchButton(_ sender: UIButton) {
+        openSearchViewController()
+    }
+    
     func didReceiveOrdersUpdate(_ orders: [Order]?) {
         let ordersCount = orders?.count ?? 0
         headerView.itemsCount = ordersCount

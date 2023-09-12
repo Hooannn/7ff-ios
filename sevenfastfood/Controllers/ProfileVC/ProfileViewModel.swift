@@ -13,7 +13,7 @@ enum ProfileSectionIdentifier {
 }
 
 enum ProfileSectionItemIdentitier: String {
-    case firstName, lastName, email, phoneNumber, password, address, deactivateAccount, signOut
+    case firstName, lastName, email, phoneNumber, password, address, signOut
 }
 
 struct ProfileSection {
@@ -57,7 +57,7 @@ final class ProfileViewModel {
     func getProfileSections() -> [ProfileSection] {
         [
             ProfileSection(title: "Account Details", identifier: .accountDetails),
-            ProfileSection(title: "Danger", identifier: .danger)
+            ProfileSection(title: "", identifier: .danger)
         ]
     }
     
@@ -83,7 +83,6 @@ final class ProfileViewModel {
             ]
         case .danger:
             return [
-                ProfileSectionItem(title: "Deactivate account", subtitle: nil, image: nil, identifier: .deactivateAccount, hasValue: false, defaultValue: nil, isEmpty: false, readonly: false),
                 ProfileSectionItem(title: "Sign out", subtitle: nil, image: nil, identifier: .signOut, hasValue: false, defaultValue: nil, isEmpty: false, readonly: false)
             ]
         }

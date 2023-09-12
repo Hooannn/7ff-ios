@@ -10,10 +10,39 @@ import GoogleSignIn
 protocol SignInViewControllerDelegate: AnyObject {
     func didTapDoNotHaveAnAccountYetButton()
 }
-final class SignInViewController: UIViewController {
+final class SignInViewController: KeyboardAvoidViewController {
     weak var delegate: SignInViewControllerDelegate!
     private let tokens = Tokens.shared
     private let widgets = Widgets.shared
+    
+    private var originalContainerBottomConstraint: NSLayoutConstraint?
+    private var keyboardContainerBottomConstraint: NSLayoutConstraint?
+    
+    override func keyboardWillHide(notification: NSNotification) {
+        /*
+        keyboardContainerBottomConstraint?.isActive = false
+        originalContainerBottomConstraint?.isActive = true
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+        */
+    }
+    
+    override func keyboardWillShow(notification: NSNotification) {
+        /*
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if keyboardContainerBottomConstraint == nil {
+                keyboardContainerBottomConstraint = bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -keyboardSize.height)
+            }
+            keyboardContainerBottomConstraint?.isActive = true
+            originalContainerBottomConstraint?.isActive = false
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+            }
+        }
+        */
+    }
+    
     private lazy var topView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -54,6 +83,8 @@ final class SignInViewController: UIViewController {
     
     private lazy var laterButton: UIButton = {
         let button = UIButton(type: .system)
+        // Hide
+        button.isHidden = true
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapLaterButton), for: .touchUpInside)
         button.setTitle("Later", for: .normal)
@@ -87,6 +118,7 @@ final class SignInViewController: UIViewController {
     
     private func setupConstraints() {
         // Constraint for main view
+        originalContainerBottomConstraint = bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.topAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -106,7 +138,7 @@ final class SignInViewController: UIViewController {
             bottomView.topAnchor.constraint(equalTo: separatorView.bottomAnchor),
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            originalContainerBottomConstraint!
         ])
         
         NSLayoutConstraint.activate([

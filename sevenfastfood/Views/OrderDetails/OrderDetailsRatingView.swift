@@ -17,13 +17,13 @@ final class OrderDetailsRatingView: BaseView {
     private lazy var label: UILabel = {
         let label = Widgets.shared.createLabel()
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: Tokens.shared.systemFontSize, weight: .regular)
         return label
     }()
     
     private lazy var stackView: UIStackView = {
         let imageContainerView = UIView()
-        let imageView = UIImageView(image: UIImage(named: "Rating"))
+        let imageView = UIImageView(image: UIImage(named: "Rating_2"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageContainerView.translatesAutoresizingMaskIntoConstraints = false
         imageContainerView.backgroundColor = .white

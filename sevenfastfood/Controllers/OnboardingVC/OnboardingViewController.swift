@@ -11,6 +11,7 @@ final class OnboardingViewController: ViewControllerWithoutNavigationBar {
     let viewModel = OnboardingViewModel()
     private let tokens = Tokens.shared
     private let widgets = Widgets.shared
+    private var currentViewController: UIViewController?
     private let pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     private var viewControllers: [UIViewController]? = nil
     private var safeAreaInsets: UIEdgeInsets? = nil
@@ -46,7 +47,17 @@ final class OnboardingViewController: ViewControllerWithoutNavigationBar {
     }
     
     @objc func didTapContinueButton() {
-        print("didTabContinueButton")
+        let current = pageVC.viewControllers?.first
+        let currentIndex = viewControllers?.firstIndex {
+            vc in
+            vc == current
+        }
+        if let currentIndex = currentIndex {
+            let nextIndex = currentIndex + 1
+            if let nextVC = viewControllers?[nextIndex] {
+                pageVC.setViewControllers([nextVC], direction: .forward, animated: true)
+            }
+        }
     }
     
     @objc func didTapStartedButton() {
@@ -59,6 +70,7 @@ final class OnboardingViewController: ViewControllerWithoutNavigationBar {
     private func setupPages() {
         createSkipButton()
         pageVC.dataSource = self
+        pageVC.delegate = self
         let onboardingScreens = viewModel.fetchOnboardingScreens()
         
         viewControllers = onboardingScreens.compactMap( {
@@ -78,7 +90,7 @@ final class OnboardingViewController: ViewControllerWithoutNavigationBar {
         view.bringSubviewToFront(skipButton!)
     }
     
-    private func setupOnboardingView(for vc: UIViewController, title _title: String, description _description: String, displayImage image: UIImage, buttonTitle _buttonTitle: String, isFinal _isFinal: Bool) {
+    private func setupOnboardingView(for vc: UIViewController, title: String, description: String, displayImage: UIImage, buttonTitle: String, isFinal: Bool) {
         let topView = {
            let view = UIView()
             view.translatesAutoresizingMaskIntoConstraints = false
@@ -95,7 +107,7 @@ final class OnboardingViewController: ViewControllerWithoutNavigationBar {
         }()
 
         let imageView = {
-            let view = UIImageView(image: image)
+            let view = UIImageView(image: displayImage)
             view.translatesAutoresizingMaskIntoConstraints = false
             view.contentMode = .scaleAspectFit
             view.clipsToBounds = true
@@ -104,7 +116,7 @@ final class OnboardingViewController: ViewControllerWithoutNavigationBar {
 
         let titleLabel = {
             let label = UILabel()
-            label.text = _title
+            label.text = title
             label.numberOfLines = 0
             label.textColor = tokens.secondaryColor
             label.font = UIFont.boldSystemFont(ofSize: tokens.titleFontSize)
@@ -115,7 +127,7 @@ final class OnboardingViewController: ViewControllerWithoutNavigationBar {
 
         let descriptionLabel = {
             let label = UILabel()
-            label.text = _description
+            label.text = description
             label.numberOfLines = 0
             label.textColor = .gray
             label.textAlignment = .center
@@ -124,8 +136,8 @@ final class OnboardingViewController: ViewControllerWithoutNavigationBar {
             return label
         }()
         
-        let action: Selector = _isFinal ? #selector(didTapStartedButton) : #selector(didTapContinueButton)
-        let actionButton = widgets.createSecondaryButton(title: _buttonTitle, target: self, action: action)
+        let action: Selector = isFinal ? #selector(didTapStartedButton) : #selector(didTapContinueButton)
+        let actionButton = widgets.createSecondaryButton(title: buttonTitle, target: self, action: action)
 
         vc.view.addSubviews(topView, bottomView)
         topView.addSubviews(imageView)
@@ -162,7 +174,7 @@ final class OnboardingViewController: ViewControllerWithoutNavigationBar {
     }
 }
 
-extension OnboardingViewController: UIPageViewControllerDataSource {
+extension OnboardingViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let index = viewControllers?.firstIndex(of: viewController) else {
             return nil
